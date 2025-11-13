@@ -304,7 +304,7 @@ export function ProjectsSection({ projects: dbProjects, config }: ProjectsSectio
       </div>
 
       <div
-        className="relative h-[70vh] md:h-screen select-none cursor-grab active:cursor-grabbing"
+        className="relative h-[70vh] md:h-screen select-none cursor-grab active:cursor-grabbing md:-mt-20 -mt-40"
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
@@ -362,22 +362,24 @@ export function ProjectsSection({ projects: dbProjects, config }: ProjectsSectio
       </div>
 
       <div className="container mx-auto px-6 mt-12 text-center">
-        <Button
-          size="lg"
-          style={{
-            background: `linear-gradient(to right, ${gradientFrom}, ${gradientTo})`,
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.opacity = '0.9'
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.opacity = '1'
-          }}
-          className="cursor-pointer"
-        >
-          Veja todos os projetos
-          <ArrowRight className="w-4 h-4 ml-2" />
-        </Button>
+        <a href="/projects">
+          <Button
+            size="lg"
+            style={{
+              background: `linear-gradient(to right, ${gradientFrom}, ${gradientTo})`,
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.opacity = '0.9'
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.opacity = '1'
+            }}
+            className="cursor-pointer"
+          >
+            Veja todos os projetos
+            <ArrowRight className="w-4 h-4 ml-2" />
+          </Button>
+        </a>
       </div>
     </section>
   )

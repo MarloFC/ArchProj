@@ -121,7 +121,7 @@ export function ComparisonSection({ config }: ComparisonSectionProps) {
                 draggable={false}
               />
               <div className="absolute bottom-4 right-4 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-lg shadow-lg">
-                <span className="text-sm font-semibold text-gray-900">After</span>
+                <span className="text-sm font-semibold text-gray-900">Depois</span>
               </div>
             </div>
 
@@ -139,7 +139,7 @@ export function ComparisonSection({ config }: ComparisonSectionProps) {
                 draggable={false}
               />
               <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-lg shadow-lg">
-                <span className="text-sm font-semibold text-gray-900">Before</span>
+                <span className="text-sm font-semibold text-gray-900">Antes</span>
               </div>
             </div>
 

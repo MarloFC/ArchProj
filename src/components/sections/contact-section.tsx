@@ -83,7 +83,7 @@ export function ContactSection({ config }: ContactSectionProps) {
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    First Name
+                    Primeiro nome
                   </label>
                   <input
                     type="text"
@@ -99,13 +99,13 @@ export function ContactSection({ config }: ContactSectionProps) {
                       e.currentTarget.style.borderColor = '#d1d5db'
                       e.currentTarget.style.boxShadow = 'none'
                     }}
-                    placeholder="John"
+                    placeholder="Nome"
                   />
                 </div>
                 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Last Name
+                    Último nome
                   </label>
                   <input
                     type="text"
@@ -118,7 +118,7 @@ export function ContactSection({ config }: ContactSectionProps) {
                       e.currentTarget.style.borderColor = '#d1d5db'
                       e.currentTarget.style.boxShadow = 'none'
                     }}
-                    placeholder="Doe"
+                    placeholder="Sobrenome"
                   />
                 </div>
               </div>
@@ -138,13 +138,13 @@ export function ContactSection({ config }: ContactSectionProps) {
                     e.currentTarget.style.borderColor = '#d1d5db'
                     e.currentTarget.style.boxShadow = 'none'
                   }}
-                  placeholder="john@example.com"
+                  placeholder="nome@exemplo.com"
                 />
               </div>
               
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Project Type
+                  Tipo de Projeto
                 </label>
                 <select
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 outline-none transition-colors"
@@ -157,16 +157,16 @@ export function ContactSection({ config }: ContactSectionProps) {
                     e.currentTarget.style.boxShadow = 'none'
                   }}
                 >
-                  <option>Residential</option>
-                  <option>Commercial</option>
-                  <option>Interior Design</option>
-                  <option>Consultation</option>
+                  <option>Residencial</option>
+                  <option>Comercial</option>
+                  <option>Design de interiores</option>
+                  <option>Consultoria</option>
                 </select>
               </div>
               
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Message
+                  Mensagem
                 </label>
                 <textarea
                   rows={4}
@@ -179,7 +179,7 @@ export function ContactSection({ config }: ContactSectionProps) {
                     e.currentTarget.style.borderColor = '#d1d5db'
                     e.currentTarget.style.boxShadow = 'none'
                   }}
-                  placeholder="Tell us about your project..."
+                  placeholder="Nos conte um pouco do seu projeto..."
                 />
               </div>
               
@@ -195,7 +195,7 @@ export function ContactSection({ config }: ContactSectionProps) {
                   e.currentTarget.style.opacity = '1'
                 }}
               >
-                Send Message
+                Entre em contato
                 <Send className="w-4 h-4 ml-2" />
               </Button>
             </form>
