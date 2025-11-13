@@ -152,7 +152,7 @@ export function ProjectManager() {
         <Button
           onClick={handleAddProject}
           disabled={saving}
-          className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700"
+          className="bg-gradient-to-r from-gray-600 to-black hover:from-black hover:to-gray-700"
         >
           <Plus className="w-4 h-4 mr-2" />
           Add Project
@@ -197,8 +197,8 @@ export function ProjectManager() {
                   )}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
                 >
-                  <option value="residential">Residential</option>
-                  <option value="commercial">Commercial</option>
+                  <option value="residential">Residencial</option>
+                  <option value="commercial">Comercial</option>
                   <option value="cultural">Cultural</option>
                   <option value="industrial">Industrial</option>
                 </select>

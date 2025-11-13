@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Building2, Menu, X, User } from "lucide-react"
 import Link from "next/link"
 import { useSession, signOut } from "next-auth/react"
+import { usePathname } from "next/navigation"
 import type { SiteConfig } from "@prisma/client"
 
 interface NavbarProps {
@@ -14,6 +15,7 @@ interface NavbarProps {
 export function Navbar({ config }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false)
   const { data: session } = useSession()
+  const pathname = usePathname()
 
   const logoName = config?.logoName || ""
   const logoSvg = config?.logoSvg
@@ -21,6 +23,16 @@ export function Navbar({ config }: NavbarProps) {
   const logoHeight = config?.logoHeight || 20
 
   const toggleMenu = () => setIsOpen(!isOpen)
+
+  // Helper function to determine the correct href for section links
+  const getSectionLink = (hash: string) => {
+    // If we're on the home page, just use the hash
+    if (pathname === "/") {
+      return hash
+    }
+    // Otherwise, redirect to home with the hash
+    return `/${hash}`
+  }
 
   return (
     <nav className="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-sm border-b border-gray-200">
@@ -30,25 +42,25 @@ export function Navbar({ config }: NavbarProps) {
             {logoSvg ? (
               <div
                 style={{ width: `${logoWidth * 4}px`, height: `${logoHeight * 4}px` }}
-                className="text-indigo-600"
+                className="text-gray-600"
                 dangerouslySetInnerHTML={{ __html: logoSvg }}
               />
             ) : (
-              logoName && <Building2 className="w-8 h-8 text-indigo-600" />
+              logoName && <Building2 className="w-8 h-8 text-gray-600" />
             )}
             {logoName && <span className="text-xl font-bold text-gray-900">{logoName}</span>}
           </Link>
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-8">
-            <Link href="#services" className="text-gray-700 hover:text-indigo-600 transition-colors">
-              Services
+            <Link href={getSectionLink("#services")} className="text-gray-700 hover:text-gray-600 transition-colors">
+              Serviços
             </Link>
-            <Link href="#projects" className="text-gray-700 hover:text-indigo-600 transition-colors">
-              Projects
+            <Link href={getSectionLink("#projects")} className="text-gray-700 hover:text-gray-600 transition-colors">
+              Projetos
             </Link>
-            <Link href="#contact" className="text-gray-700 hover:text-indigo-600 transition-colors">
-              Contact
+            <Link href={getSectionLink("#contact")} className="text-gray-700 hover:text-gray-600 transition-colors">
+              Contato
             </Link>
             
             {session ? (
@@ -85,23 +97,23 @@ export function Navbar({ config }: NavbarProps) {
         {isOpen && (
           <div className="md:hidden py-4 border-t border-gray-200 bg-white">
             <div className="flex flex-col space-y-3">
-              <Link 
-                href="#services" 
-                className="px-3 py-2 text-gray-700 hover:text-indigo-600 transition-colors"
+              <Link
+                href={getSectionLink("#services")}
+                className="px-3 py-2 text-gray-700 hover:text-gray-600 transition-colors"
                 onClick={() => setIsOpen(false)}
               >
                 Services
               </Link>
-              <Link 
-                href="#projects" 
-                className="px-3 py-2 text-gray-700 hover:text-indigo-600 transition-colors"
+              <Link
+                href={getSectionLink("#projects")}
+                className="px-3 py-2 text-gray-700 hover:text-gray-600 transition-colors"
                 onClick={() => setIsOpen(false)}
               >
                 Projects
               </Link>
-              <Link 
-                href="#contact" 
-                className="px-3 py-2 text-gray-700 hover:text-indigo-600 transition-colors"
+              <Link
+                href={getSectionLink("#contact")}
+                className="px-3 py-2 text-gray-700 hover:text-gray-600 transition-colors"
                 onClick={() => setIsOpen(false)}
               >
                 Contact
@@ -111,7 +123,7 @@ export function Navbar({ config }: NavbarProps) {
                 <>
                   <Link 
                     href="/admin"
-                    className="px-3 py-2 text-gray-700 hover:text-indigo-600 transition-colors"
+                    className="px-3 py-2 text-gray-700 hover:text-gray-600 transition-colors"
                     onClick={() => setIsOpen(false)}
                   >
                     Admin Panel
@@ -121,7 +133,7 @@ export function Navbar({ config }: NavbarProps) {
                       signOut()
                       setIsOpen(false)
                     }}
-                    className="px-3 py-2 text-left text-gray-700 hover:text-indigo-600 transition-colors"
+                    className="px-3 py-2 text-left text-gray-700 hover:text-gray-600 transition-colors"
                   >
                     Sign Out
                   </button>
@@ -129,7 +141,7 @@ export function Navbar({ config }: NavbarProps) {
               ) : (
                 <Link 
                   href="/auth/signin"
-                  className="px-3 py-2 text-gray-700 hover:text-indigo-600 transition-colors"
+                  className="px-3 py-2 text-gray-700 hover:text-gray-600 transition-colors"
                   onClick={() => setIsOpen(false)}
                 >
                   Admin Login
