@@ -13,6 +13,8 @@ export async function GET() {
         heroTitle: "Architectural Excellence",
         heroSubtitle: "Creating spaces that inspire and endure",
         heroDescription: "Transform your vision into reality with our innovative architectural solutions.",
+        logoWidth: 8,
+        logoHeight: 8,
         primaryColor: "#000000",
         secondaryColor: "#ffffff",
         accentColor: "#6366f1",

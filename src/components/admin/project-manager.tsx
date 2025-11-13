@@ -1,41 +1,46 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Plus, Edit, Trash2, Save } from "lucide-react"
+import { Plus, Edit, Trash2, Save, Loader2 } from "lucide-react"
 
 interface Project {
   id: string
   title: string
   description: string
   category: string
-  imageUrl: string
+  imageUrl: string | null
   featured: boolean
+  order: number
 }
 
 export function ProjectManager() {
-  const [projects, setProjects] = useState<Project[]>([
-    {
-      id: "1",
-      title: "Modern Skyline Tower",
-      description: "A 40-story mixed-use development featuring sustainable design principles.",
-      category: "Commercial",
-      imageUrl: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=600&fit=crop",
-      featured: true,
-    },
-    {
-      id: "2",
-      title: "Riverside Residence",
-      description: "Contemporary family home with panoramic river views and eco-friendly features.",
-      category: "Residential",
-      imageUrl: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=800&h=600&fit=crop",
-      featured: true,
-    },
-  ])
+  const [projects, setProjects] = useState<Project[]>([])
+  const [loading, setLoading] = useState(true)
+  const [saving, setSaving] = useState(false)
 
   const [editingProject, setEditingProject] = useState<Project | null>(null)
   const [isAddingNew, setIsAddingNew] = useState(false)
+
+  // Fetch projects on mount
+  useEffect(() => {
+    fetchProjects()
+  }, [])
+
+  const fetchProjects = async () => {
+    try {
+      setLoading(true)
+      const response = await fetch("/api/projects")
+      if (!response.ok) throw new Error("Failed to fetch projects")
+      const data = await response.json()
+      setProjects(data)
+    } catch (error) {
+      console.error("Error fetching projects:", error)
+    } finally {
+      setLoading(false)
+    }
+  }
 
   const handleAddProject = () => {
     setIsAddingNew(true)
@@ -43,34 +48,76 @@ export function ProjectManager() {
       id: "",
       title: "",
       description: "",
-      category: "Residential",
+      category: "residential",
       imageUrl: "",
       featured: false,
+      order: projects.length,
     })
   }
 
-  const handleSaveProject = () => {
+  const handleSaveProject = async () => {
     if (!editingProject) return
 
-    if (isAddingNew) {
-      const newProject = {
-        ...editingProject,
-        id: Date.now().toString(),
-      }
-      setProjects(prev => [...prev, newProject])
-    } else {
-      setProjects(prev =>
-        prev.map(p => p.id === editingProject.id ? editingProject : p)
-      )
-    }
+    try {
+      setSaving(true)
 
-    setEditingProject(null)
-    setIsAddingNew(false)
+      if (isAddingNew) {
+        const response = await fetch("/api/projects", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            title: editingProject.title,
+            description: editingProject.description,
+            category: editingProject.category,
+            imageUrl: editingProject.imageUrl,
+            featured: editingProject.featured,
+            order: editingProject.order,
+          }),
+        })
+
+        if (!response.ok) throw new Error("Failed to create project")
+        await fetchProjects()
+      } else {
+        const response = await fetch(`/api/projects/${editingProject.id}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            title: editingProject.title,
+            description: editingProject.description,
+            category: editingProject.category,
+            imageUrl: editingProject.imageUrl,
+            featured: editingProject.featured,
+            order: editingProject.order,
+          }),
+        })
+
+        if (!response.ok) throw new Error("Failed to update project")
+        await fetchProjects()
+      }
+
+      setEditingProject(null)
+      setIsAddingNew(false)
+    } catch (error) {
+      console.error("Error saving project:", error)
+      alert("Failed to save project. Please try again.")
+    } finally {
+      setSaving(false)
+    }
   }
 
-  const handleDeleteProject = (id: string) => {
-    if (confirm("Are you sure you want to delete this project?")) {
-      setProjects(prev => prev.filter(p => p.id !== id))
+  const handleDeleteProject = async (id: string) => {
+    if (!confirm("Are you sure you want to delete this project?")) return
+
+    try {
+      const response = await fetch(`/api/projects/${id}`, {
+        method: "DELETE",
+      })
+
+      if (!response.ok) throw new Error("Failed to delete project")
+      await fetchProjects()
+    } catch (error) {
+      console.error("Error deleting project:", error)
+      alert("Failed to delete project. Please try again.")
     }
   }
 
@@ -84,6 +131,14 @@ export function ProjectManager() {
     setIsAddingNew(false)
   }
 
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-12">
+        <Loader2 className="w-8 h-8 animate-spin text-indigo-600" />
+      </div>
+    )
+  }
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -93,9 +148,10 @@ export function ProjectManager() {
             Manage your project showcase and portfolio items.
           </p>
         </div>
-        
+
         <Button
           onClick={handleAddProject}
+          disabled={saving}
           className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700"
         >
           <Plus className="w-4 h-4 mr-2" />
@@ -136,15 +192,15 @@ export function ProjectManager() {
                 </label>
                 <select
                   value={editingProject.category}
-                  onChange={(e) => setEditingProject(prev => 
+                  onChange={(e) => setEditingProject(prev =>
                     prev ? { ...prev, category: e.target.value } : null
                   )}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
                 >
-                  <option value="Residential">Residential</option>
-                  <option value="Commercial">Commercial</option>
-                  <option value="Cultural">Cultural</option>
-                  <option value="Industrial">Industrial</option>
+                  <option value="residential">Residential</option>
+                  <option value="commercial">Commercial</option>
+                  <option value="cultural">Cultural</option>
+                  <option value="industrial">Industrial</option>
                 </select>
               </div>
             </div>
@@ -195,12 +251,21 @@ export function ProjectManager() {
             </div>
 
             <div className="flex justify-end space-x-2 pt-4">
-              <Button variant="outline" onClick={handleCancel}>
+              <Button variant="outline" onClick={handleCancel} disabled={saving}>
                 Cancel
               </Button>
-              <Button onClick={handleSaveProject}>
-                <Save className="w-4 h-4 mr-2" />
-                Save Project
+              <Button onClick={handleSaveProject} disabled={saving}>
+                {saving ? (
+                  <>
+                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                    Saving...
+                  </>
+                ) : (
+                  <>
+                    <Save className="w-4 h-4 mr-2" />
+                    Save Project
+                  </>
+                )}
               </Button>
             </div>
           </CardContent>
@@ -208,7 +273,14 @@ export function ProjectManager() {
       )}
 
       <div className="grid gap-6">
-        {projects.map((project) => (
+        {projects.length === 0 ? (
+          <Card>
+            <CardContent className="p-12 text-center">
+              <p className="text-gray-500 mb-4">No projects yet. Click "Add Project" to create your first one!</p>
+            </CardContent>
+          </Card>
+        ) : (
+          projects.map((project) => (
           <Card key={project.id}>
             <CardContent className="p-6">
               <div className="flex items-start justify-between">
@@ -264,7 +336,8 @@ export function ProjectManager() {
               </div>
             </CardContent>
           </Card>
-        ))}
+        ))
+        )}
       </div>
     </div>
   )

@@ -4,7 +4,7 @@ import { motion } from "framer-motion"
 import { ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import type { Project, SiteConfig } from "@prisma/client"
-import { useState, useRef, MouseEvent } from "react"
+import { useState, useRef, MouseEvent, useEffect } from "react"
 
 interface ProjectsSectionProps {
   projects: Project[]
@@ -123,13 +123,19 @@ export function ProjectsSection({ projects: dbProjects, config }: ProjectsSectio
   const accentColor = config?.accentColor || "#6366f1"
   const projectsTitle = config?.projectsTitle || "Featured Projects"
   const projectsDescription = config?.projectsDescription || "Explore our portfolio of award-winning architectural projects that showcase innovation and excellence."
+
+  const trackRef = useRef<HTMLDivElement>(null)
+  const [mouseDownAt, setMouseDownAt] = useState(0)
+  const [prevPercentage, setPrevPercentage] = useState(0)
+  const [currentPercentage, setCurrentPercentage] = useState(0)
+
   // Fallback to default projects if none in database
   const defaultProjects = [
     {
       id: "1",
       title: "Modern Skyline Tower",
       category: "commercial",
-      imageUrl: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=600&fit=crop",
+      imageUrl: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=800&fit=crop",
       description: "A 40-story mixed-use development featuring sustainable design principles.",
       featured: true,
       order: 0,
@@ -140,7 +146,7 @@ export function ProjectsSection({ projects: dbProjects, config }: ProjectsSectio
       id: "2",
       title: "Riverside Residence",
       category: "residential",
-      imageUrl: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=800&h=600&fit=crop",
+      imageUrl: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1200&h=800&fit=crop",
       description: "Contemporary family home with panoramic river views and eco-friendly features.",
       featured: true,
       order: 1,
@@ -151,25 +157,136 @@ export function ProjectsSection({ projects: dbProjects, config }: ProjectsSectio
       id: "3",
       title: "Cultural Arts Center",
       category: "cultural",
-      imageUrl: "https://images.unsplash.com/photo-1503387837-b154d5074bd2?w=800&h=600&fit=crop",
+      imageUrl: "https://images.unsplash.com/photo-1503387837-b154d5074bd2?w=1200&h=800&fit=crop",
       description: "Dynamic performance venue combining traditional and modern architectural elements.",
       featured: true,
       order: 2,
       createdAt: new Date(),
       updatedAt: new Date(),
     },
+    {
+      id: "4",
+      title: "Sustainable Office Complex",
+      category: "commercial",
+      imageUrl: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&h=800&fit=crop",
+      description: "LEED-certified workspace with innovative green technology and design.",
+      featured: true,
+      order: 3,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      id: "5",
+      title: "Mountain Villa",
+      category: "residential",
+      imageUrl: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&h=800&fit=crop",
+      description: "Luxury retreat seamlessly integrated into natural landscape.",
+      featured: true,
+      order: 4,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      id: "6",
+      title: "Mountain Villa",
+      category: "residential",
+      imageUrl: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&h=800&fit=crop",
+      description: "Luxury retreat seamlessly integrated into natural landscape.",
+      featured: true,
+      order: 5,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
   ]
 
-  const projects = dbProjects.length > 0 ? dbProjects : defaultProjects
+  const allProjects = dbProjects.length > 0 ? dbProjects : defaultProjects
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => {
+      const mobile = window.innerWidth < 768
+      setIsMobile(mobile)
+      // Set initial percentage based on device type
+      const initialPercentage = mobile ? -12 : -24.7
+      setPrevPercentage(initialPercentage)
+      setCurrentPercentage(initialPercentage)
+    }
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
+  // Use 3 images for mobile, 5 for desktop
+  const projects = isMobile ? allProjects.slice(0, 3) : allProjects.slice(0, 6)
+
+  const handleMouseDown = (e: MouseEvent<HTMLDivElement>) => {
+    setMouseDownAt(e.clientX)
+  }
+
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    setMouseDownAt(e.touches[0].clientX)
+  }
+
+  const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
+    if (mouseDownAt === 0) return
+
+    const mouseDelta = mouseDownAt - e.clientX
+    const maxDelta = window.innerWidth
+
+    const percentage = (mouseDelta / maxDelta) * -100
+    const nextPercentageUnconstrained = prevPercentage + percentage
+    const nextPercentage = Math.max(Math.min(nextPercentageUnconstrained, 0), -100)
+
+    setCurrentPercentage(nextPercentage)
+
+    if (trackRef.current) {
+      trackRef.current.style.transform = `translate(${nextPercentage}%, -50%)`
+
+      const images = trackRef.current.getElementsByClassName("gallery-image")
+      for (const image of Array.from(images)) {
+        (image as HTMLElement).style.objectPosition = `${100 + nextPercentage}% center`
+      }
+    }
+  }
+
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (mouseDownAt === 0) return
+
+    const mouseDelta = mouseDownAt - e.touches[0].clientX
+    const maxDelta = window.innerWidth
+
+    const percentage = (mouseDelta / maxDelta) * -100
+    const nextPercentageUnconstrained = prevPercentage + percentage
+    const nextPercentage = Math.max(Math.min(nextPercentageUnconstrained, 0), -100)
+
+    setCurrentPercentage(nextPercentage)
+
+    if (trackRef.current) {
+      trackRef.current.style.transform = `translate(${nextPercentage}%, -50%)`
+
+      const images = trackRef.current.getElementsByClassName("gallery-image")
+      for (const image of Array.from(images)) {
+        (image as HTMLElement).style.objectPosition = `${100 + nextPercentage}% center`
+      }
+    }
+  }
+
+  const handleMouseUp = () => {
+    if (mouseDownAt === 0) return
+
+    setPrevPercentage(currentPercentage)
+    setMouseDownAt(0)
+  }
+
   return (
-    <section className="py-20 bg-gradient-to-br from-gray-50 to-white">
-      <div className="container mx-auto px-6">
+    <section className="relative py-20 bg-white overflow-hidden">
+      <div className="container mx-auto px-6 mb-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center"
         >
           <h2
             className="text-4xl font-bold mb-4 bg-clip-text text-transparent"
@@ -182,44 +299,85 @@ export function ProjectsSection({ projects: dbProjects, config }: ProjectsSectio
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             {projectsDescription}
           </p>
+          <p className="text-sm text-gray-500 mt-4">Arraste ou deslize para explorar</p>
         </motion.div>
+      </div>
 
-        <div className="grid lg:grid-cols-3 gap-8 mb-12">
-          {projects.map((project, index) => (
-            <ProjectCard
-              key={project.id}
-              project={project}
-              index={index}
-              gradientFrom={gradientFrom}
-              gradientTo={gradientTo}
-              accentColor={accentColor}
-            />
+      <div
+        className="relative h-[70vh] md:h-screen select-none cursor-grab active:cursor-grabbing"
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseUp}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleMouseUp}
+      >
+        <div
+          ref={trackRef}
+          className="absolute left-1/2 top-1/2 flex gap-[2vmin] md:gap-[4vmin] select-none"
+          style={{
+            transform: `translate(${currentPercentage}%, -50%)`,
+            userSelect: "none",
+          }}
+        >
+          {projects.map((project) => (
+            <div key={project.id} className="relative group w-80">
+              <img
+                src={project.imageUrl || `https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=800&fit=crop`}
+                alt={project.title}
+                className="gallery-image w-[80vmin] h-[65vmin] object-cover select-none pointer-events-none rounded-2xl shadow-2xl"
+                draggable="false"
+                style={{
+                  objectPosition: `${100 + currentPercentage}% center`,
+                  width: isMobile ? "100vw" : "40vw",
+                }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 rounded-2xl">
+                <div className="absolute bottom-0 left-0 right-0 p-3 md:p-6 text-white">
+                  <span className="inline-block px-2 py-1 md:px-3 bg-white/20 backdrop-blur-sm text-xs font-medium rounded-full mb-1 md:mb-2 capitalize">
+                    {project.category}
+                  </span>
+                  <h3 className="text-base md:text-2xl font-bold mb-1 md:mb-2 overflow-hidden">{project.title}</h3>
+                  <p className="text-xs md:text-sm text-gray-200 overflow-hidden line-clamp-2">{project.description}</p>
+                </div>
+              </div>
+            </div>
           ))}
         </div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          viewport={{ once: true }}
-          className="text-center"
-        >
-          <Button
-            size="lg"
-            style={{
-              background: `linear-gradient(to right, ${gradientFrom}, ${gradientTo})`,
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.opacity = '0.9'
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.opacity = '1'
-            }}
+        {/* Scroll indicator */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none">
+          <motion.div
+            animate={{ x: [-10, 10, -10] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            className="flex items-center gap-2 text-gray-600"
           >
-            View All Projects
-            <ArrowRight className="w-4 h-4 ml-2" />
-          </Button>
-        </motion.div>
+            <div className="w-8 h-8 rounded-full border-2 border-gray-400 flex items-center justify-center">
+              <div className="w-1 h-3 bg-gray-400 rounded-full" />
+            </div>
+          </motion.div>
+          <p className="text-sm text-gray-500 font-medium">Scroll</p>
+        </div>
+      </div>
+
+      <div className="container mx-auto px-6 mt-12 text-center">
+        <Button
+          size="lg"
+          style={{
+            background: `linear-gradient(to right, ${gradientFrom}, ${gradientTo})`,
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.opacity = '0.9'
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.opacity = '1'
+          }}
+          className="cursor-pointer"
+        >
+          Veja todos os projetos
+          <ArrowRight className="w-4 h-4 ml-2" />
+        </Button>
       </div>
     </section>
   )

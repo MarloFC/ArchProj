@@ -127,6 +127,8 @@ export function ContentEditor() {
     heroButton2Text: "",
     logoName: "",
     logoSvg: "",
+    logoWidth: 8,
+    logoHeight: 8,
     beforeAfterTitle: "",
     beforeAfterDescription: "",
     beforeImage: "",
@@ -160,6 +162,8 @@ export function ContentEditor() {
             heroButton2Text: data.heroButton2Text || "",
             logoName: data.logoName || "",
             logoSvg: data.logoSvg || "",
+            logoWidth: data.logoWidth || 8,
+            logoHeight: data.logoHeight || 8,
             beforeAfterTitle: data.beforeAfterTitle || "",
             beforeAfterDescription: data.beforeAfterDescription || "",
             beforeImage: data.beforeImage || "",
@@ -354,18 +358,67 @@ export function ContentEditor() {
               onAIGenerate={() => {}}
               loading={loading}
             />
-            <InputField
-              label="Logo SVG/Icon"
-              field="logoSvg"
-              description="SVG path or icon identifier for your logo (optional)"
-              showAI={false}
-              rows={4}
-              type="textarea"
-              value={content.logoSvg}
-              onChange={handleFieldChange("logoSvg")}
-              onAIGenerate={() => {}}
-              loading={loading}
-            />
+            <Card>
+              <CardHeader>
+                <CardTitle>Logo SVG/Icon</CardTitle>
+                <CardDescription>SVG path or icon identifier for your logo (optional)</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <textarea
+                  value={content.logoSvg}
+                  onChange={(e) => handleFieldChange("logoSvg")(e.target.value)}
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
+                  rows={4}
+                  placeholder="Paste your SVG code here..."
+                />
+
+                {/* Logo Preview */}
+                {content.logoSvg && (
+                  <div className="space-y-2">
+                    <p className="text-sm font-medium text-gray-700">Preview:</p>
+                    <div className="p-4 bg-gray-50 rounded-lg border border-gray-200 flex items-center justify-center">
+                      <div
+                        style={{ width: `${content.logoWidth * 4}px`, height: `${content.logoHeight * 4}px` }}
+                        className="text-indigo-600"
+                        dangerouslySetInnerHTML={{ __html: content.logoSvg }}
+                      />
+                    </div>
+                  </div>
+                )}
+
+                {/* Width and Height Selectors */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-gray-700">
+                      Width (Tailwind scale)
+                    </label>
+                    <input
+                      type="number"
+                      min="4"
+                      max="32"
+                      value={content.logoWidth}
+                      onChange={(e) => handleFieldChange("logoWidth")(parseInt(e.target.value) || 8)}
+                      className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
+                    />
+                    <p className="text-xs text-gray-500">Current: w-{content.logoWidth} ({content.logoWidth * 4}px)</p>
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-gray-700">
+                      Height (Tailwind scale)
+                    </label>
+                    <input
+                      type="number"
+                      min="4"
+                      max="32"
+                      value={content.logoHeight}
+                      onChange={(e) => handleFieldChange("logoHeight")(parseInt(e.target.value) || 8)}
+                      className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
+                    />
+                    <p className="text-xs text-gray-500">Current: h-{content.logoHeight} ({content.logoHeight * 4}px)</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </>
         )}
 

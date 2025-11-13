@@ -19,6 +19,12 @@ export const authOptions: NextAuthOptions = {
     jwt: async ({ token, user }) => {
       if (user) {
         token.id = user.id
+        // Fetch admin status from database when creating token
+        const dbUser = await prisma.user.findUnique({
+          where: { id: user.id },
+          select: { admin: true }
+        })
+        token.admin = dbUser?.admin || false
       }
       return token
     },
@@ -27,11 +33,27 @@ export const authOptions: NextAuthOptions = {
       user: {
         ...session.user,
         id: token.id as string,
+        admin: token.admin as boolean,
       },
     }),
   },
   pages: {
     signIn: "/auth/signin",
+    error: "/auth/error",
+  },
+  events: {
+    async signIn({ user, account }) {
+      // Check if user has admin role when signing in
+      if (user.id) {
+        const dbUser = await prisma.user.findUnique({
+          where: { id: user.id },
+          select: { admin: true }
+        })
+        if (dbUser?.admin === false) {
+          console.log('Non-admin user signed in:', user.email)
+        }
+      }
+    }
   },
 }
 

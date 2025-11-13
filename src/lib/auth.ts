@@ -7,3 +7,8 @@ export const getCurrentUser = async () => {
   const session = await getSession()
   return session?.user
 }
+
+export const isUserAdmin = async () => {
+  const session = await getSession()
+  return (session?.user as any)?.admin === true
+}

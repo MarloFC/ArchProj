@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
       // Validate required fields
       const requiredFields = [
         'heroTitle', 'heroSubtitle', 'heroDescription', 'heroButton1Text', 'heroButton2Text',
-        'logoName', 'beforeAfterTitle', 'beforeAfterDescription', 'beforeImage', 'afterImage',
+        'beforeAfterTitle', 'beforeAfterDescription', 'beforeImage', 'afterImage',
         'projectsTitle', 'projectsDescription', 'contactTitle', 'contactDescription',
         'contactFormTitle', 'contactEmail', 'contactPhone', 'contactAddress'
       ]
@@ -49,8 +49,10 @@ export async function POST(request: NextRequest) {
           heroDescription: data.heroDescription,
           heroButton1Text: data.heroButton1Text,
           heroButton2Text: data.heroButton2Text,
-          logoName: data.logoName,
+          logoName: data.logoName || '',
           logoSvg: data.logoSvg || null,
+          logoWidth: data.logoWidth || 8,
+          logoHeight: data.logoHeight || 8,
           beforeAfterTitle: data.beforeAfterTitle,
           beforeAfterDescription: data.beforeAfterDescription,
           beforeImage: data.beforeImage,
@@ -71,8 +73,10 @@ export async function POST(request: NextRequest) {
           heroDescription: data.heroDescription,
           heroButton1Text: data.heroButton1Text,
           heroButton2Text: data.heroButton2Text,
-          logoName: data.logoName,
+          logoName: data.logoName || '',
           logoSvg: data.logoSvg || null,
+          logoWidth: data.logoWidth || 8,
+          logoHeight: data.logoHeight || 8,
           beforeAfterTitle: data.beforeAfterTitle,
           beforeAfterDescription: data.beforeAfterDescription,
           beforeImage: data.beforeImage,
