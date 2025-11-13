@@ -197,7 +197,7 @@ export function ComparisonSection({ config }: ComparisonSectionProps) {
             viewport={{ once: true }}
             className="text-center text-gray-500 mt-6 text-sm"
           >
-            ← Drag the slider to compare the before and after transformation →
+            ← Arraste o controle deslizante para comparar o antes e o depois da transformação. →
           </motion.p>
         </motion.div>
       </div>

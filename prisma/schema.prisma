@@ -14,6 +14,7 @@ model User {
   email         String          @unique
   emailVerified DateTime?
   image         String?
+  admin         Boolean         @default(false) @map("Admin")
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
 
@@ -74,6 +75,8 @@ model SiteConfig {
   // Navbar
   logoName        String   @default("ArchStudio")
   logoSvg         String?  // SVG path or icon identifier
+  logoWidth       Int      @default(8)  // Width in Tailwind scale (e.g., 8 = w-8)
+  logoHeight      Int      @default(8)  // Height in Tailwind scale (e.g., 8 = h-8)
 
   // Before & After Section
   beforeAfterTitle       String @default("Before & After")

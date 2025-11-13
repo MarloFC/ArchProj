@@ -15,7 +15,10 @@ export function Navbar({ config }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false)
   const { data: session } = useSession()
 
-  const logoName = config?.logoName || "ArchStudio"
+  const logoName = config?.logoName || ""
+  const logoSvg = config?.logoSvg
+  const logoWidth = config?.logoWidth || 20
+  const logoHeight = config?.logoHeight || 20
 
   const toggleMenu = () => setIsOpen(!isOpen)
 
@@ -24,8 +27,16 @@ export function Navbar({ config }: NavbarProps) {
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between h-16">
           <Link href="/" className="flex items-center space-x-2">
-            <Building2 className="w-8 h-8 text-indigo-600" />
-            <span className="text-xl font-bold text-gray-900">{logoName}</span>
+            {logoSvg ? (
+              <div
+                style={{ width: `${logoWidth * 4}px`, height: `${logoHeight * 4}px` }}
+                className="text-indigo-600"
+                dangerouslySetInnerHTML={{ __html: logoSvg }}
+              />
+            ) : (
+              logoName && <Building2 className="w-8 h-8 text-indigo-600" />
+            )}
+            {logoName && <span className="text-xl font-bold text-gray-900">{logoName}</span>}
           </Link>
 
           {/* Desktop Menu */}
