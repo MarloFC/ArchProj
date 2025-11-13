@@ -5,10 +5,17 @@ import { Button } from "@/components/ui/button"
 import { Building2, Menu, X, User } from "lucide-react"
 import Link from "next/link"
 import { useSession, signOut } from "next-auth/react"
+import type { SiteConfig } from "@prisma/client"
 
-export function Navbar() {
+interface NavbarProps {
+  config?: SiteConfig | null
+}
+
+export function Navbar({ config }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false)
   const { data: session } = useSession()
+
+  const logoName = config?.logoName || "ArchStudio"
 
   const toggleMenu = () => setIsOpen(!isOpen)
 
@@ -18,7 +25,7 @@ export function Navbar() {
         <div className="flex items-center justify-between h-16">
           <Link href="/" className="flex items-center space-x-2">
             <Building2 className="w-8 h-8 text-indigo-600" />
-            <span className="text-xl font-bold text-gray-900">ArchStudio</span>
+            <span className="text-xl font-bold text-gray-900">{logoName}</span>
           </Link>
 
           {/* Desktop Menu */}

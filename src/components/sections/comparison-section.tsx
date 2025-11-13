@@ -12,14 +12,14 @@ export function ComparisonSection({ config }: ComparisonSectionProps) {
   const gradientFrom = config?.gradientFrom || "#6366f1"
   const gradientTo = config?.gradientTo || "#8b5cf6"
   const accentColor = config?.accentColor || "#6366f1"
+  const beforeAfterTitle = config?.beforeAfterTitle || "Before & After"
+  const beforeAfterDescription = config?.beforeAfterDescription || "See the transformation. Drag the slider to compare our architectural renovations."
+  const beforeImage = config?.beforeImage || "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=1200&h=800&fit=crop"
+  const afterImage = config?.afterImage || "https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=1200&h=800&fit=crop"
 
   const [sliderPosition, setSliderPosition] = useState(50)
   const [isDragging, setIsDragging] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
-
-  // Default images - you can replace these with your actual project images
-  const beforeImage = "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=1200&h=800&fit=crop"
-  const afterImage = "https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=1200&h=800&fit=crop"
 
   const handleMove = (clientX: number) => {
     if (!containerRef.current) return
@@ -87,10 +87,10 @@ export function ComparisonSection({ config }: ComparisonSectionProps) {
               backgroundImage: `linear-gradient(to right, ${gradientFrom}, ${gradientTo})`
             }}
           >
-            Before & After
+            {beforeAfterTitle}
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            See the transformation. Drag the slider to compare our architectural renovations.
+            {beforeAfterDescription}
           </p>
         </motion.div>
 

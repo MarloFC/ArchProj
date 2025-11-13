@@ -13,6 +13,12 @@ export function ContactSection({ config }: ContactSectionProps) {
   const gradientFrom = config?.gradientFrom || "#6366f1"
   const gradientTo = config?.gradientTo || "#8b5cf6"
   const accentColor = config?.accentColor || "#6366f1"
+  const contactTitle = config?.contactTitle || "Ready to Start Your Project?"
+  const contactDescription = config?.contactDescription || "Let's transform your vision into architectural reality. Contact us today for a consultation and discover how we can bring your ideas to life."
+  const contactFormTitle = config?.contactFormTitle || "Send us a message"
+  const contactEmail = config?.contactEmail || "contact@architecturalexcellence.com"
+  const contactPhone = config?.contactPhone || "+1 (555) 123-4567"
+  const contactAddress = config?.contactAddress || "123 Design Street, Creative City, CC 12345"
 
   return (
     <section
@@ -31,34 +37,33 @@ export function ContactSection({ config }: ContactSectionProps) {
             className="text-white"
           >
             <h2 className="text-4xl font-bold mb-6">
-              Ready to Start Your Project?
+              {contactTitle}
             </h2>
-            
+
             <p className="text-xl text-white/90 mb-8 leading-relaxed">
-              Let's transform your vision into architectural reality. Contact us today 
-              for a consultation and discover how we can bring your ideas to life.
+              {contactDescription}
             </p>
-            
+
             <div className="space-y-4">
               <div className="flex items-center space-x-4">
                 <div className="p-3 bg-white/20 rounded-lg">
                   <Mail className="w-5 h-5" />
                 </div>
-                <span className="text-white/90">contact@architecturalexcellence.com</span>
+                <span className="text-white/90">{contactEmail}</span>
               </div>
-              
+
               <div className="flex items-center space-x-4">
                 <div className="p-3 bg-white/20 rounded-lg">
                   <Phone className="w-5 h-5" />
                 </div>
-                <span className="text-white/90">+1 (555) 123-4567</span>
+                <span className="text-white/90">{contactPhone}</span>
               </div>
-              
+
               <div className="flex items-center space-x-4">
                 <div className="p-3 bg-white/20 rounded-lg">
                   <MapPin className="w-5 h-5" />
                 </div>
-                <span className="text-white/90">123 Design Street, Creative City, CC 12345</span>
+                <span className="text-white/90">{contactAddress}</span>
               </div>
             </div>
           </motion.div>
@@ -71,7 +76,7 @@ export function ContactSection({ config }: ContactSectionProps) {
             className="bg-white rounded-2xl p-8 shadow-2xl"
           >
             <h3 className="text-2xl font-semibold mb-6 text-gray-900">
-              Send us a message
+              {contactFormTitle}
             </h3>
             
             <form className="space-y-6">
