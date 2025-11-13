@@ -26,7 +26,7 @@ export default async function Home() {
 
   return (
     <>
-      <Navbar />
+      <Navbar config={siteConfig} />
       <main className="min-h-screen">
         <HeroSection config={siteConfig} />
         <section id="services">

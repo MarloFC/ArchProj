@@ -62,15 +62,15 @@ export function AdminDashboard({ user }: AdminDashboardProps) {
           <TabsList className="grid w-full grid-cols-3 bg-white p-1 rounded-lg shadow-sm">
             <TabsTrigger value="content" className="flex items-center space-x-2">
               <Settings className="w-4 h-4" />
-              <span>Content</span>
+              <span className="cursor-pointer">Content</span>
             </TabsTrigger>
             <TabsTrigger value="colors" className="flex items-center space-x-2">
               <Palette className="w-4 h-4" />
-              <span>Colors</span>
+              <span className="cursor-pointer">Colors</span>
             </TabsTrigger>
             <TabsTrigger value="projects" className="flex items-center space-x-2">
               <FolderOpen className="w-4 h-4" />
-              <span>Projects</span>
+              <span className="cursor-pointer">Projects</span>
             </TabsTrigger>
           </TabsList>
 

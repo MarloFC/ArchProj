@@ -121,6 +121,8 @@ export function ProjectsSection({ projects: dbProjects, config }: ProjectsSectio
   const gradientFrom = config?.gradientFrom || "#6366f1"
   const gradientTo = config?.gradientTo || "#8b5cf6"
   const accentColor = config?.accentColor || "#6366f1"
+  const projectsTitle = config?.projectsTitle || "Featured Projects"
+  const projectsDescription = config?.projectsDescription || "Explore our portfolio of award-winning architectural projects that showcase innovation and excellence."
   // Fallback to default projects if none in database
   const defaultProjects = [
     {
@@ -175,10 +177,10 @@ export function ProjectsSection({ projects: dbProjects, config }: ProjectsSectio
               backgroundImage: `linear-gradient(to right, ${gradientFrom}, ${gradientTo})`
             }}
           >
-            Featured Projects
+            {projectsTitle}
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Explore our portfolio of award-winning architectural projects that showcase innovation and excellence.
+            {projectsDescription}
           </p>
         </motion.div>
 

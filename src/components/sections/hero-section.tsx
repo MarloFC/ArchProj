@@ -15,6 +15,8 @@ export function HeroSection({ config }: HeroSectionProps) {
   const heroTitle = config?.heroTitle || "Architectural Excellence"
   const heroSubtitle = config?.heroSubtitle || "Creating spaces that inspire and endure"
   const heroDescription = config?.heroDescription || "Transform your vision into reality with our innovative architectural solutions."
+  const heroButton1Text = config?.heroButton1Text || "View Projects"
+  const heroButton2Text = config?.heroButton2Text || "Get Consultation"
   const gradientFrom = config?.gradientFrom || "#6366f1"
   const gradientTo = config?.gradientTo || "#8b5cf6"
   const ref = useRef<HTMLDivElement>(null)
@@ -80,7 +82,7 @@ export function HeroSection({ config }: HeroSectionProps) {
                   e.currentTarget.style.opacity = '1'
                 }}
               >
-                View Projects
+                {heroButton1Text}
               </Button>
               <Button
                 size="lg"
@@ -96,7 +98,7 @@ export function HeroSection({ config }: HeroSectionProps) {
                   e.currentTarget.style.opacity = '1'
                 }}
               >
-                Get Consultation
+                {heroButton2Text}
               </Button>
             </div>
           </motion.div>
