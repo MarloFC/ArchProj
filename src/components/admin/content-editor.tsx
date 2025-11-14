@@ -133,6 +133,8 @@ export function ContentEditor() {
     beforeAfterDescription: "",
     beforeImage: "",
     afterImage: "",
+    servicesTitle: "",
+    servicesDescription: "",
     projectsTitle: "",
     projectsDescription: "",
     contactTitle: "",
@@ -168,6 +170,8 @@ export function ContentEditor() {
             beforeAfterDescription: data.beforeAfterDescription || "",
             beforeImage: data.beforeImage || "",
             afterImage: data.afterImage || "",
+            servicesTitle: data.servicesTitle || "",
+            servicesDescription: data.servicesDescription || "",
             projectsTitle: data.projectsTitle || "",
             projectsDescription: data.projectsDescription || "",
             contactTitle: data.contactTitle || "",
@@ -273,6 +277,7 @@ export function ContentEditor() {
           { id: "hero", label: "Hero Section" },
           { id: "navbar", label: "Navbar & Logo" },
           { id: "beforeafter", label: "Before & After" },
+          { id: "services", label: "Services" },
           { id: "projects", label: "Projects" },
           { id: "contact", label: "Contact" },
         ].map((section) => (
@@ -459,6 +464,39 @@ export function ContentEditor() {
               value={content.afterImage}
               onChange={handleFieldChange("afterImage")}
             />
+          </>
+        )}
+
+        {/* Services Section */}
+        {activeSection === "services" && (
+          <>
+            <InputField
+              label="Services Section Title"
+              field="servicesTitle"
+              description="Title for the services section"
+              value={content.servicesTitle}
+              onChange={handleFieldChange("servicesTitle")}
+              onAIGenerate={() => generateWithAI("servicesTitle")}
+              loading={loading}
+            />
+            <InputField
+              label="Services Section Description"
+              field="servicesDescription"
+              description="Description for the services section"
+              type="textarea"
+              rows={3}
+              value={content.servicesDescription}
+              onChange={handleFieldChange("servicesDescription")}
+              onAIGenerate={() => generateWithAI("servicesDescription")}
+              loading={loading}
+            />
+            <Card className="bg-blue-50 border-blue-200">
+              <CardContent className="p-4">
+                <p className="text-sm text-blue-800">
+                  <strong>Note:</strong> Individual service items (icons, titles, descriptions) can be managed in the "Services" tab.
+                </p>
+              </CardContent>
+            </Card>
           </>
         )}
 

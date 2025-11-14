@@ -7,7 +7,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ContentEditor } from "./content-editor"
 import { ColorCustomizer } from "./color-customizer"
 import { ProjectManager } from "./project-manager"
-import { Settings, Palette, FolderOpen, LogOut, Home } from "lucide-react"
+import { ServiceManager } from "./service-manager"
+import { Settings, Palette, FolderOpen, LogOut, Home, Briefcase } from "lucide-react"
 import { signOut } from "next-auth/react"
 import Link from "next/link"
 
@@ -59,7 +60,7 @@ export function AdminDashboard({ user }: AdminDashboardProps) {
 
       <div className="p-6">
         <Tabs defaultValue="content" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3 bg-white p-1 rounded-lg shadow-sm">
+          <TabsList className="grid w-full grid-cols-4 bg-white p-1 rounded-lg shadow-sm">
             <TabsTrigger value="content" className="flex items-center space-x-2">
               <Settings className="w-4 h-4" />
               <span className="cursor-pointer">Content</span>
@@ -67,6 +68,10 @@ export function AdminDashboard({ user }: AdminDashboardProps) {
             <TabsTrigger value="colors" className="flex items-center space-x-2">
               <Palette className="w-4 h-4" />
               <span className="cursor-pointer">Colors</span>
+            </TabsTrigger>
+            <TabsTrigger value="services" className="flex items-center space-x-2">
+              <Briefcase className="w-4 h-4" />
+              <span className="cursor-pointer">Services</span>
             </TabsTrigger>
             <TabsTrigger value="projects" className="flex items-center space-x-2">
               <FolderOpen className="w-4 h-4" />
@@ -83,6 +88,12 @@ export function AdminDashboard({ user }: AdminDashboardProps) {
           <TabsContent value="colors">
             <Card className="p-6">
               <ColorCustomizer />
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="services">
+            <Card className="p-6">
+              <ServiceManager />
             </Card>
           </TabsContent>
 
