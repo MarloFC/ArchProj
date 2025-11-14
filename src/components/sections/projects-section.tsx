@@ -128,6 +128,7 @@ export function ProjectsSection({ projects: dbProjects, config }: ProjectsSectio
   const [mouseDownAt, setMouseDownAt] = useState(0)
   const [prevPercentage, setPrevPercentage] = useState(0)
   const [currentPercentage, setCurrentPercentage] = useState(0)
+  const [isDragging, setIsDragging] = useState(false)
 
   // Fallback to default projects if none in database
   const defaultProjects = [
@@ -233,6 +234,11 @@ export function ProjectsSection({ projects: dbProjects, config }: ProjectsSectio
     const mouseDelta = mouseDownAt - e.clientX
     const maxDelta = window.innerWidth
 
+    // If moved more than 5px, consider it a drag
+    if (Math.abs(mouseDelta) > 5) {
+      setIsDragging(true)
+    }
+
     const percentage = (mouseDelta / maxDelta) * -100
     const nextPercentageUnconstrained = prevPercentage + percentage
     const nextPercentage = Math.max(Math.min(nextPercentageUnconstrained, 0), -100)
@@ -276,6 +282,11 @@ export function ProjectsSection({ projects: dbProjects, config }: ProjectsSectio
 
     setPrevPercentage(currentPercentage)
     setMouseDownAt(0)
+
+    // Reset dragging state after a short delay to allow click detection
+    setTimeout(() => {
+      setIsDragging(false)
+    }, 100)
   }
 
   return (
@@ -321,8 +332,23 @@ export function ProjectsSection({ projects: dbProjects, config }: ProjectsSectio
             userSelect: "none",
           }}
         >
-          {projects.map((project) => (
-            <div key={project.id} className="relative group w-80">
+          {projects.map((project) => {
+            const projectId = project.title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')
+            return (
+            <a
+              key={project.id}
+              href={`/projects#${projectId}`}
+              className="relative group w-80 block"
+              draggable="false"
+              onClick={(e) => {
+                if (isDragging) {
+                  e.preventDefault()
+                }
+              }}
+              onDragStart={(e) => {
+                e.preventDefault()
+              }}
+            >
               <img
                 src={project.imageUrl || `https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=800&fit=crop`}
                 alt={project.title}
@@ -333,7 +359,7 @@ export function ProjectsSection({ projects: dbProjects, config }: ProjectsSectio
                   width: isMobile ? "100vw" : "40vw",
                 }}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 rounded-2xl">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 rounded-2xl pointer-events-none">
                 <div className="absolute bottom-0 left-0 right-0 p-3 md:p-6 text-white">
                   <span className="inline-block px-2 py-1 md:px-3 bg-white/20 backdrop-blur-sm text-xs font-medium rounded-full mb-1 md:mb-2 capitalize">
                     {project.category}
@@ -342,8 +368,8 @@ export function ProjectsSection({ projects: dbProjects, config }: ProjectsSectio
                   <p className="text-xs md:text-sm text-gray-200 overflow-hidden line-clamp-2">{project.description}</p>
                 </div>
               </div>
-            </div>
-          ))}
+            </a>
+          )})}
         </div>
 
         {/* Scroll indicator */}

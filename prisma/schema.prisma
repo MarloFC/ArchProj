@@ -113,6 +113,7 @@ model Project {
   id          String   @id @default(cuid())
   title       String
   description String
+  textarea    String?  @db.Text
   imageUrl    String?
   category    String   @default("residential")
   featured    Boolean  @default(false)
