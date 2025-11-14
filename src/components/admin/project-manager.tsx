@@ -9,6 +9,7 @@ interface Project {
   id: string
   title: string
   description: string
+  textarea: string | null
   category: string
   imageUrl: string | null
   featured: boolean
@@ -48,6 +49,7 @@ export function ProjectManager() {
       id: "",
       title: "",
       description: "",
+      textarea: "",
       category: "residential",
       imageUrl: "",
       featured: false,
@@ -68,6 +70,7 @@ export function ProjectManager() {
           body: JSON.stringify({
             title: editingProject.title,
             description: editingProject.description,
+            textarea: editingProject.textarea,
             category: editingProject.category,
             imageUrl: editingProject.imageUrl,
             featured: editingProject.featured,
@@ -84,6 +87,7 @@ export function ProjectManager() {
           body: JSON.stringify({
             title: editingProject.title,
             description: editingProject.description,
+            textarea: editingProject.textarea,
             category: editingProject.category,
             imageUrl: editingProject.imageUrl,
             featured: editingProject.featured,
@@ -226,12 +230,27 @@ export function ProjectManager() {
               </label>
               <textarea
                 value={editingProject.description}
-                onChange={(e) => setEditingProject(prev => 
+                onChange={(e) => setEditingProject(prev =>
                   prev ? { ...prev, description: e.target.value } : null
                 )}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
                 rows={3}
                 placeholder="Describe the project..."
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Text Area (Additional Details)
+              </label>
+              <textarea
+                value={editingProject.textarea || ""}
+                onChange={(e) => setEditingProject(prev =>
+                  prev ? { ...prev, textarea: e.target.value } : null
+                )}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
+                rows={5}
+                placeholder="Add additional details or extended project information..."
               />
             </div>
 

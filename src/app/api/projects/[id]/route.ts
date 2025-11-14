@@ -15,7 +15,7 @@ export async function PUT(
     }
 
     const body = await request.json()
-    const { title, description, imageUrl, category, featured, order } = body
+    const { title, description, textarea, imageUrl, category, featured, order } = body
     const { id } = await params
 
     const project = await prisma.project.update({
@@ -23,6 +23,7 @@ export async function PUT(
       data: {
         title,
         description,
+        textarea: textarea || null,
         imageUrl: imageUrl || null,
         category,
         featured,

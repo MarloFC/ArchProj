@@ -8,8 +8,11 @@ interface ProjectCardProps {
 }
 
 export function ProjectCard({ project, color = "#f97316" }: ProjectCardProps) {
+  // Create a URL-friendly id from the project title
+  const projectId = project.title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')
+
   return (
-    <div className="relative w-full aspect-[4/5] overflow-hidden shadow-lg group cursor-pointer">
+    <div id={projectId} className="relative w-full aspect-[4/5] overflow-hidden shadow-lg group cursor-pointer">
       {/* Background Image Layer - absolute positioning to cover full card */}
       <div className="absolute inset-0">
         <img
@@ -34,6 +37,17 @@ export function ProjectCard({ project, color = "#f97316" }: ProjectCardProps) {
           {project.description}
         </p>
       </div>
+
+      {/* Textarea content on hover - positioned above bottom */}
+      {project.textarea && (
+        <div className="absolute left-6 right-6 bottom-24 md:bottom-32 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <div className="bg-black/80 backdrop-blur-sm rounded-lg p-4 md:p-5 text-white">
+            <p className="text-xs md:text-sm leading-relaxed overflow-hidden line-clamp-6">
+              {project.textarea}
+            </p>
+          </div>
+        </div>
+      )}
 
       {/* Hover overlay on image area */}
       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
