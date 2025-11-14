@@ -22,46 +22,48 @@ interface ServiceModalProps {
 
 export function ServiceModal({ isOpen, onClose, service, gradientFrom = "#6366f1", gradientTo = "#8b5cf6", originRect }: ServiceModalProps) {
   const [isClosing, setIsClosing] = useState(false)
-  const [isAnimating, setIsAnimating] = useState(true)
+  const [hasAnimated, setHasAnimated] = useState(false)
 
   useEffect(() => {
     if (isOpen) {
-      // Prevent scroll events
-      const preventScroll = (e: Event) => {
-        e.preventDefault()
-        e.stopPropagation()
-        return false
-      }
-
-      // Keep scrollbar visible but prevent scrolling
-      document.body.style.overflowY = 'scroll'
-
-      // Add event listeners to prevent scroll
-      window.addEventListener('scroll', preventScroll, { passive: false })
-      window.addEventListener('wheel', preventScroll, { passive: false })
-      window.addEventListener('touchmove', preventScroll, { passive: false })
-      document.body.addEventListener('scroll', preventScroll, { passive: false })
-      document.body.addEventListener('wheel', preventScroll, { passive: false })
-      document.body.addEventListener('touchmove', preventScroll, { passive: false })
+      // Check if device is mobile (screen width < 768px)
+      const isMobile = window.innerWidth < 768
 
       setIsClosing(false)
-      setIsAnimating(true)
+      setHasAnimated(false)
       // Trigger animation after a tiny delay to ensure CSS transition works
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
-          setIsAnimating(false)
+          setHasAnimated(true)
         })
       })
 
-      // Cleanup function for event listeners
-      return () => {
-        window.removeEventListener('scroll', preventScroll)
-        window.removeEventListener('wheel', preventScroll)
-        window.removeEventListener('touchmove', preventScroll)
-        document.body.removeEventListener('scroll', preventScroll)
-        document.body.removeEventListener('wheel', preventScroll)
-        document.body.removeEventListener('touchmove', preventScroll)
-        document.body.style.overflowY = ''
+      // Only prevent scroll on desktop
+      if (!isMobile) {
+        // Prevent scroll events
+        const preventScroll = (e: Event) => {
+          e.preventDefault()
+          e.stopPropagation()
+          return false
+        }
+
+        // Keep scrollbar visible but prevent scrolling
+        document.body.style.overflowY = 'scroll'
+
+        // Add event listeners to prevent scroll
+        window.addEventListener('scroll', preventScroll, { passive: false })
+        window.addEventListener('wheel', preventScroll, { passive: false })
+        document.body.addEventListener('scroll', preventScroll, { passive: false })
+        document.body.addEventListener('wheel', preventScroll, { passive: false })
+
+        // Cleanup function for event listeners
+        return () => {
+          window.removeEventListener('scroll', preventScroll)
+          window.removeEventListener('wheel', preventScroll)
+          document.body.removeEventListener('scroll', preventScroll)
+          document.body.removeEventListener('wheel', preventScroll)
+          document.body.style.overflowY = ''
+        }
       }
     } else {
       // Restore scrolling
@@ -84,7 +86,7 @@ export function ServiceModal({ isOpen, onClose, service, gradientFrom = "#6366f1
   }, [isOpen])
 
   const handleClose = () => {
-    setIsAnimating(true)
+    setHasAnimated(false)
     setIsClosing(true)
     setTimeout(() => {
       onClose()
@@ -96,7 +98,7 @@ export function ServiceModal({ isOpen, onClose, service, gradientFrom = "#6366f1
 
   // Calculate the position and scale transforms for morphing effect
   const getMorphTransform = () => {
-    if (!originRect || !isAnimating) {
+    if (!originRect) {
       return {
         transform: 'translate(0, 0) scale(1)',
         width: '100%',
@@ -122,7 +124,9 @@ export function ServiceModal({ isOpen, onClose, service, gradientFrom = "#6366f1
     const modalWidth = Math.min(672, viewportWidth - 32) // max-w-2xl = 42rem = 672px, with padding
     const scaleRatio = originRect.width / modalWidth
 
-    if (isClosing) {
+    // When NOT animated yet (opening) or closing, show card position
+    // When animated (opened), show modal position
+    if (!hasAnimated || isClosing) {
       return {
         transform: `translate(${translateX}px, ${translateY}px) scale(${scaleRatio})`,
         width: `${modalWidth}px`,
@@ -142,7 +146,7 @@ export function ServiceModal({ isOpen, onClose, service, gradientFrom = "#6366f1
   return (
     <div
       className={`fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 transition-opacity duration-400 overflow-y-auto ${
-        isAnimating && !isClosing ? 'bg-black/0' : isClosing ? 'bg-black/0' : 'bg-black/50 backdrop-blur-sm'
+        !hasAnimated && !isClosing ? 'bg-black/0' : isClosing ? 'bg-black/0' : 'bg-black/50 backdrop-blur-sm'
       }`}
       onClick={handleClose}
     >
@@ -151,7 +155,7 @@ export function ServiceModal({ isOpen, onClose, service, gradientFrom = "#6366f1
         onClick={(e) => e.stopPropagation()}
         style={{
           ...morphStyle,
-          opacity: (isAnimating && !isClosing) ? 0.8 : 1,
+          opacity: (!hasAnimated && !isClosing) ? 0.8 : 1,
         }}
       >
         {/* Close button */}
@@ -159,7 +163,7 @@ export function ServiceModal({ isOpen, onClose, service, gradientFrom = "#6366f1
           variant="ghost"
           size="icon"
           className={`absolute top-4 right-4 text-gray-500 hover:text-gray-700 z-10 transition-opacity duration-200 ${
-            isAnimating ? 'opacity-0' : 'opacity-100'
+            !hasAnimated ? 'opacity-0' : 'opacity-100'
           }`}
           onClick={handleClose}
         >
@@ -170,7 +174,7 @@ export function ServiceModal({ isOpen, onClose, service, gradientFrom = "#6366f1
         <div className="p-6 sm:p-8">
           {/* Icon */}
           <div className={`mb-4 sm:mb-6 flex justify-center transition-all duration-300 ${
-            isAnimating ? 'opacity-70 scale-75' : 'opacity-100 scale-100'
+            !hasAnimated ? 'opacity-70 scale-75' : 'opacity-100 scale-100'
           }`}>
             <div
               className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl flex items-center justify-center shadow-lg transition-all duration-400"
@@ -197,26 +201,26 @@ export function ServiceModal({ isOpen, onClose, service, gradientFrom = "#6366f1
 
           {/* Title */}
           <h2 className={`text-2xl sm:text-3xl font-bold text-gray-900 text-center mb-3 sm:mb-4 transition-all duration-300 delay-75 ${
-            isAnimating ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
+            !hasAnimated ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
           }`}>
             {service.title}
           </h2>
 
           {/* Short description */}
           <p className={`text-base sm:text-lg text-gray-600 text-center mb-4 sm:mb-6 transition-all duration-300 delay-100 ${
-            isAnimating ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
+            !hasAnimated ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
           }`}>
             {service.description}
           </p>
 
           {/* Divider */}
           <div className={`border-t border-gray-200 my-4 sm:my-6 transition-all duration-300 delay-150 ${
-            isAnimating ? 'opacity-0' : 'opacity-100'
+            !hasAnimated ? 'opacity-0' : 'opacity-100'
           }`}></div>
 
           {/* Detailed description */}
           <div className={`prose prose-sm sm:prose-lg max-w-none transition-all duration-300 delay-200 ${
-            isAnimating ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
+            !hasAnimated ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
           }`}>
             <p className="text-sm sm:text-base text-gray-700 leading-relaxed whitespace-pre-line">
               {service.detailedDescription || service.description}
@@ -225,7 +229,7 @@ export function ServiceModal({ isOpen, onClose, service, gradientFrom = "#6366f1
 
           {/* Close button at bottom */}
           <div className={`mt-6 sm:mt-8 flex justify-center transition-all duration-300 delay-250 ${
-            isAnimating ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
+            !hasAnimated ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
           }`}>
             <Button
               onClick={handleClose}
