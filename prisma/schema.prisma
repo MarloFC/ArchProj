@@ -84,6 +84,10 @@ model SiteConfig {
   beforeImage            String @default("https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=1200&h=800&fit=crop")
   afterImage             String @default("https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=1200&h=800&fit=crop")
 
+  // Services Section
+  servicesTitle       String @default("Our Services")
+  servicesDescription String @default("We offer comprehensive architectural solutions tailored to your unique vision and requirements.")
+
   // Projects Section
   projectsTitle       String @default("Featured Projects")
   projectsDescription String @default("Explore our portfolio of innovative architectural designs")
@@ -125,13 +129,16 @@ model Project {
 }
 
 model Service {
-  id          String   @id @default(cuid())
-  title       String
-  description String
-  icon        String   @default("building")
-  order       Int      @default(0)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id                 String   @id @default(cuid())
+  title              String
+  description        String
+  detailedDescription String?  @db.Text  // Longer description for modal
+  icon               String   @default("building")  // Lucide icon name (fallback)
+  iconSvg            String?  @db.Text  // Custom SVG code
+  iconImageUrl       String? // Image URL for icon
+  order              Int      @default(0)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
 
   @@map(name: "services")
 }

@@ -27,6 +27,7 @@ export async function POST(request: NextRequest) {
       const requiredFields = [
         'heroTitle', 'heroSubtitle', 'heroDescription', 'heroButton1Text', 'heroButton2Text',
         'beforeAfterTitle', 'beforeAfterDescription', 'beforeImage', 'afterImage',
+        'servicesTitle', 'servicesDescription',
         'projectsTitle', 'projectsDescription', 'contactTitle', 'contactDescription',
         'contactFormTitle', 'contactEmail', 'contactPhone', 'contactAddress'
       ]
@@ -57,6 +58,8 @@ export async function POST(request: NextRequest) {
           beforeAfterDescription: data.beforeAfterDescription,
           beforeImage: data.beforeImage,
           afterImage: data.afterImage,
+          servicesTitle: data.servicesTitle,
+          servicesDescription: data.servicesDescription,
           projectsTitle: data.projectsTitle,
           projectsDescription: data.projectsDescription,
           contactTitle: data.contactTitle,
@@ -81,6 +84,8 @@ export async function POST(request: NextRequest) {
           beforeAfterDescription: data.beforeAfterDescription,
           beforeImage: data.beforeImage,
           afterImage: data.afterImage,
+          servicesTitle: data.servicesTitle,
+          servicesDescription: data.servicesDescription,
           projectsTitle: data.projectsTitle,
           projectsDescription: data.projectsDescription,
           contactTitle: data.contactTitle,

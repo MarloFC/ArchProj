@@ -1,8 +1,10 @@
 "use client"
 
+import { useState } from "react"
 import { motion } from "framer-motion"
 import { Building2, Home, Paintbrush, Users, Building, Hammer, Lightbulb, MapPin } from "lucide-react"
 import type { Service, SiteConfig } from "@prisma/client"
+import { ServiceModal } from "@/components/service-modal"
 
 // Map icon names from database to lucide-react icons
 const iconMap: Record<string, any> = {
@@ -22,9 +24,31 @@ interface ServicesSectionProps {
 }
 
 export function ServicesSection({ services: dbServices, config }: ServicesSectionProps) {
+  const [selectedService, setSelectedService] = useState<Service | null>(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [originRect, setOriginRect] = useState<DOMRect | null>(null)
+
   const gradientFrom = config?.gradientFrom || "#6366f1"
   const gradientTo = config?.gradientTo || "#8b5cf6"
   const accentColor = config?.accentColor || "#6366f1"
+  const servicesTitle = config?.servicesTitle || "Our Services"
+  const servicesDescription = config?.servicesDescription || "We offer comprehensive architectural solutions tailored to your unique vision and requirements."
+
+  const handleServiceClick = (service: Service, event: React.MouseEvent<HTMLDivElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect()
+    setOriginRect(rect)
+    setSelectedService(service)
+    setIsModalOpen(true)
+  }
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false)
+    setTimeout(() => {
+      setSelectedService(null)
+      setOriginRect(null)
+    }, 300) // Wait for animation
+  }
+
   // Fallback to default services if none in database
   const defaultServices = [
     {
@@ -66,10 +90,10 @@ export function ServicesSection({ services: dbServices, config }: ServicesSectio
               backgroundImage: `linear-gradient(to right, ${gradientFrom}, ${gradientTo})`
             }}
           >
-            Our Services
+            {servicesTitle}
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            We offer comprehensive architectural solutions tailored to your unique vision and requirements.
+            {servicesDescription}
           </p>
         </motion.div>
 
@@ -83,11 +107,12 @@ export function ServicesSection({ services: dbServices, config }: ServicesSectio
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="group p-8 bg-gradient-to-br from-gray-50 to-white rounded-2xl transition-all duration-300 hover:shadow-xl border border-gray-100"
+                className="group p-8 bg-gradient-to-br from-gray-50 to-white rounded-2xl transition-all duration-300 hover:shadow-xl border border-gray-100 cursor-pointer"
                 style={{
                   ['--hover-from' as any]: `${gradientFrom}10`,
                   ['--hover-to' as any]: `${gradientTo}10`,
                 }}
+                onClick={(e) => 'id' in service && handleServiceClick(service as Service, e)}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.background = `linear-gradient(to bottom right, ${gradientFrom}10, ${gradientTo}10)`
                 }}
@@ -101,7 +126,20 @@ export function ServicesSection({ services: dbServices, config }: ServicesSectio
                     background: `linear-gradient(to bottom right, ${gradientFrom}, ${gradientTo})`
                   }}
                 >
-                  <IconComponent className="w-8 h-8 text-white" />
+                  {service.iconImageUrl ? (
+                    <img
+                      src={service.iconImageUrl}
+                      alt={service.title}
+                      className="w-8 h-8 object-contain"
+                    />
+                  ) : service.iconSvg ? (
+                    <div
+                      className="w-8 h-8 text-white"
+                      dangerouslySetInnerHTML={{ __html: service.iconSvg }}
+                    />
+                  ) : (
+                    <IconComponent className="w-8 h-8 text-white" />
+                  )}
                 </div>
 
                 <h3 className="text-xl font-semibold mb-3 text-gray-900">
@@ -116,6 +154,15 @@ export function ServicesSection({ services: dbServices, config }: ServicesSectio
           })}
         </div>
       </div>
+
+      <ServiceModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        service={selectedService}
+        gradientFrom={gradientFrom}
+        gradientTo={gradientTo}
+        originRect={originRect}
+      />
     </section>
   )
 }
