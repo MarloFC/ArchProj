@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback, memo } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { RichTextEditor } from "@/components/ui/rich-text-editor"
 import { Sparkles, Save, Image as ImageIcon } from "lucide-react"
 
 // Memoized components to prevent re-renders
@@ -143,6 +144,9 @@ export function ContentEditor() {
     contactEmail: "",
     contactPhone: "",
     contactAddress: "",
+    teamTitle: "",
+    teamSubtitle: "",
+    teamDescription: "",
   })
 
   const [loading, setLoading] = useState(false)
@@ -177,6 +181,9 @@ export function ContentEditor() {
             contactTitle: data.contactTitle || "",
             contactDescription: data.contactDescription || "",
             contactFormTitle: data.contactFormTitle || "",
+            teamTitle: data.teamTitle || "",
+            teamSubtitle: data.teamSubtitle || "",
+            teamDescription: data.teamDescription || "",
             contactEmail: data.contactEmail || "",
             contactPhone: data.contactPhone || "",
             contactAddress: data.contactAddress || "",
@@ -279,6 +286,7 @@ export function ContentEditor() {
           { id: "beforeafter", label: "Before & After" },
           { id: "services", label: "Services" },
           { id: "projects", label: "Projects" },
+          { id: "team", label: "Team" },
           { id: "contact", label: "Contact" },
         ].map((section) => (
           <Button
@@ -599,6 +607,64 @@ export function ContentEditor() {
               onAIGenerate={() => {}}
               loading={loading}
             />
+          </>
+        )}
+
+        {/* Team Section */}
+        {activeSection === "team" && (
+          <>
+            <InputField
+              label="Team Section Title"
+              field="teamTitle"
+              description="Main heading for the team page"
+              value={content.teamTitle}
+              onChange={handleFieldChange("teamTitle")}
+              onAIGenerate={() => generateWithAI("teamTitle")}
+              loading={loading}
+            />
+            <InputField
+              label="Team Subtitle"
+              field="teamSubtitle"
+              description="Subtitle under the team title"
+              value={content.teamSubtitle}
+              onChange={handleFieldChange("teamSubtitle")}
+              onAIGenerate={() => generateWithAI("teamSubtitle")}
+              loading={loading}
+            />
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center justify-between">
+                  Team Description
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => generateWithAI("teamDescription")}
+                    disabled={loading}
+                    className="flex items-center space-x-1"
+                  >
+                    <Sparkles className="w-3 h-3" />
+                    <span>AI Suggest</span>
+                  </Button>
+                </CardTitle>
+                <CardDescription>Brief description about your team (supports rich text formatting)</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <RichTextEditor
+                  value={content.teamDescription}
+                  onChange={handleFieldChange("teamDescription")}
+                  placeholder="Enter your team description here..."
+                />
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>Individual Team Members</CardTitle>
+                <CardDescription>
+                  To manage individual team members, go to the "Team" tab
+                </CardDescription>
+              </CardHeader>
+            </Card>
           </>
         )}
       </div>

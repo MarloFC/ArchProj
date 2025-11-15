@@ -62,7 +62,10 @@ export function Navbar({ config }: NavbarProps) {
             <Link href={getSectionLink("#contact")} className="text-gray-700 hover:text-gray-600 transition-colors">
               Contato
             </Link>
-            
+            <Link href="/team" className="text-gray-700 hover:text-gray-600 transition-colors">
+              Equipe
+            </Link>
+
             {session ? (
               <div className="flex items-center space-x-4">
                 <Link href="/admin">
@@ -118,7 +121,14 @@ export function Navbar({ config }: NavbarProps) {
               >
                 Contact
               </Link>
-              
+              <Link
+                href="/team"
+                className="px-3 py-2 text-gray-700 hover:text-gray-600 transition-colors"
+                onClick={() => setIsOpen(false)}
+              >
+                Team
+              </Link>
+
               {session ? (
                 <>
                   <Link 

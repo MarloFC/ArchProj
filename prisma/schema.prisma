@@ -100,6 +100,11 @@ model SiteConfig {
   contactPhone       String @default("+1 (555) 123-4567")
   contactAddress     String @default("123 Design Street, Creative City, CC 12345")
 
+  // Team Section
+  teamTitle       String @default("Meet Our Team")
+  teamSubtitle    String @default("The minds behind our vision")
+  teamDescription String @default("Our team of passionate professionals is dedicated to transforming architectural dreams into reality.")
+
   // Colors
   primaryColor    String   @default("#000000")
   secondaryColor  String   @default("#ffffff")
@@ -141,4 +146,19 @@ model Service {
   updatedAt          DateTime @updatedAt
 
   @@map(name: "services")
+}
+
+model TeamMember {
+  id          String   @id @default(cuid())
+  name        String
+  role        String
+  imageUrl    String
+  linkedin    String?
+  instagram   String?
+  email       String?
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map(name: "team_members")
 }
