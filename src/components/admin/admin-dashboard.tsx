@@ -8,7 +8,8 @@ import { ContentEditor } from "./content-editor"
 import { ColorCustomizer } from "./color-customizer"
 import { ProjectManager } from "./project-manager"
 import { ServiceManager } from "./service-manager"
-import { Settings, Palette, FolderOpen, LogOut, Home, Briefcase } from "lucide-react"
+import { TeamManager } from "./team-manager"
+import { Settings, Palette, FolderOpen, LogOut, Home, Briefcase, Users } from "lucide-react"
 import { signOut } from "next-auth/react"
 import Link from "next/link"
 
@@ -60,7 +61,7 @@ export function AdminDashboard({ user }: AdminDashboardProps) {
 
       <div className="p-6">
         <Tabs defaultValue="content" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4 bg-white p-1 rounded-lg shadow-sm">
+          <TabsList className="grid w-full grid-cols-5 bg-white p-1 rounded-lg shadow-sm">
             <TabsTrigger value="content" className="flex items-center space-x-2">
               <Settings className="w-4 h-4" />
               <span className="cursor-pointer">Content</span>
@@ -76,6 +77,10 @@ export function AdminDashboard({ user }: AdminDashboardProps) {
             <TabsTrigger value="projects" className="flex items-center space-x-2">
               <FolderOpen className="w-4 h-4" />
               <span className="cursor-pointer">Projects</span>
+            </TabsTrigger>
+            <TabsTrigger value="team" className="flex items-center space-x-2">
+              <Users className="w-4 h-4" />
+              <span className="cursor-pointer">Team</span>
             </TabsTrigger>
           </TabsList>
 
@@ -101,6 +106,10 @@ export function AdminDashboard({ user }: AdminDashboardProps) {
             <Card className="p-6">
               <ProjectManager />
             </Card>
+          </TabsContent>
+
+          <TabsContent value="team">
+            <TeamManager />
           </TabsContent>
         </Tabs>
       </div>
