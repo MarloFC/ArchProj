@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react"
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Mail, Phone, MapPin, Send } from "lucide-react"
@@ -10,6 +11,13 @@ interface ContactSectionProps {
 }
 
 export function ContactSection({ config }: ContactSectionProps) {
+  const [firstname, setFirstname] = useState("")
+  const [lastname, setLastname] = useState("")
+  const [email, setEmail] = useState("")
+  const [project, setProject] = useState("Residencial")
+  const [message, setMessage] = useState("")
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
   const gradientFrom = config?.gradientFrom || "#6366f1"
   const gradientTo = config?.gradientTo || "#8b5cf6"
   const accentColor = config?.accentColor || "#6366f1"
@@ -19,6 +27,45 @@ export function ContactSection({ config }: ContactSectionProps) {
   const contactEmail = config?.contactEmail || "contact@architecturalexcellence.com"
   const contactPhone = config?.contactPhone || "+1 (555) 123-4567"
   const contactAddress = config?.contactAddress || "123 Design Street, Creative City, CC 12345"
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+
+    try {
+      const response = await fetch("/api/email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          firstname,
+          lastname,
+          email,
+          message,
+          project,
+        }),
+      })
+
+      const data = await response.json()
+
+      if (data.ok) {
+        alert("Mensagem enviada com sucesso!")
+        setFirstname("")
+        setLastname("")
+        setEmail("")
+        setMessage("")
+        setProject("Residencial")
+      } else {
+        alert("Erro ao enviar mensagem. Tente novamente.")
+      }
+    } catch (error) {
+      console.error("Error:", error)
+      alert("Erro ao enviar mensagem. Tente novamente.")
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
 
   return (
     <section
@@ -79,7 +126,7 @@ export function ContactSection({ config }: ContactSectionProps) {
               {contactFormTitle}
             </h3>
             
-            <form className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -87,6 +134,9 @@ export function ContactSection({ config }: ContactSectionProps) {
                   </label>
                   <input
                     type="text"
+                    value={firstname}
+                    onChange={(e) => setFirstname(e.target.value)}
+                    required
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 outline-none transition-colors"
                     style={{
                       ['--tw-ring-color' as any]: accentColor
@@ -102,13 +152,16 @@ export function ContactSection({ config }: ContactSectionProps) {
                     placeholder="Nome"
                   />
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Último nome
                   </label>
                   <input
                     type="text"
+                    value={lastname}
+                    onChange={(e) => setLastname(e.target.value)}
+                    required
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 outline-none transition-colors"
                     onFocus={(e) => {
                       e.currentTarget.style.borderColor = accentColor
@@ -122,13 +175,16 @@ export function ContactSection({ config }: ContactSectionProps) {
                   />
                 </div>
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Email
                 </label>
                 <input
                   type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 outline-none transition-colors"
                   onFocus={(e) => {
                     e.currentTarget.style.borderColor = accentColor
@@ -141,12 +197,14 @@ export function ContactSection({ config }: ContactSectionProps) {
                   placeholder="nome@exemplo.com"
                 />
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Tipo de Projeto
                 </label>
                 <select
+                  value={project}
+                  onChange={(e) => setProject(e.target.value)}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 outline-none transition-colors"
                   onFocus={(e) => {
                     e.currentTarget.style.borderColor = accentColor
@@ -163,13 +221,16 @@ export function ContactSection({ config }: ContactSectionProps) {
                   <option>Consultoria</option>
                 </select>
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Mensagem
                 </label>
                 <textarea
                   rows={4}
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  required
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 outline-none transition-colors resize-none"
                   onFocus={(e) => {
                     e.currentTarget.style.borderColor = accentColor
@@ -182,20 +243,23 @@ export function ContactSection({ config }: ContactSectionProps) {
                   placeholder="Nos conte um pouco do seu projeto..."
                 />
               </div>
-              
+
               <Button
+                type="submit"
+                disabled={isSubmitting}
                 className="w-full text-white font-medium py-3"
                 style={{
-                  background: `linear-gradient(to right, ${gradientFrom}, ${gradientTo})`
+                  background: `linear-gradient(to right, ${gradientFrom}, ${gradientTo})`,
+                  opacity: isSubmitting ? 0.7 : 1
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.opacity = '0.9'
+                  if (!isSubmitting) e.currentTarget.style.opacity = '0.9'
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.opacity = '1'
+                  if (!isSubmitting) e.currentTarget.style.opacity = '1'
                 }}
               >
-                Entre em contato
+                {isSubmitting ? "Enviando..." : "Entre em contato"}
                 <Send className="w-4 h-4 ml-2" />
               </Button>
             </form>

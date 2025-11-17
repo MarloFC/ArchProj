@@ -50,7 +50,7 @@ export function HeroSection({ config }: HeroSectionProps) {
             className="mx-auto max-w-4xl"
           >
             <div className="mb-6 flex items-center justify-center">
-              <Building2 size={48} className="text-white/90" />
+              {/* <Building2 size={48} className="text-white/90" /> */}
             </div>
             
             <h1 className="mb-6 text-5xl font-bold leading-tight md:text-7xl">

@@ -162,3 +162,14 @@ model TeamMember {
 
   @@map(name: "team_members")
 }
+
+model Lead {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  message   String   @db.Text
+  project   String?
+  createdAt DateTime @default(now())
+
+  @@map(name: "leads")
+}
