@@ -79,11 +79,12 @@ export function Navbar({ config }: NavbarProps) {
                 </Button>
               </div>
             ) : (
-              <Link href="/auth/signin">
-                <Button variant="ghost" size="sm">
-                  Admin Login
-                </Button>
-              </Link>
+              // <Link href="/auth/signin">
+              //   <Button variant="ghost" size="sm">
+              //     Admin Login
+              //   </Button>
+              // </Link>
+              <></>
             )}
           </div>
 
