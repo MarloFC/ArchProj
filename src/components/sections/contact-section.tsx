@@ -5,6 +5,7 @@ import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Mail, Phone, MapPin, Send } from "lucide-react"
 import type { SiteConfig } from "@prisma/client"
+import { toast } from "sonner"
 
 interface ContactSectionProps {
   config: SiteConfig | null
@@ -50,18 +51,18 @@ export function ContactSection({ config }: ContactSectionProps) {
       const data = await response.json()
 
       if (data.ok) {
-        alert("Mensagem enviada com sucesso!")
+        toast.success("Mensagem enviada com sucesso!")
         setFirstname("")
         setLastname("")
         setEmail("")
         setMessage("")
         setProject("Residencial")
       } else {
-        alert("Erro ao enviar mensagem. Tente novamente.")
+        toast.error("Erro ao enviar mensagem. Tente novamente.")
       }
     } catch (error) {
       console.error("Error:", error)
-      alert("Erro ao enviar mensagem. Tente novamente.")
+      toast.error("Erro ao enviar mensagem. Tente novamente.")
     } finally {
       setIsSubmitting(false)
     }

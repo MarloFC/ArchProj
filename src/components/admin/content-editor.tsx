@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { SlateEditor } from "@/components/ui/slate-editor"
 import { Sparkles, Save, Image as ImageIcon } from "lucide-react"
+import { toast } from "sonner"
 
 // Memoized components to prevent re-renders
 const InputField = memo(({
@@ -212,13 +213,13 @@ export function ContentEditor() {
       })
 
       if (response.ok) {
-        alert("Content saved successfully!")
+        toast.success("Content saved successfully!")
       } else {
-        alert('Failed to save content')
+        toast.error('Failed to save content')
       }
     } catch (error) {
       console.error('Error saving content:', error)
-      alert('Failed to save content')
+      toast.error('Failed to save content')
     } finally {
       setLoading(false)
     }
@@ -241,12 +242,13 @@ export function ContentEditor() {
       if (response.ok) {
         const data = await response.json()
         setContent(prev => ({ ...prev, [field]: data.content }))
+        toast.success('Content generated successfully!')
       } else {
-        alert('Failed to generate content')
+        toast.error('Failed to generate content')
       }
     } catch (error) {
       console.error('Error generating content:', error)
-      alert('Failed to generate content')
+      toast.error('Failed to generate content')
     } finally {
       setLoading(false)
     }

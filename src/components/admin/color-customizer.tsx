@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Save, RefreshCw } from "lucide-react"
+import { toast } from "sonner"
 
 const presetThemes = [
   {
@@ -107,14 +108,14 @@ export function ColorCustomizer() {
         root.style.setProperty('--primary', colors.primary)
         root.style.setProperty('--secondary', colors.secondary)
         root.style.setProperty('--accent', colors.accent)
-        
-        alert("Colors saved successfully!")
+
+        toast.success("Colors saved successfully!")
       } else {
-        alert('Failed to save colors')
+        toast.error('Failed to save colors')
       }
     } catch (error) {
       console.error('Error saving colors:', error)
-      alert('Failed to save colors')
+      toast.error('Failed to save colors')
     } finally {
       setLoading(false)
     }

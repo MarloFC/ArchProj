@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { SlateEditor } from "@/components/ui/slate-editor"
 import { Plus, Edit, Trash2, Save, Loader2 } from "lucide-react"
+import { toast } from "sonner"
 
 interface Service {
   id: string
@@ -102,9 +103,10 @@ export function ServiceManager() {
 
       setEditingService(null)
       setIsAddingNew(false)
+      toast.success(isAddingNew ? "Service created successfully!" : "Service updated successfully!")
     } catch (error) {
       console.error("Error saving service:", error)
-      alert("Failed to save service. Please try again.")
+      toast.error("Failed to save service. Please try again.")
     } finally {
       setSaving(false)
     }
@@ -120,9 +122,10 @@ export function ServiceManager() {
 
       if (!response.ok) throw new Error("Failed to delete service")
       await fetchServices()
+      toast.success("Service deleted successfully!")
     } catch (error) {
       console.error("Error deleting service:", error)
-      alert("Failed to delete service. Please try again.")
+      toast.error("Failed to delete service. Please try again.")
     }
   }
 
