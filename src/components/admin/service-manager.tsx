@@ -103,6 +103,7 @@ export function ServiceManager() {
 
       setEditingService(null)
       setIsAddingNew(false)
+      console.log("Showing toast success")
       toast.success(isAddingNew ? "Service created successfully!" : "Service updated successfully!")
     } catch (error) {
       console.error("Error saving service:", error)
