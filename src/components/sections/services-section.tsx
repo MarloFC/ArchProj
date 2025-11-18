@@ -97,7 +97,7 @@ export function ServicesSection({ services: dbServices, config }: ServicesSectio
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="flex flex-wrap justify-center gap-8">
           {services.map((service, index) => {
             const IconComponent = iconMap[service.icon.toLowerCase()] || Building2
             return (
@@ -107,7 +107,7 @@ export function ServicesSection({ services: dbServices, config }: ServicesSectio
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="group p-8 bg-gradient-to-br from-gray-50 to-white rounded-2xl transition-all duration-300 hover:shadow-xl border border-gray-100 cursor-pointer"
+                className="group p-8 bg-gradient-to-br from-gray-50 to-white rounded-2xl transition-all duration-300 hover:shadow-xl border border-gray-100 cursor-pointer w-full md:w-[calc(50%-1rem)] lg:w-[calc(25%-1.5rem)] max-w-sm"
                 style={{
                   ['--hover-from' as any]: `${gradientFrom}10`,
                   ['--hover-to' as any]: `${gradientTo}10`,

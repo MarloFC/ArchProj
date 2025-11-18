@@ -88,9 +88,12 @@ export function ContactSection({ config }: ContactSectionProps) {
               {contactTitle}
             </h2>
 
-            <p className="text-xl text-white/90 mb-8 leading-relaxed">
-              {contactDescription}
-            </p>
+            <div
+              className="text-xl text-white/90 mb-8 leading-relaxed prose prose-xl max-w-none
+                [&>p]:text-white/90 [&>p]:text-xl [&>p]:mb-2 [&>p]:leading-relaxed
+                [&>strong]:font-bold [&>em]:italic"
+              dangerouslySetInnerHTML={{ __html: contactDescription }}
+            />
 
             <div className="space-y-4">
               <div className="flex items-center space-x-4">

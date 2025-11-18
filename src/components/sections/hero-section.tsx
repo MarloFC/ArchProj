@@ -54,18 +54,27 @@ export function HeroSection({ config }: HeroSectionProps) {
             </div>
             
             <h1 className="mb-6 text-5xl font-bold leading-tight md:text-7xl">
-              <span className="block bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">
-                {heroTitle}
-              </span>
+              <span
+                className="block bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent prose prose-lg max-w-none
+                  [&>p]:inline [&>p]:text-inherit [&>p]:font-inherit [&>p]:text-5xl [&>p]:md:text-7xl [&>p]:leading-tight
+                  [&>strong]:font-bold [&>em]:italic"
+                dangerouslySetInnerHTML={{ __html: heroTitle }}
+              />
             </h1>
 
-            <p className="mb-8 text-xl text-white/90 md:text-2xl">
-              {heroSubtitle}
-            </p>
+            <div
+              className="mb-8 text-xl text-white/90 md:text-2xl prose prose-xl max-w-none
+                [&>p]:text-white/90 [&>p]:text-xl [&>p]:md:text-2xl [&>p]:mb-0
+                [&>strong]:font-bold [&>em]:italic"
+              dangerouslySetInnerHTML={{ __html: heroSubtitle }}
+            />
 
-            <p className="mx-auto mb-10 max-w-2xl text-lg text-white/80">
-              {heroDescription}
-            </p>
+            <div
+              className="mx-auto mb-10 max-w-2xl text-lg text-white/80 prose prose-lg max-w-2xl
+                [&>p]:text-white/80 [&>p]:text-lg [&>p]:mb-2
+                [&>strong]:font-bold [&>em]:italic"
+              dangerouslySetInnerHTML={{ __html: heroDescription }}
+            />
             
             <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
               <Button
