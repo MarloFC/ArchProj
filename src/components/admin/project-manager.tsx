@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { SlateEditor } from "@/components/ui/slate-editor"
 import { Plus, Edit, Trash2, Save, Loader2 } from "lucide-react"
+import { toast } from "sonner"
 
 interface Project {
   id: string
@@ -102,9 +103,10 @@ export function ProjectManager() {
 
       setEditingProject(null)
       setIsAddingNew(false)
+      toast.success(isAddingNew ? "Project created successfully!" : "Project updated successfully!")
     } catch (error) {
       console.error("Error saving project:", error)
-      alert("Failed to save project. Please try again.")
+      toast.error("Failed to save project. Please try again.")
     } finally {
       setSaving(false)
     }
@@ -120,9 +122,10 @@ export function ProjectManager() {
 
       if (!response.ok) throw new Error("Failed to delete project")
       await fetchProjects()
+      toast.success("Project deleted successfully!")
     } catch (error) {
       console.error("Error deleting project:", error)
-      alert("Failed to delete project. Please try again.")
+      toast.error("Failed to delete project. Please try again.")
     }
   }
 

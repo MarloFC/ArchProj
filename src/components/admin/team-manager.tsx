@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Plus, Edit, Trash2, Save, Loader2, X } from "lucide-react"
+import { toast } from "sonner"
 
 interface TeamMember {
   id: string
@@ -99,9 +100,10 @@ export function TeamManager() {
 
       setEditingMember(null)
       setIsAddingNew(false)
+      toast.success(isAddingNew ? "Team member added successfully!" : "Team member updated successfully!")
     } catch (error) {
       console.error("Error saving team member:", error)
-      alert("Failed to save team member")
+      toast.error("Failed to save team member")
     } finally {
       setSaving(false)
     }
@@ -117,9 +119,10 @@ export function TeamManager() {
 
       if (!response.ok) throw new Error("Failed to delete team member")
       await fetchTeamMembers()
+      toast.success("Team member deleted successfully!")
     } catch (error) {
       console.error("Error deleting team member:", error)
-      alert("Failed to delete team member")
+      toast.error("Failed to delete team member")
     }
   }
 
