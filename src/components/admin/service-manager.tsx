@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { SlateEditor } from "@/components/ui/slate-editor"
 import { Plus, Edit, Trash2, Save, Loader2 } from "lucide-react"
 
 interface Service {
@@ -206,35 +207,39 @@ export function ServiceManager() {
               </div>
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Short Description
-              </label>
-              <textarea
-                value={editingService.description}
-                onChange={(e) => setEditingService(prev =>
-                  prev ? { ...prev, description: e.target.value } : null
-                )}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
-                rows={2}
-                placeholder="Brief description for the service card..."
-              />
-            </div>
+            <Card>
+              <CardHeader>
+                <CardTitle>Short Description</CardTitle>
+                <CardDescription>Brief description for the service card (supports rich text formatting)</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <SlateEditor
+                  key={`description-${editingService.id}`}
+                  value={editingService.description}
+                  onChange={(value) => setEditingService(prev =>
+                    prev ? { ...prev, description: value } : null
+                  )}
+                  placeholder="Brief description for the service card..."
+                />
+              </CardContent>
+            </Card>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Detailed Description (for Modal)
-              </label>
-              <textarea
-                value={editingService.detailedDescription || ""}
-                onChange={(e) => setEditingService(prev =>
-                  prev ? { ...prev, detailedDescription: e.target.value } : null
-                )}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
-                rows={6}
-                placeholder="Longer, more detailed description that will appear in the popup modal..."
-              />
-            </div>
+            <Card>
+              <CardHeader>
+                <CardTitle>Detailed Description (for Modal)</CardTitle>
+                <CardDescription>Longer, more detailed description that will appear in the popup modal (supports rich text formatting)</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <SlateEditor
+                  key={`detailed-${editingService.id}`}
+                  value={editingService.detailedDescription || ""}
+                  onChange={(value) => setEditingService(prev =>
+                    prev ? { ...prev, detailedDescription: value } : null
+                  )}
+                  placeholder="Longer, more detailed description that will appear in the popup modal..."
+                />
+              </CardContent>
+            </Card>
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -350,7 +355,17 @@ export function ServiceManager() {
                     <h3 className="text-lg font-semibold text-gray-900 mb-1">
                       {service.title}
                     </h3>
-                    <p className="text-gray-700 text-sm">{service.description}</p>
+                    <div
+                      className="text-gray-700 text-sm prose prose-sm max-w-none
+                        [&>p]:text-gray-700 [&>p]:mb-1 [&>p]:text-sm
+                        [&>h1]:text-base [&>h1]:font-bold [&>h1]:mb-1
+                        [&>h2]:text-sm [&>h2]:font-bold [&>h2]:mb-1
+                        [&>ul]:list-disc [&>ul]:pl-4 [&>ul]:my-1
+                        [&>ol]:list-decimal [&>ol]:pl-4 [&>ol]:my-1
+                        [&>li]:text-gray-700 [&>li]:text-sm [&>li]:mb-0.5
+                        [&>strong]:font-bold [&>em]:italic"
+                      dangerouslySetInnerHTML={{ __html: service.description }}
+                    />
                   </div>
                 </div>
 

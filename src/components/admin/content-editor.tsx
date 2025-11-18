@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback, memo } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { RichTextEditor } from "@/components/ui/rich-text-editor"
+import { SlateEditor } from "@/components/ui/slate-editor"
 import { Sparkles, Save, Image as ImageIcon } from "lucide-react"
 
 // Memoized components to prevent re-renders
@@ -52,11 +52,10 @@ const InputField = memo(({
       </CardHeader>
       <CardContent>
         {type === "textarea" ? (
-          <textarea
+          <SlateEditor
             value={value}
-            onChange={(e) => onChange(e.target.value)}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
-            rows={rows}
+            onChange={onChange}
+            placeholder=""
           />
         ) : (
           <input
@@ -649,7 +648,7 @@ export function ContentEditor() {
                 <CardDescription>Brief description about your team (supports rich text formatting)</CardDescription>
               </CardHeader>
               <CardContent>
-                <RichTextEditor
+                <SlateEditor
                   value={content.teamDescription}
                   onChange={handleFieldChange("teamDescription")}
                   placeholder="Enter your team description here..."
