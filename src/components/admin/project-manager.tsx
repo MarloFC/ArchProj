@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { SlateEditor } from "@/components/ui/slate-editor"
 import { Plus, Edit, Trash2, Save, Loader2 } from "lucide-react"
 
 interface Project {
@@ -224,35 +225,39 @@ export function ProjectManager() {
               />
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Description
-              </label>
-              <textarea
-                value={editingProject.description}
-                onChange={(e) => setEditingProject(prev =>
-                  prev ? { ...prev, description: e.target.value } : null
-                )}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
-                rows={3}
-                placeholder="Describe the project..."
-              />
-            </div>
+            <Card>
+              <CardHeader>
+                <CardTitle>Description</CardTitle>
+                <CardDescription>Project description (supports rich text formatting)</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <SlateEditor
+                  key={`description-${editingProject.id}`}
+                  value={editingProject.description}
+                  onChange={(value) => setEditingProject(prev =>
+                    prev ? { ...prev, description: value } : null
+                  )}
+                  placeholder="Describe the project..."
+                />
+              </CardContent>
+            </Card>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Text Area (Additional Details)
-              </label>
-              <textarea
-                value={editingProject.textarea || ""}
-                onChange={(e) => setEditingProject(prev =>
-                  prev ? { ...prev, textarea: e.target.value } : null
-                )}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
-                rows={5}
-                placeholder="Add additional details or extended project information..."
-              />
-            </div>
+            <Card>
+              <CardHeader>
+                <CardTitle>Additional Details</CardTitle>
+                <CardDescription>Extended project information (supports rich text formatting)</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <SlateEditor
+                  key={`textarea-${editingProject.id}`}
+                  value={editingProject.textarea || ""}
+                  onChange={(value) => setEditingProject(prev =>
+                    prev ? { ...prev, textarea: value } : null
+                  )}
+                  placeholder="Add additional details or extended project information..."
+                />
+              </CardContent>
+            </Card>
 
             <div className="flex items-center space-x-2">
               <input

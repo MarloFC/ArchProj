@@ -26,9 +26,6 @@ export function ServiceModal({ isOpen, onClose, service, gradientFrom = "#6366f1
 
   useEffect(() => {
     if (isOpen) {
-      // Check if device is mobile (screen width < 768px)
-      const isMobile = window.innerWidth < 768
-
       setIsClosing(false)
       setHasAnimated(false)
       // Trigger animation after a tiny delay to ensure CSS transition works
@@ -37,37 +34,6 @@ export function ServiceModal({ isOpen, onClose, service, gradientFrom = "#6366f1
           setHasAnimated(true)
         })
       })
-
-      // Only prevent scroll on desktop
-      if (!isMobile) {
-        // Prevent scroll events
-        const preventScroll = (e: Event) => {
-          e.preventDefault()
-          e.stopPropagation()
-          return false
-        }
-
-        // Keep scrollbar visible but prevent scrolling
-        document.body.style.overflowY = 'scroll'
-
-        // Add event listeners to prevent scroll
-        window.addEventListener('scroll', preventScroll, { passive: false })
-        window.addEventListener('wheel', preventScroll, { passive: false })
-        document.body.addEventListener('scroll', preventScroll, { passive: false })
-        document.body.addEventListener('wheel', preventScroll, { passive: false })
-
-        // Cleanup function for event listeners
-        return () => {
-          window.removeEventListener('scroll', preventScroll)
-          window.removeEventListener('wheel', preventScroll)
-          document.body.removeEventListener('scroll', preventScroll)
-          document.body.removeEventListener('wheel', preventScroll)
-          document.body.style.overflowY = ''
-        }
-      }
-    } else {
-      // Restore scrolling
-      document.body.style.overflowY = ''
     }
   }, [isOpen])
 
@@ -207,11 +173,19 @@ export function ServiceModal({ isOpen, onClose, service, gradientFrom = "#6366f1
           </h2>
 
           {/* Short description */}
-          <p className={`text-base sm:text-lg text-gray-600 text-center mb-4 sm:mb-6 transition-all duration-300 delay-100 ${
-            !hasAnimated ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
-          }`}>
-            {service.description}
-          </p>
+          <div
+            className={`text-base sm:text-lg text-gray-600 text-center mb-4 sm:mb-6 transition-all duration-300 delay-100 prose prose-sm sm:prose-lg max-w-none
+              [&>p]:text-center [&>p]:text-gray-600 [&>p]:mb-2
+              [&>h1]:text-center [&>h1]:text-2xl [&>h1]:font-bold [&>h1]:mb-3 [&>h1]:text-gray-900
+              [&>h2]:text-center [&>h2]:text-xl [&>h2]:font-bold [&>h2]:mb-2 [&>h2]:text-gray-900
+              [&>ul]:text-left [&>ul]:mx-auto [&>ul]:max-w-2xl [&>ul]:list-disc [&>ul]:pl-6
+              [&>ol]:text-left [&>ol]:mx-auto [&>ol]:max-w-2xl [&>ol]:list-decimal [&>ol]:pl-6
+              [&>li]:text-gray-600 [&>li]:mb-1
+              [&>strong]:font-bold [&>em]:italic
+              ${!hasAnimated ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
+            }`}
+            dangerouslySetInnerHTML={{ __html: service.description }}
+          />
 
           {/* Divider */}
           <div className={`border-t border-gray-200 my-4 sm:my-6 transition-all duration-300 delay-150 ${
@@ -219,13 +193,19 @@ export function ServiceModal({ isOpen, onClose, service, gradientFrom = "#6366f1
           }`}></div>
 
           {/* Detailed description */}
-          <div className={`prose prose-sm sm:prose-lg max-w-none transition-all duration-300 delay-200 ${
-            !hasAnimated ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
-          }`}>
-            <p className="text-sm sm:text-base text-gray-700 leading-relaxed whitespace-pre-line">
-              {service.detailedDescription || service.description}
-            </p>
-          </div>
+          <div
+            className={`prose prose-sm sm:prose-lg max-w-none transition-all duration-300 delay-200
+              [&>p]:text-gray-700 [&>p]:mb-4 [&>p]:leading-relaxed
+              [&>h1]:text-2xl [&>h1]:font-bold [&>h1]:mb-4 [&>h1]:text-gray-900
+              [&>h2]:text-xl [&>h2]:font-bold [&>h2]:mb-3 [&>h2]:text-gray-900
+              [&>ul]:list-disc [&>ul]:pl-6 [&>ul]:my-4
+              [&>ol]:list-decimal [&>ol]:pl-6 [&>ol]:my-4
+              [&>li]:text-gray-700 [&>li]:mb-2 [&>li]:leading-relaxed
+              [&>strong]:font-bold [&>em]:italic
+              ${!hasAnimated ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
+            }`}
+            dangerouslySetInnerHTML={{ __html: service.detailedDescription || service.description }}
+          />
 
           {/* Close button at bottom */}
           <div className={`mt-6 sm:mt-8 flex justify-center transition-all duration-300 delay-250 ${

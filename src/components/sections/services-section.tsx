@@ -146,9 +146,17 @@ export function ServicesSection({ services: dbServices, config }: ServicesSectio
                   {service.title}
                 </h3>
 
-                <p className="text-gray-600 leading-relaxed">
-                  {service.description}
-                </p>
+                <div
+                  className="text-gray-600 leading-relaxed prose prose-sm max-w-none
+                    [&>p]:text-gray-600 [&>p]:mb-2 [&>p]:leading-relaxed
+                    [&>h1]:text-lg [&>h1]:font-bold [&>h1]:mb-2 [&>h1]:text-gray-900
+                    [&>h2]:text-base [&>h2]:font-bold [&>h2]:mb-2 [&>h2]:text-gray-900
+                    [&>ul]:list-disc [&>ul]:pl-4 [&>ul]:my-2
+                    [&>ol]:list-decimal [&>ol]:pl-4 [&>ol]:my-2
+                    [&>li]:text-gray-600 [&>li]:mb-1
+                    [&>strong]:font-bold [&>em]:italic"
+                  dangerouslySetInnerHTML={{ __html: service.description }}
+                />
               </motion.div>
             )
           })}
