@@ -4,6 +4,7 @@ import { ComparisonSection } from "@/components/sections/comparison-section"
 import { ProjectsSection } from "@/components/sections/projects-section"
 import { ContactSection } from "@/components/sections/contact-section"
 import { Navbar } from "@/components/navigation/navbar"
+import { LoadingProvider } from "@/components/providers/loading-provider"
 import { prisma } from "@/lib/prisma"
 
 export default async function Home() {
@@ -25,7 +26,7 @@ export default async function Home() {
   })
 
   return (
-    <>
+    <LoadingProvider accentColor={siteConfig?.accentColor || "#6366f1"}>
       <Navbar config={siteConfig} />
       <main className="min-h-screen">
         <HeroSection config={siteConfig} />
@@ -42,6 +43,6 @@ export default async function Home() {
           <ContactSection config={siteConfig} />
         </section>
       </main>
-    </>
+    </LoadingProvider>
   );
 }
