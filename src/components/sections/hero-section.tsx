@@ -38,7 +38,7 @@ export function HeroSection({ config }: HeroSectionProps) {
         }}
         className="absolute inset-0"
       />
-      
+
       <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
       
       <div className="relative z-10 flex h-full items-center justify-center">
