@@ -411,7 +411,7 @@ export function ContentEditor() {
                       min="4"
                       max="32"
                       value={content.logoWidth}
-                      onChange={(e) => handleFieldChange("logoWidth")(parseInt(e.target.value) || 8)}
+                      onChange={(e) => handleFieldChange("logoWidth")((parseInt(e.target.value) || 8).toString())}
                       className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
                     />
                     <p className="text-xs text-gray-500">Current: w-{content.logoWidth} ({content.logoWidth * 4}px)</p>
@@ -425,7 +425,7 @@ export function ContentEditor() {
                       min="4"
                       max="32"
                       value={content.logoHeight}
-                      onChange={(e) => handleFieldChange("logoHeight")(parseInt(e.target.value) || 8)}
+                      onChange={(e) => handleFieldChange("logoHeight")((parseInt(e.target.value) || 8).toString())}
                       className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
                     />
                     <p className="text-xs text-gray-500">Current: h-{content.logoHeight} ({content.logoHeight * 4}px)</p>

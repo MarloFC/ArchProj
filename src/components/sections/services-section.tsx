@@ -126,16 +126,16 @@ export function ServicesSection({ services: dbServices, config }: ServicesSectio
                     background: `linear-gradient(to bottom right, ${gradientFrom}, ${gradientTo})`
                   }}
                 >
-                  {service.iconImageUrl ? (
+                  {'iconImageUrl' in service && service.iconImageUrl ? (
                     <img
-                      src={service.iconImageUrl}
+                      src={String(service.iconImageUrl)}
                       alt={service.title}
                       className="w-8 h-8 object-contain"
                     />
-                  ) : service.iconSvg ? (
+                  ) : 'iconSvg' in service && service.iconSvg ? (
                     <div
                       className="w-8 h-8 text-white"
-                      dangerouslySetInnerHTML={{ __html: service.iconSvg }}
+                      dangerouslySetInnerHTML={{ __html: String(service.iconSvg) }}
                     />
                   ) : (
                     <IconComponent className="w-8 h-8 text-white" />

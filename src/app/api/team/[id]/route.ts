@@ -5,7 +5,7 @@ import { prisma } from "@/lib/prisma"
 // PUT update team member (admin only)
 export async function PUT(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getSession()
@@ -14,11 +14,12 @@ export async function PUT(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
+    const { id } = await params
     const body = await request.json()
     const { name, role, imageUrl, linkedin, instagram, email, order } = body
 
     const teamMember = await prisma.teamMember.update({
-      where: { id: params.id },
+      where: { id },
       data: {
         name,
         role,
@@ -43,7 +44,7 @@ export async function PUT(
 // DELETE team member (admin only)
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getSession()
@@ -52,8 +53,10 @@ export async function DELETE(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
+    const { id } = await params
+
     await prisma.teamMember.delete({
-      where: { id: params.id },
+      where: { id },
     })
 
     return NextResponse.json({ success: true })
