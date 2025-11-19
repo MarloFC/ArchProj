@@ -1,12 +1,13 @@
 import { GoogleGenerativeAI } from '@google/generative-ai'
 
-if (!process.env.GEMINI_API_KEY) {
-  throw new Error('GEMINI_API_KEY is not defined')
-}
-
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY)
+const apiKey = process.env.GEMINI_API_KEY || ''
+const genAI = apiKey ? new GoogleGenerativeAI(apiKey) : null
 
 export async function generateContent(prompt: string, contentType: 'title' | 'subtitle' | 'description' | 'project') {
+  if (!genAI) {
+    throw new Error('GEMINI_API_KEY is not configured. Please add it to your environment variables.')
+  }
+
   try {
     const model = genAI.getGenerativeModel({ model: 'gemini-pro' })
 
@@ -41,6 +42,10 @@ export async function generateContent(prompt: string, contentType: 'title' | 'su
 }
 
 export async function generateProjectIdeas() {
+  if (!genAI) {
+    throw new Error('GEMINI_API_KEY is not configured. Please add it to your environment variables.')
+  }
+
   try {
     const model = genAI.getGenerativeModel({ model: 'gemini-pro' })
 
