@@ -7,6 +7,9 @@ import { Navbar } from "@/components/navigation/navbar"
 import { LoadingProvider } from "@/components/providers/loading-provider"
 import { prisma } from "@/lib/prisma"
 
+// Revalidate every 10 seconds
+export const revalidate = 10
+
 export default async function Home() {
   // Fetch site config from database
   const siteConfig = await prisma.siteConfig.findUnique({

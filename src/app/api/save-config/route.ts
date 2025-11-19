@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { revalidatePath } from 'next/cache'
 import { prisma } from '@/lib/prisma'
 import { getCurrentUser } from '@/lib/auth'
 
@@ -104,6 +105,10 @@ export async function POST(request: NextRequest) {
       })
 
       console.log('Config saved successfully')
+
+      // Revalidate the home page to show updated content immediately
+      revalidatePath('/')
+
       return NextResponse.json({ success: true, config })
     } else if (type === 'colors') {
       // Save color configuration
@@ -125,6 +130,9 @@ export async function POST(request: NextRequest) {
           gradientTo: data.gradientTo,
         },
       })
+
+      // Revalidate the home page to show updated colors immediately
+      revalidatePath('/')
 
       return NextResponse.json({ success: true, config })
     }

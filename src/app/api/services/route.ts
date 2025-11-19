@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { revalidatePath } from "next/cache"
 import { prisma } from "@/lib/prisma"
 
 // GET all services
@@ -33,6 +34,9 @@ export async function POST(request: Request) {
         order: data.order || 0,
       },
     })
+
+    // Revalidate home page to show new service
+    revalidatePath('/')
 
     return NextResponse.json(service)
   } catch (error) {

@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { revalidatePath } from "next/cache"
 import { prisma } from "@/lib/prisma"
 
 // PUT update service
@@ -22,6 +23,9 @@ export async function PUT(
         order: data.order || 0,
       },
     })
+
+    // Revalidate home page to show updated service
+    revalidatePath('/')
 
     return NextResponse.json(service)
   } catch (error) {
@@ -47,6 +51,9 @@ export async function DELETE(
     await prisma.service.delete({
       where: { id },
     })
+
+    // Revalidate home page to remove deleted service
+    revalidatePath('/')
 
     return NextResponse.json({ success: true })
   } catch (error) {
