@@ -121,8 +121,8 @@ export function ProjectsSection({ projects: dbProjects, config }: ProjectsSectio
   const gradientFrom = config?.gradientFrom || "#6366f1"
   const gradientTo = config?.gradientTo || "#8b5cf6"
   const accentColor = config?.accentColor || "#6366f1"
-  const projectsTitle = config?.projectsTitle || "Featured Projects"
-  const projectsDescription = config?.projectsDescription || "Explore our portfolio of award-winning architectural projects that showcase innovation and excellence."
+  const projectsTitle = config?.projectsTitle || ""
+  const projectsDescription = config?.projectsDescription || ""
 
   const trackRef = useRef<HTMLDivElement>(null)
   const [mouseDownAt, setMouseDownAt] = useState(0)

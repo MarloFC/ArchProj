@@ -22,12 +22,12 @@ export function ContactSection({ config }: ContactSectionProps) {
   const gradientFrom = config?.gradientFrom || "#6366f1"
   const gradientTo = config?.gradientTo || "#8b5cf6"
   const accentColor = config?.accentColor || "#6366f1"
-  const contactTitle = config?.contactTitle || "Ready to Start Your Project?"
-  const contactDescription = config?.contactDescription || "Let's transform your vision into architectural reality. Contact us today for a consultation and discover how we can bring your ideas to life."
-  const contactFormTitle = config?.contactFormTitle || "Send us a message"
-  const contactEmail = config?.contactEmail || "contact@architecturalexcellence.com"
-  const contactPhone = config?.contactPhone || "+1 (555) 123-4567"
-  const contactAddress = config?.contactAddress || "123 Design Street, Creative City, CC 12345"
+  const contactTitle = config?.contactTitle || ""
+  const contactDescription = config?.contactDescription || ""
+  const contactFormTitle = config?.contactFormTitle || ""
+  const contactEmail = config?.contactEmail || ""
+  const contactPhone = config?.contactPhone || ""
+  const contactAddress = config?.contactAddress || ""
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()

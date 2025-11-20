@@ -30,9 +30,9 @@ export default async function TeamPage() {
   const gradientTo = siteConfig?.gradientTo || "#8b5cf6"
   const accentColor = siteConfig?.accentColor || "#6366f1"
   const secondaryColor = siteConfig?.secondaryColor || "#ffffff"
-  const teamTitle = siteConfig?.teamTitle || "Meet Our Team"
-  const teamSubtitle = siteConfig?.teamSubtitle || "The minds behind our vision"
-  const teamDescription = siteConfig?.teamDescription || "Our team of passionate professionals is dedicated to transforming architectural dreams into reality."
+  const teamTitle = siteConfig?.teamTitle || ""
+  const teamSubtitle = siteConfig?.teamSubtitle || ""
+  const teamDescription = siteConfig?.teamDescription || ""
 
   return (
     <>

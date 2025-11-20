@@ -66,51 +66,51 @@ model VerificationToken {
 model SiteConfig {
   id              String   @id
   // Hero Section
-  heroTitle       String   @default("Architectural Excellence")
-  heroSubtitle    String   @default("Creating spaces that inspire and endure")
-  heroDescription String   @default("Transform your vision into reality with our innovative architectural solutions.")
-  heroButton1Text String   @default("View Projects")
-  heroButton2Text String   @default("Get Consultation")
+  heroTitle       String?  @default("Architectural Excellence")
+  heroSubtitle    String?  @default("Creating spaces that inspire and endure")
+  heroDescription String?  @default("Transform your vision into reality with our innovative architectural solutions.")
+  heroButton1Text String?  @default("View Projects")
+  heroButton2Text String?  @default("Get Consultation")
 
   // Navbar
-  logoName        String   @default("ArchStudio")
+  logoName        String?  @default("ArchStudio")
   logoSvg         String?  // SVG path or icon identifier
-  logoWidth       Int      @default(8)  // Width in Tailwind scale (e.g., 8 = w-8)
-  logoHeight      Int      @default(8)  // Height in Tailwind scale (e.g., 8 = h-8)
+  logoWidth       Int?     @default(8)  // Width in Tailwind scale (e.g., 8 = w-8)
+  logoHeight      Int?     @default(8)  // Height in Tailwind scale (e.g., 8 = h-8)
 
   // Before & After Section
-  beforeAfterTitle       String @default("Before & After")
-  beforeAfterDescription String @default("See the transformation. Drag the slider to compare our architectural renovations.")
-  beforeImage            String @default("https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=1200&h=800&fit=crop")
-  afterImage             String @default("https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=1200&h=800&fit=crop")
+  beforeAfterTitle       String? @default("Before & After")
+  beforeAfterDescription String? @default("See the transformation. Drag the slider to compare our architectural renovations.")
+  beforeImage            String? @default("https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=1200&h=800&fit=crop")
+  afterImage             String? @default("https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=1200&h=800&fit=crop")
 
   // Services Section
-  servicesTitle       String @default("Our Services")
-  servicesDescription String @default("We offer comprehensive architectural solutions tailored to your unique vision and requirements.")
+  servicesTitle       String? @default("Our Services")
+  servicesDescription String? @default("We offer comprehensive architectural solutions tailored to your unique vision and requirements.")
 
   // Projects Section
-  projectsTitle       String @default("Featured Projects")
-  projectsDescription String @default("Explore our portfolio of innovative architectural designs")
+  projectsTitle       String? @default("Featured Projects")
+  projectsDescription String? @default("Explore our portfolio of innovative architectural designs")
 
   // Contact Section
-  contactTitle       String @default("Ready to Start Your Project?")
-  contactDescription String @default("Let's transform your vision into architectural reality. Contact us today for a consultation and discover how we can bring your ideas to life.")
-  contactFormTitle   String @default("Send us a message")
-  contactEmail       String @default("contact@architecturalexcellence.com")
-  contactPhone       String @default("+1 (555) 123-4567")
-  contactAddress     String @default("123 Design Street, Creative City, CC 12345")
+  contactTitle       String? @default("Ready to Start Your Project?")
+  contactDescription String? @default("Let's transform your vision into architectural reality. Contact us today for a consultation and discover how we can bring your ideas to life.")
+  contactFormTitle   String? @default("Send us a message")
+  contactEmail       String? @default("contact@architecturalexcellence.com")
+  contactPhone       String? @default("+1 (555) 123-4567")
+  contactAddress     String? @default("123 Design Street, Creative City, CC 12345")
 
   // Team Section
-  teamTitle       String @default("Meet Our Team")
-  teamSubtitle    String @default("The minds behind our vision")
-  teamDescription String @default("Our team of passionate professionals is dedicated to transforming architectural dreams into reality.")
+  teamTitle       String? @default("Meet Our Team")
+  teamSubtitle    String? @default("The minds behind our vision")
+  teamDescription String? @default("Our team of passionate professionals is dedicated to transforming architectural dreams into reality.")
 
   // Colors
-  primaryColor    String   @default("#000000")
-  secondaryColor  String   @default("#ffffff")
-  accentColor     String   @default("#6366f1")
-  gradientFrom    String   @default("#6366f1")
-  gradientTo      String   @default("#8b5cf6")
+  primaryColor    String?   @default("#000000")
+  secondaryColor  String?   @default("#ffffff")
+  accentColor     String?   @default("#6366f1")
+  gradientFrom    String?   @default("#6366f1")
+  gradientTo      String?   @default("#8b5cf6")
 
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt

@@ -11,12 +11,12 @@ interface HeroSectionProps {
 }
 
 export function HeroSection({ config }: HeroSectionProps) {
-  // Use database config or fallback to defaults
-  const heroTitle = config?.heroTitle || "Architectural Excellence"
-  const heroSubtitle = config?.heroSubtitle || "Creating spaces that inspire and endure"
-  const heroDescription = config?.heroDescription || "Transform your vision into reality with our innovative architectural solutions."
-  const heroButton1Text = config?.heroButton1Text || "View Projects"
-  const heroButton2Text = config?.heroButton2Text || "Get Consultation"
+  // Use database config values
+  const heroTitle = config?.heroTitle || ""
+  const heroSubtitle = config?.heroSubtitle || ""
+  const heroDescription = config?.heroDescription || ""
+  const heroButton1Text = config?.heroButton1Text
+  const heroButton2Text = config?.heroButton2Text
   const gradientFrom = config?.gradientFrom || "#6366f1"
   const gradientTo = config?.gradientTo || "#8b5cf6"
   const ref = useRef<HTMLDivElement>(null)
@@ -76,40 +76,46 @@ export function HeroSection({ config }: HeroSectionProps) {
               dangerouslySetInnerHTML={{ __html: heroDescription }}
             />
             
-            <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-              <Button
-                size="lg"
-                style={{
-                  background: `linear-gradient(to right, ${gradientFrom}, ${gradientTo})`,
-                  color: 'white',
-                  border: 'none'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.opacity = '0.9'
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.opacity = '1'
-                }}
-              >
-                {heroButton1Text}
-              </Button>
-              <Button
-                size="lg"
-                style={{
-                  background: `linear-gradient(to left, ${gradientFrom}, ${gradientTo})`,
-                  color: 'white',
-                  border: 'none'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.opacity = '0.9'
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.opacity = '1'
-                }}
-              >
-                {heroButton2Text}
-              </Button>
-            </div>
+            {(heroButton1Text || heroButton2Text) && (
+              <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+                {heroButton1Text && (
+                  <Button
+                    size="lg"
+                    style={{
+                      background: `linear-gradient(to right, ${gradientFrom}, ${gradientTo})`,
+                      color: 'white',
+                      border: 'none'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.opacity = '0.9'
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.opacity = '1'
+                    }}
+                  >
+                    {heroButton1Text}
+                  </Button>
+                )}
+                {heroButton2Text && (
+                  <Button
+                    size="lg"
+                    style={{
+                      background: `linear-gradient(to left, ${gradientFrom}, ${gradientTo})`,
+                      color: 'white',
+                      border: 'none'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.opacity = '0.9'
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.opacity = '1'
+                    }}
+                  >
+                    {heroButton2Text}
+                  </Button>
+                )}
+              </div>
+            )}
           </motion.div>
         </div>
       </div>
