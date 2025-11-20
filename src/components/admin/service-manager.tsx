@@ -357,7 +357,7 @@ export function ServiceManager() {
 
                   <div className="flex-1 min-w-0">
                     <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-1 break-words">
-                      {service.title}
+                      {service.title || "Untitled Service"}
                     </h3>
                     <div
                       className="text-gray-700 text-xs md:text-sm prose prose-sm max-w-none break-words

@@ -9,7 +9,7 @@ interface ProjectCardProps {
 
 export function ProjectCard({ project, color = "#f97316" }: ProjectCardProps) {
   // Create a URL-friendly id from the project title
-  const projectId = project.title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')
+  const projectId = (project.title || 'project').toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')
 
   return (
     <div id={projectId} className="relative w-full aspect-[4/5] overflow-hidden shadow-lg group cursor-pointer">
@@ -17,7 +17,7 @@ export function ProjectCard({ project, color = "#f97316" }: ProjectCardProps) {
       <div className="absolute inset-0">
         <img
           src={project.imageUrl || "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=800&fit=crop"}
-          alt={project.title}
+          alt={project.title || "Project"}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
       </div>

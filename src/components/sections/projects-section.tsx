@@ -382,7 +382,7 @@ export function ProjectsSection({ projects: dbProjects, config }: ProjectsSectio
           onTouchEnd={handleCarouselDragEnd}
         >
           {projects.map((project, index) => {
-            const projectId = project.title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')
+            const projectId = (project.title || 'project').toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')
             return (
               <motion.div
                 key={project.id}
@@ -408,7 +408,7 @@ export function ProjectsSection({ projects: dbProjects, config }: ProjectsSectio
                   <div className="relative h-[450px] rounded-2xl overflow-hidden shadow-2xl">
                     <img
                       src={project.imageUrl || `https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=800&fit=crop`}
-                      alt={project.title}
+                      alt={project.title || "Project"}
                       className="w-full h-full object-cover"
                       draggable="false"
                     />
@@ -480,7 +480,7 @@ export function ProjectsSection({ projects: dbProjects, config }: ProjectsSectio
           }}
         >
           {projects.map((project) => {
-            const projectId = project.title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')
+            const projectId = (project.title || 'project').toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')
             return (
             <a
               key={project.id}
@@ -498,7 +498,7 @@ export function ProjectsSection({ projects: dbProjects, config }: ProjectsSectio
             >
               <img
                 src={project.imageUrl || `https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=800&fit=crop`}
-                alt={project.title}
+                alt={project.title || "Project"}
                 className="gallery-image w-[40vw] h-[65vmin] object-cover select-none pointer-events-none rounded-2xl shadow-2xl"
                 draggable="false"
                 style={{
