@@ -290,14 +290,20 @@ export function TeamManager() {
                   key={member.id}
                   className="flex flex-col sm:flex-row items-start sm:items-center gap-4 p-4 border rounded-lg hover:shadow-md transition-shadow"
                 >
-                  <img
-                    src={member.imageUrl}
-                    alt={member.name}
-                    className="w-16 h-16 rounded-full object-cover flex-shrink-0"
-                  />
+                  {member.imageUrl ? (
+                    <img
+                      src={member.imageUrl}
+                      alt={member.name || "Team member"}
+                      className="w-16 h-16 rounded-full object-cover flex-shrink-0"
+                    />
+                  ) : (
+                    <div className="w-16 h-16 rounded-full bg-gray-300 flex items-center justify-center flex-shrink-0 text-gray-500 text-xs">
+                      No Image
+                    </div>
+                  )}
                   <div className="flex-1 min-w-0">
-                    <h4 className="font-semibold text-sm md:text-base break-words">{member.name}</h4>
-                    <p className="text-xs md:text-sm text-gray-600 break-words">{member.role}</p>
+                    <h4 className="font-semibold text-sm md:text-base break-words">{member.name || "Unnamed"}</h4>
+                    <p className="text-xs md:text-sm text-gray-600 break-words">{member.role || "No role"}</p>
                     <div className="flex flex-wrap gap-2 mt-1 text-xs text-gray-500">
                       {member.linkedin && <span>LinkedIn</span>}
                       {member.instagram && <span>Instagram</span>}
