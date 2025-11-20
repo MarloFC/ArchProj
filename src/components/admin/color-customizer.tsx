@@ -60,11 +60,11 @@ export function ColorCustomizer() {
         if (response.ok) {
           const data = await response.json()
           setColors({
-            primary: data.primaryColor,
-            secondary: data.secondaryColor,
-            accent: data.accentColor,
-            gradientFrom: data.gradientFrom,
-            gradientTo: data.gradientTo,
+            primary: data.primaryColor || "#6366f1",
+            secondary: data.secondaryColor || "#8b5cf6",
+            accent: data.accentColor || "#06b6d4",
+            gradientFrom: data.gradientFrom || "#6366f1",
+            gradientTo: data.gradientTo || "#8b5cf6",
           })
         }
       } catch (error) {

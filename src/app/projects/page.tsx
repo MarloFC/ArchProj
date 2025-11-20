@@ -31,10 +31,10 @@ export default async function ProjectsPage() {
           {/* Page Header */}
           <div className="mb-12 text-center">
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              {siteConfig?.projectsTitle || "Our Projects"}
+              {siteConfig?.projectsTitle || ""}
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              {siteConfig?.projectsDescription || "Explore our complete portfolio of architectural projects"}
+              {siteConfig?.projectsDescription || ""}
             </p>
           </div>
 

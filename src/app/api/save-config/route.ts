@@ -24,83 +24,65 @@ export async function POST(request: NextRequest) {
     console.log('Saving config - Data keys:', Object.keys(data))
 
     if (type === 'content') {
-      // Validate required fields
-      const requiredFields = [
-        'heroTitle', 'heroSubtitle', 'heroDescription', 'heroButton1Text', 'heroButton2Text',
-        'beforeAfterTitle', 'beforeAfterDescription', 'beforeImage', 'afterImage',
-        'servicesTitle', 'servicesDescription',
-        'projectsTitle', 'projectsDescription', 'contactTitle', 'contactDescription',
-        'contactFormTitle', 'contactEmail', 'contactPhone', 'contactAddress'
-      ]
-
-      const missingFields = requiredFields.filter(field => !data[field])
-      if (missingFields.length > 0) {
-        console.error('Missing required fields:', missingFields)
-        return NextResponse.json({
-          error: 'Missing required fields',
-          fields: missingFields
-        }, { status: 400 })
-      }
-
-      // Save site content configuration
+      // Save site content configuration with nullable fields
       const config = await prisma.siteConfig.upsert({
         where: { id: 'main' },
         update: {
-          heroTitle: data.heroTitle,
-          heroSubtitle: data.heroSubtitle,
-          heroDescription: data.heroDescription,
-          heroButton1Text: data.heroButton1Text,
-          heroButton2Text: data.heroButton2Text,
-          logoName: data.logoName || '',
-          logoSvg: data.logoSvg || null,
-          logoWidth: data.logoWidth || 8,
-          logoHeight: data.logoHeight || 8,
-          beforeAfterTitle: data.beforeAfterTitle,
-          beforeAfterDescription: data.beforeAfterDescription,
-          beforeImage: data.beforeImage,
-          afterImage: data.afterImage,
-          servicesTitle: data.servicesTitle,
-          servicesDescription: data.servicesDescription,
-          projectsTitle: data.projectsTitle,
-          projectsDescription: data.projectsDescription,
-          contactTitle: data.contactTitle,
-          contactDescription: data.contactDescription,
-          contactFormTitle: data.contactFormTitle,
-          teamTitle: data.teamTitle || '',
-          teamSubtitle: data.teamSubtitle || '',
-          teamDescription: data.teamDescription || '',
-          contactEmail: data.contactEmail,
-          contactPhone: data.contactPhone,
-          contactAddress: data.contactAddress,
+          heroTitle: data.heroTitle !== undefined ? data.heroTitle : null,
+          heroSubtitle: data.heroSubtitle !== undefined ? data.heroSubtitle : null,
+          heroDescription: data.heroDescription !== undefined ? data.heroDescription : null,
+          heroButton1Text: data.heroButton1Text !== undefined ? data.heroButton1Text : null,
+          heroButton2Text: data.heroButton2Text !== undefined ? data.heroButton2Text : null,
+          logoName: data.logoName !== undefined ? data.logoName : null,
+          logoSvg: data.logoSvg !== undefined ? data.logoSvg : null,
+          logoWidth: data.logoWidth !== undefined ? data.logoWidth : null,
+          logoHeight: data.logoHeight !== undefined ? data.logoHeight : null,
+          beforeAfterTitle: data.beforeAfterTitle !== undefined ? data.beforeAfterTitle : null,
+          beforeAfterDescription: data.beforeAfterDescription !== undefined ? data.beforeAfterDescription : null,
+          beforeImage: data.beforeImage !== undefined ? data.beforeImage : null,
+          afterImage: data.afterImage !== undefined ? data.afterImage : null,
+          servicesTitle: data.servicesTitle !== undefined ? data.servicesTitle : null,
+          servicesDescription: data.servicesDescription !== undefined ? data.servicesDescription : null,
+          projectsTitle: data.projectsTitle !== undefined ? data.projectsTitle : null,
+          projectsDescription: data.projectsDescription !== undefined ? data.projectsDescription : null,
+          contactTitle: data.contactTitle !== undefined ? data.contactTitle : null,
+          contactDescription: data.contactDescription !== undefined ? data.contactDescription : null,
+          contactFormTitle: data.contactFormTitle !== undefined ? data.contactFormTitle : null,
+          teamTitle: data.teamTitle !== undefined ? data.teamTitle : null,
+          teamSubtitle: data.teamSubtitle !== undefined ? data.teamSubtitle : null,
+          teamDescription: data.teamDescription !== undefined ? data.teamDescription : null,
+          contactEmail: data.contactEmail !== undefined ? data.contactEmail : null,
+          contactPhone: data.contactPhone !== undefined ? data.contactPhone : null,
+          contactAddress: data.contactAddress !== undefined ? data.contactAddress : null,
         },
         create: {
           id: 'main',
-          heroTitle: data.heroTitle,
-          heroSubtitle: data.heroSubtitle,
-          heroDescription: data.heroDescription,
-          heroButton1Text: data.heroButton1Text,
-          heroButton2Text: data.heroButton2Text,
-          logoName: data.logoName || '',
-          logoSvg: data.logoSvg || null,
-          logoWidth: data.logoWidth || 8,
-          logoHeight: data.logoHeight || 8,
-          beforeAfterTitle: data.beforeAfterTitle,
-          beforeAfterDescription: data.beforeAfterDescription,
-          beforeImage: data.beforeImage,
-          afterImage: data.afterImage,
-          servicesTitle: data.servicesTitle,
-          servicesDescription: data.servicesDescription,
-          projectsTitle: data.projectsTitle,
-          projectsDescription: data.projectsDescription,
-          contactTitle: data.contactTitle,
-          contactDescription: data.contactDescription,
-          contactFormTitle: data.contactFormTitle,
-          teamTitle: data.teamTitle || '',
-          teamSubtitle: data.teamSubtitle || '',
-          teamDescription: data.teamDescription || '',
-          contactEmail: data.contactEmail,
-          contactPhone: data.contactPhone,
-          contactAddress: data.contactAddress,
+          heroTitle: data.heroTitle !== undefined ? data.heroTitle : null,
+          heroSubtitle: data.heroSubtitle !== undefined ? data.heroSubtitle : null,
+          heroDescription: data.heroDescription !== undefined ? data.heroDescription : null,
+          heroButton1Text: data.heroButton1Text !== undefined ? data.heroButton1Text : null,
+          heroButton2Text: data.heroButton2Text !== undefined ? data.heroButton2Text : null,
+          logoName: data.logoName !== undefined ? data.logoName : null,
+          logoSvg: data.logoSvg !== undefined ? data.logoSvg : null,
+          logoWidth: data.logoWidth !== undefined ? data.logoWidth : null,
+          logoHeight: data.logoHeight !== undefined ? data.logoHeight : null,
+          beforeAfterTitle: data.beforeAfterTitle !== undefined ? data.beforeAfterTitle : null,
+          beforeAfterDescription: data.beforeAfterDescription !== undefined ? data.beforeAfterDescription : null,
+          beforeImage: data.beforeImage !== undefined ? data.beforeImage : null,
+          afterImage: data.afterImage !== undefined ? data.afterImage : null,
+          servicesTitle: data.servicesTitle !== undefined ? data.servicesTitle : null,
+          servicesDescription: data.servicesDescription !== undefined ? data.servicesDescription : null,
+          projectsTitle: data.projectsTitle !== undefined ? data.projectsTitle : null,
+          projectsDescription: data.projectsDescription !== undefined ? data.projectsDescription : null,
+          contactTitle: data.contactTitle !== undefined ? data.contactTitle : null,
+          contactDescription: data.contactDescription !== undefined ? data.contactDescription : null,
+          contactFormTitle: data.contactFormTitle !== undefined ? data.contactFormTitle : null,
+          teamTitle: data.teamTitle !== undefined ? data.teamTitle : null,
+          teamSubtitle: data.teamSubtitle !== undefined ? data.teamSubtitle : null,
+          teamDescription: data.teamDescription !== undefined ? data.teamDescription : null,
+          contactEmail: data.contactEmail !== undefined ? data.contactEmail : null,
+          contactPhone: data.contactPhone !== undefined ? data.contactPhone : null,
+          contactAddress: data.contactAddress !== undefined ? data.contactAddress : null,
         },
       })
 
@@ -111,23 +93,23 @@ export async function POST(request: NextRequest) {
 
       return NextResponse.json({ success: true, config })
     } else if (type === 'colors') {
-      // Save color configuration
+      // Save color configuration with nullable fields
       const config = await prisma.siteConfig.upsert({
         where: { id: 'main' },
         update: {
-          primaryColor: data.primary,
-          secondaryColor: data.secondary,
-          accentColor: data.accent,
-          gradientFrom: data.gradientFrom,
-          gradientTo: data.gradientTo,
+          primaryColor: data.primary !== undefined ? data.primary : null,
+          secondaryColor: data.secondary !== undefined ? data.secondary : null,
+          accentColor: data.accent !== undefined ? data.accent : null,
+          gradientFrom: data.gradientFrom !== undefined ? data.gradientFrom : null,
+          gradientTo: data.gradientTo !== undefined ? data.gradientTo : null,
         },
         create: {
           id: 'main',
-          primaryColor: data.primary,
-          secondaryColor: data.secondary,
-          accentColor: data.accent,
-          gradientFrom: data.gradientFrom,
-          gradientTo: data.gradientTo,
+          primaryColor: data.primary !== undefined ? data.primary : null,
+          secondaryColor: data.secondary !== undefined ? data.secondary : null,
+          accentColor: data.accent !== undefined ? data.accent : null,
+          gradientFrom: data.gradientFrom !== undefined ? data.gradientFrom : null,
+          gradientTo: data.gradientTo !== undefined ? data.gradientTo : null,
         },
       })
 

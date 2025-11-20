@@ -31,8 +31,8 @@ export function ServicesSection({ services: dbServices, config }: ServicesSectio
   const gradientFrom = config?.gradientFrom || "#6366f1"
   const gradientTo = config?.gradientTo || "#8b5cf6"
   const accentColor = config?.accentColor || "#6366f1"
-  const servicesTitle = config?.servicesTitle || "Our Services"
-  const servicesDescription = config?.servicesDescription || "We offer comprehensive architectural solutions tailored to your unique vision and requirements."
+  const servicesTitle = config?.servicesTitle || ""
+  const servicesDescription = config?.servicesDescription || ""
 
   const handleServiceClick = (service: Service, event: React.MouseEvent<HTMLDivElement>) => {
     const rect = event.currentTarget.getBoundingClientRect()
