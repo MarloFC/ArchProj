@@ -10,8 +10,13 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Architectural Excellence | Modern Design Studio",
+  title: "Gato Arquitetura",
   description: "Creating spaces that inspire and endure. Professional architectural services with innovative design solutions.",
+  icons: {
+    icon: '/logo.svg',
+    shortcut: '/logo.svg',
+    apple: '/logo.svg',
+  },
 };
 
 export default function RootLayout({
