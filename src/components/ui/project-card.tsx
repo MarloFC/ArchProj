@@ -24,16 +24,16 @@ export function ProjectCard({ project, color = "#f97316" }: ProjectCardProps) {
 
       {/* Foreground Colored Block - positioned at top-left corner */}
       <div
-        className="absolute opacity-95 top-0 left-0 w-2/5 h-15vh p-6 flex flex-col justify-end text-white transition-all duration-300"
+        className="absolute opacity-95 top-0 left-0 w-3/5 md:w-[56%] p-3 md:p-6 flex flex-col justify-start text-white transition-all duration-300 min-h-[140px] md:min-h-[180px]"
         style={{ backgroundColor: color }}
       >
-        <h3 className="text-2xl font-bold mb-2 leading-tight">
+        <h3 className="text-lg md:text-2xl font-bold mb-1 md:mb-2 leading-tight break-words">
           {project.title}
         </h3>
-        <p className="text-sm opacity-90 mb-1">
+        <p className="text-xs md:text-sm opacity-90 mb-1 capitalize">
           {project.category}
         </p>
-        <p className="text-xs opacity-75 line-clamp-2">
+        <p className="text-xs opacity-75 line-clamp-2 md:line-clamp-3 break-words">
           {project.description}
         </p>
       </div>

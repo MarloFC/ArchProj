@@ -110,11 +110,16 @@ export function ContactSection({ config }: ContactSectionProps) {
                 <span className="text-white/90">{contactPhone}</span>
               </div>
 
-              <div className="flex items-center space-x-4">
-                <div className="p-3 bg-white/20 rounded-lg">
+              <div className="flex items-start space-x-4">
+                <div className="p-3 bg-white/20 rounded-lg flex-shrink-0">
                   <MapPin className="w-5 h-5" />
                 </div>
-                <span className="text-white/90">{contactAddress}</span>
+                <div
+                  className="text-white/90 prose prose-sm max-w-none
+                    [&>p]:text-white/90 [&>p]:mb-0 [&>p]:leading-normal
+                    [&>strong]:font-bold [&>em]:italic"
+                  dangerouslySetInnerHTML={{ __html: contactAddress }}
+                />
               </div>
             </div>
           </motion.div>

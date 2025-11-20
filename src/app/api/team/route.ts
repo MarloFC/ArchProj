@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { revalidatePath } from "next/cache"
 import { getSession } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 
@@ -41,6 +42,9 @@ export async function POST(request: Request) {
         order,
       },
     })
+
+    // Revalidate team page
+    revalidatePath('/team')
 
     return NextResponse.json(teamMember)
   } catch (error) {

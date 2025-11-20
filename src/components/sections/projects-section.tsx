@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { ArrowRight } from "lucide-react"
+import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import type { Project, SiteConfig } from "@prisma/client"
 import { useState, useRef, MouseEvent, useEffect } from "react"
@@ -129,6 +129,9 @@ export function ProjectsSection({ projects: dbProjects, config }: ProjectsSectio
   const [prevPercentage, setPrevPercentage] = useState(0)
   const [currentPercentage, setCurrentPercentage] = useState(0)
   const [isDragging, setIsDragging] = useState(false)
+  const [currentSlide, setCurrentSlide] = useState(0)
+  const [dragStartX, setDragStartX] = useState(0)
+  const [isDraggingCarousel, setIsDraggingCarousel] = useState(false)
 
   // Fallback to default projects if none in database
   const defaultProjects = [
@@ -218,7 +221,55 @@ export function ProjectsSection({ projects: dbProjects, config }: ProjectsSectio
   }, [])
 
   // Use 3 images for mobile, 5 for desktop
-  const projects = isMobile ? allProjects.slice(0, 3) : allProjects.slice(0, 6)
+  const projects = isMobile ? allProjects : allProjects.slice(0, 6)
+
+  // Carousel navigation for mobile
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % projects.length)
+  }
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + projects.length) % projects.length)
+  }
+
+  // Handle drag for mobile carousel
+  const handleCarouselDragStart = (e: React.MouseEvent | React.TouchEvent) => {
+    const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX
+    setDragStartX(clientX)
+    setIsDraggingCarousel(false)
+  }
+
+  const handleCarouselDragMove = (e: React.MouseEvent | React.TouchEvent) => {
+    if (dragStartX === 0) return
+
+    const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX
+    const diff = dragStartX - clientX
+
+    if (Math.abs(diff) > 10) {
+      setIsDraggingCarousel(true)
+    }
+  }
+
+  const handleCarouselDragEnd = (e: React.MouseEvent | React.TouchEvent) => {
+    if (dragStartX === 0) return
+
+    const clientX = 'changedTouches' in e ? e.changedTouches[0].clientX : ('clientX' in e ? e.clientX : dragStartX)
+    const diff = dragStartX - clientX
+
+    // Swipe threshold
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) {
+        // Swiped left, go to next
+        nextSlide()
+      } else {
+        // Swiped right, go to previous
+        prevSlide()
+      }
+    }
+
+    setDragStartX(0)
+    setTimeout(() => setIsDraggingCarousel(false), 100)
+  }
 
   const handleMouseDown = (e: MouseEvent<HTMLDivElement>) => {
     setMouseDownAt(e.clientX)
@@ -318,8 +369,100 @@ export function ProjectsSection({ projects: dbProjects, config }: ProjectsSectio
         </motion.div>
       </div>
 
+      {/* Mobile: Simple carousel */}
+      <div className="md:hidden relative">
+        <div
+          className="relative h-[500px] overflow-hidden cursor-grab active:cursor-grabbing"
+          onMouseDown={handleCarouselDragStart}
+          onMouseMove={handleCarouselDragMove}
+          onMouseUp={handleCarouselDragEnd}
+          onMouseLeave={handleCarouselDragEnd}
+          onTouchStart={handleCarouselDragStart}
+          onTouchMove={handleCarouselDragMove}
+          onTouchEnd={handleCarouselDragEnd}
+        >
+          {projects.map((project, index) => {
+            const projectId = project.title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')
+            return (
+              <motion.div
+                key={project.id}
+                className="absolute inset-0 flex items-center justify-center px-4"
+                initial={{ opacity: 0, x: 100 }}
+                animate={{
+                  opacity: index === currentSlide ? 1 : 0,
+                  x: index === currentSlide ? 0 : index < currentSlide ? -100 : 100,
+                  scale: index === currentSlide ? 1 : 0.8,
+                }}
+                transition={{ duration: 0.5 }}
+                style={{ pointerEvents: index === currentSlide ? 'auto' : 'none' }}
+              >
+                <a
+                  href={`/projects#${projectId}`}
+                  className="relative group block w-full"
+                  onClick={(e) => {
+                    if (isDraggingCarousel) {
+                      e.preventDefault()
+                    }
+                  }}
+                >
+                  <div className="relative h-[450px] rounded-2xl overflow-hidden shadow-2xl">
+                    <img
+                      src={project.imageUrl || `https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=800&fit=crop`}
+                      alt={project.title}
+                      className="w-full h-full object-cover"
+                      draggable="false"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
+                      <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                        <span className="inline-block px-3 py-1 bg-white/20 backdrop-blur-sm text-xs font-medium rounded-full mb-2 capitalize">
+                          {project.category}
+                        </span>
+                        <h3 className="text-xl font-bold mb-2">{project.title}</h3>
+                        <p className="text-sm text-gray-200">{project.description}</p>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              </motion.div>
+            )
+          })}
+        </div>
+
+        {/* Navigation arrows */}
+        <button
+          onClick={prevSlide}
+          className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 hover:bg-white shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110 z-10"
+          style={{ color: accentColor }}
+        >
+          <ChevronLeft className="w-5 h-5" />
+        </button>
+        <button
+          onClick={nextSlide}
+          className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 hover:bg-white shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110 z-10"
+          style={{ color: accentColor }}
+        >
+          <ChevronRight className="w-5 h-5" />
+        </button>
+
+        {/* Dots indicator */}
+        <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+          {projects.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentSlide(index)}
+              className="w-2 h-2 rounded-full transition-all duration-300"
+              style={{
+                backgroundColor: index === currentSlide ? accentColor : '#d1d5db',
+                width: index === currentSlide ? '2rem' : '0.5rem',
+              }}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Desktop: Drag gallery */}
       <div
-        className="relative h-[70vh] md:h-screen select-none cursor-grab active:cursor-grabbing md:-mt-20 -mt-40"
+        className="hidden md:block relative h-screen select-none cursor-grab active:cursor-grabbing -mt-20"
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
@@ -330,7 +473,7 @@ export function ProjectsSection({ projects: dbProjects, config }: ProjectsSectio
       >
         <div
           ref={trackRef}
-          className="absolute left-1/2 top-1/2 flex gap-[2vmin] md:gap-[4vmin] select-none"
+          className="absolute left-1/2 top-1/2 flex gap-[4vmin] select-none"
           style={{
             transform: `translate(${currentPercentage}%, -50%)`,
             userSelect: "none",
@@ -356,20 +499,19 @@ export function ProjectsSection({ projects: dbProjects, config }: ProjectsSectio
               <img
                 src={project.imageUrl || `https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=800&fit=crop`}
                 alt={project.title}
-                className="gallery-image w-[80vmin] h-[65vmin] object-cover select-none pointer-events-none rounded-2xl shadow-2xl"
+                className="gallery-image w-[40vw] h-[65vmin] object-cover select-none pointer-events-none rounded-2xl shadow-2xl"
                 draggable="false"
                 style={{
                   objectPosition: `${100 + currentPercentage}% center`,
-                  width: isMobile ? "100vw" : "40vw",
                 }}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 rounded-2xl pointer-events-none">
-                <div className="absolute bottom-0 left-0 right-0 p-3 md:p-6 text-white">
-                  <span className="inline-block px-2 py-1 md:px-3 bg-white/20 backdrop-blur-sm text-xs font-medium rounded-full mb-1 md:mb-2 capitalize">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl pointer-events-none">
+                <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                  <span className="inline-block px-3 bg-white/20 backdrop-blur-sm text-xs font-medium rounded-full mb-2 capitalize">
                     {project.category}
                   </span>
-                  <h3 className="text-base md:text-2xl font-bold mb-1 md:mb-2 overflow-hidden">{project.title}</h3>
-                  <p className="text-xs md:text-sm text-gray-200 overflow-hidden line-clamp-2">{project.description}</p>
+                  <h3 className="text-2xl font-bold mb-2 overflow-hidden">{project.title}</h3>
+                  <p className="text-sm text-gray-200 overflow-hidden line-clamp-2">{project.description}</p>
                 </div>
               </div>
             </a>
