@@ -10,9 +10,21 @@ export default async function TeamPage() {
     where: { id: 'main' },
   })
 
-  const teamMembers = await prisma.teamMember.findMany({
+  const teamMembersData = await prisma.teamMember.findMany({
     orderBy: { order: 'asc' },
   })
+
+  // Map to the format expected by TeamSection
+  const teamMembers = teamMembersData.map(member => ({
+    id: member.id,
+    name: member.name,
+    role: member.role,
+    imageUrl: member.imageUrl,
+    linkedin: member.linkedin,
+    instagram: member.instagram,
+    email: member.email,
+    order: member.order,
+  }))
 
   const gradientFrom = siteConfig?.gradientFrom || "#6366f1"
   const gradientTo = siteConfig?.gradientTo || "#8b5cf6"
