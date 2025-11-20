@@ -103,17 +103,23 @@ function TeamMemberCard({ member, gradientFrom, gradientTo, index }: any) {
             background: `linear-gradient(to bottom right, ${gradientFrom}, ${gradientTo})`
           }}
         />
-        <img
-          src={member.imageUrl}
-          alt={member.name}
-          className="w-full h-full object-cover grayscale-0 group-hover:scale-110 transition-transform duration-300"
-        />
+        {member.imageUrl ? (
+          <img
+            src={member.imageUrl}
+            alt={member.name || "Team member"}
+            className="w-full h-full object-cover grayscale-0 group-hover:scale-110 transition-transform duration-300"
+          />
+        ) : (
+          <div className="w-full h-full bg-gray-300 flex items-center justify-center text-gray-500 text-sm">
+            No Image
+          </div>
+        )}
       </div>
 
       {/* Info */}
       <div className="text-center">
         <h3 className="text-xl font-bold text-gray-900 mb-1">
-          {member.name}
+          {member.name || "Unnamed"}
         </h3>
         <p
           className="text-sm font-medium mb-4 bg-clip-text text-transparent"
@@ -121,7 +127,7 @@ function TeamMemberCard({ member, gradientFrom, gradientTo, index }: any) {
             backgroundImage: `linear-gradient(to right, ${gradientFrom}, ${gradientTo})`
           }}
         >
-          {member.role}
+          {member.role || "No role"}
         </p>
 
         {/* Social Links */}

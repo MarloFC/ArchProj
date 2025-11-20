@@ -329,7 +329,7 @@ export function ProjectManager() {
                   <div className="flex-1 min-w-0">
                     <div className="flex flex-wrap items-center gap-2 mb-1">
                       <h3 className="text-base md:text-lg font-semibold text-gray-900 break-words">
-                        {project.title}
+                        {project.title || "Untitled Project"}
                       </h3>
                       {project.featured && (
                         <span className="px-2 py-1 bg-indigo-100 text-indigo-700 text-xs font-medium rounded-full">
@@ -338,8 +338,8 @@ export function ProjectManager() {
                       )}
                     </div>
 
-                    <p className="text-xs md:text-sm text-gray-600 mb-2">{project.category}</p>
-                    <p className="text-sm md:text-base text-gray-700 break-words">{project.description}</p>
+                    <p className="text-xs md:text-sm text-gray-600 mb-2">{project.category || "Uncategorized"}</p>
+                    <p className="text-sm md:text-base text-gray-700 break-words">{project.description || "No description"}</p>
                   </div>
                 </div>
 

@@ -8,10 +8,10 @@ interface ServiceModalProps {
   isOpen: boolean
   onClose: () => void
   service: {
-    title: string
-    description: string
+    title: string | null
+    description: string | null
     detailedDescription: string | null
-    icon: string
+    icon: string | null
     iconSvg: string | null
     iconImageUrl: string | null
   } | null
@@ -151,7 +151,7 @@ export function ServiceModal({ isOpen, onClose, service, gradientFrom = "#6366f1
               {service.iconImageUrl ? (
                 <img
                   src={service.iconImageUrl}
-                  alt={service.title}
+                  alt={service.title || "Service"}
                   className="w-10 h-10 sm:w-12 sm:h-12 object-contain"
                 />
               ) : service.iconSvg ? (
@@ -169,7 +169,7 @@ export function ServiceModal({ isOpen, onClose, service, gradientFrom = "#6366f1
           <h2 className={`text-2xl sm:text-3xl font-bold text-gray-900 text-center mb-3 sm:mb-4 transition-all duration-300 delay-75 ${
             !hasAnimated ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
           }`}>
-            {service.title}
+            {service.title || "Untitled Service"}
           </h2>
 
           {/* Short description */}
@@ -184,7 +184,7 @@ export function ServiceModal({ isOpen, onClose, service, gradientFrom = "#6366f1
               [&>strong]:font-bold [&>em]:italic
               ${!hasAnimated ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
             }`}
-            dangerouslySetInnerHTML={{ __html: service.description }}
+            dangerouslySetInnerHTML={{ __html: service.description || "" }}
           />
 
           {/* Divider */}
@@ -204,7 +204,7 @@ export function ServiceModal({ isOpen, onClose, service, gradientFrom = "#6366f1
               [&>strong]:font-bold [&>em]:italic
               ${!hasAnimated ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
             }`}
-            dangerouslySetInnerHTML={{ __html: service.detailedDescription || service.description }}
+            dangerouslySetInnerHTML={{ __html: service.detailedDescription || service.description || "" }}
           />
 
           {/* Close button at bottom */}

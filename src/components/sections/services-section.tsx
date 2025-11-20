@@ -99,7 +99,7 @@ export function ServicesSection({ services: dbServices, config }: ServicesSectio
 
         <div className="flex flex-wrap justify-center gap-8">
           {services.map((service, index) => {
-            const IconComponent = iconMap[service.icon.toLowerCase()] || Building2
+            const IconComponent = iconMap[(service.icon || 'building').toLowerCase()] || Building2
             return (
               <motion.div
                 key={service.title}
@@ -129,7 +129,7 @@ export function ServicesSection({ services: dbServices, config }: ServicesSectio
                   {'iconImageUrl' in service && service.iconImageUrl ? (
                     <img
                       src={String(service.iconImageUrl)}
-                      alt={service.title}
+                      alt={service.title || "Service"}
                       className="w-8 h-8 object-contain"
                     />
                   ) : 'iconSvg' in service && service.iconSvg ? (
@@ -143,7 +143,7 @@ export function ServicesSection({ services: dbServices, config }: ServicesSectio
                 </div>
 
                 <h3 className="text-xl font-semibold mb-3 text-gray-900">
-                  {service.title}
+                  {service.title || "Untitled Service"}
                 </h3>
 
                 <div
@@ -155,7 +155,7 @@ export function ServicesSection({ services: dbServices, config }: ServicesSectio
                     [&>ol]:list-decimal [&>ol]:pl-4 [&>ol]:my-2
                     [&>li]:text-gray-600 [&>li]:mb-1
                     [&>strong]:font-bold [&>em]:italic"
-                  dangerouslySetInnerHTML={{ __html: service.description }}
+                  dangerouslySetInnerHTML={{ __html: service.description || "" }}
                 />
               </motion.div>
             )
