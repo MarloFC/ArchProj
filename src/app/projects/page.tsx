@@ -2,6 +2,9 @@ import { prisma } from "@/lib/prisma"
 import { ProjectCard } from "@/components/ui/project-card"
 import { Navbar } from "@/components/navigation/navbar"
 
+// Revalidate every 10 seconds
+export const revalidate = 10
+
 export default async function ProjectsPage() {
   // Fetch site config
   const siteConfig = await prisma.siteConfig.findUnique({

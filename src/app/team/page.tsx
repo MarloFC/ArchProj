@@ -2,6 +2,9 @@ import { Navbar } from "@/components/navigation/navbar"
 import { TeamSection } from "@/components/sections/team-section"
 import { prisma } from "@/lib/prisma"
 
+// Revalidate every 10 seconds
+export const revalidate = 10
+
 export default async function TeamPage() {
   const siteConfig = await prisma.siteConfig.findUnique({
     where: { id: 'main' },

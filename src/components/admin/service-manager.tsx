@@ -335,9 +335,9 @@ export function ServiceManager() {
         ) : (
           services.map((service) => (
           <Card key={service.id}>
-            <CardContent className="p-6">
-              <div className="flex items-start justify-between">
-                <div className="flex space-x-4">
+            <CardContent className="p-4 md:p-6">
+              <div className="flex flex-col md:flex-row md:items-start md:justify-between space-y-4 md:space-y-0">
+                <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 flex-1">
                   <div className="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
                     {service.iconImageUrl ? (
                       <img
@@ -355,25 +355,25 @@ export function ServiceManager() {
                     )}
                   </div>
 
-                  <div className="flex-1">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-1">
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-1 break-words">
                       {service.title}
                     </h3>
                     <div
-                      className="text-gray-700 text-sm prose prose-sm max-w-none
-                        [&>p]:text-gray-700 [&>p]:mb-1 [&>p]:text-sm
-                        [&>h1]:text-base [&>h1]:font-bold [&>h1]:mb-1
-                        [&>h2]:text-sm [&>h2]:font-bold [&>h2]:mb-1
+                      className="text-gray-700 text-xs md:text-sm prose prose-sm max-w-none break-words
+                        [&>p]:text-gray-700 [&>p]:mb-1 [&>p]:text-xs [&>p]:md:text-sm
+                        [&>h1]:text-sm [&>h1]:md:text-base [&>h1]:font-bold [&>h1]:mb-1
+                        [&>h2]:text-xs [&>h2]:md:text-sm [&>h2]:font-bold [&>h2]:mb-1
                         [&>ul]:list-disc [&>ul]:pl-4 [&>ul]:my-1
                         [&>ol]:list-decimal [&>ol]:pl-4 [&>ol]:my-1
-                        [&>li]:text-gray-700 [&>li]:text-sm [&>li]:mb-0.5
+                        [&>li]:text-gray-700 [&>li]:text-xs [&>li]:md:text-sm [&>li]:mb-0.5
                         [&>strong]:font-bold [&>em]:italic"
                       dangerouslySetInnerHTML={{ __html: service.description }}
                     />
                   </div>
                 </div>
 
-                <div className="flex space-x-2 ml-4">
+                <div className="flex space-x-2 justify-end md:ml-4">
                   <Button
                     variant="outline"
                     size="sm"

@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { revalidatePath } from "next/cache"
 import { getSession } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 
@@ -31,6 +32,9 @@ export async function PUT(
       },
     })
 
+    // Revalidate team page
+    revalidatePath('/team')
+
     return NextResponse.json(teamMember)
   } catch (error) {
     console.error("Error updating team member:", error)
@@ -58,6 +62,9 @@ export async function DELETE(
     await prisma.teamMember.delete({
       where: { id },
     })
+
+    // Revalidate team page
+    revalidatePath('/team')
 
     return NextResponse.json({ success: true })
   } catch (error) {

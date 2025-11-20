@@ -288,23 +288,23 @@ export function TeamManager() {
               {teamMembers.map((member) => (
                 <div
                   key={member.id}
-                  className="flex items-center gap-4 p-4 border rounded-lg hover:shadow-md transition-shadow"
+                  className="flex flex-col sm:flex-row items-start sm:items-center gap-4 p-4 border rounded-lg hover:shadow-md transition-shadow"
                 >
                   <img
                     src={member.imageUrl}
                     alt={member.name}
-                    className="w-16 h-16 rounded-full object-cover"
+                    className="w-16 h-16 rounded-full object-cover flex-shrink-0"
                   />
-                  <div className="flex-1">
-                    <h4 className="font-semibold">{member.name}</h4>
-                    <p className="text-sm text-gray-600">{member.role}</p>
-                    <div className="flex gap-2 mt-1 text-xs text-gray-500">
+                  <div className="flex-1 min-w-0">
+                    <h4 className="font-semibold text-sm md:text-base break-words">{member.name}</h4>
+                    <p className="text-xs md:text-sm text-gray-600 break-words">{member.role}</p>
+                    <div className="flex flex-wrap gap-2 mt-1 text-xs text-gray-500">
                       {member.linkedin && <span>LinkedIn</span>}
                       {member.instagram && <span>Instagram</span>}
-                      {member.email && <span>Email</span>}
+                      {member.email && <span className="truncate max-w-[150px]">Email</span>}
                     </div>
                   </div>
-                  <div className="flex gap-2">
+                  <div className="flex gap-2 w-full sm:w-auto justify-end">
                     <Button
                       variant="outline"
                       size="sm"

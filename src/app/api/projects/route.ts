@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { revalidatePath } from "next/cache"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/app/api/auth/[...nextauth]/route"
 import { prisma } from "@/lib/prisma"
@@ -41,6 +42,10 @@ export async function POST(request: Request) {
         order: order || 0,
       },
     })
+
+    // Revalidate home and projects pages
+    revalidatePath('/')
+    revalidatePath('/projects')
 
     return NextResponse.json(project)
   } catch (error) {
