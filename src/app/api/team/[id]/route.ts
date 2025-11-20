@@ -22,13 +22,13 @@ export async function PUT(
     const teamMember = await prisma.teamMember.update({
       where: { id },
       data: {
-        name,
-        role,
-        imageUrl,
-        linkedin,
-        instagram,
-        email,
-        order,
+        name: name || null,
+        role: role || null,
+        imageUrl: imageUrl || null,
+        linkedin: linkedin || null,
+        instagram: instagram || null,
+        email: email || null,
+        order: order !== undefined ? order : 0,
       },
     })
 

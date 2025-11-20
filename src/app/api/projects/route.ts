@@ -33,8 +33,8 @@ export async function POST(request: Request) {
 
     const project = await prisma.project.create({
       data: {
-        title,
-        description,
+        title: title || null,
+        description: description || null,
         textarea: textarea || null,
         imageUrl: imageUrl || null,
         category: category || "residential",

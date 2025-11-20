@@ -25,8 +25,8 @@ export async function POST(request: Request) {
 
     const service = await prisma.service.create({
       data: {
-        title: data.title,
-        description: data.description,
+        title: data.title || null,
+        description: data.description || null,
         detailedDescription: data.detailedDescription || null,
         icon: data.icon || "building",
         iconSvg: data.iconSvg || null,

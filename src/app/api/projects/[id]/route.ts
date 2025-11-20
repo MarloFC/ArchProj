@@ -22,13 +22,13 @@ export async function PUT(
     const project = await prisma.project.update({
       where: { id },
       data: {
-        title,
-        description,
+        title: title || null,
+        description: description || null,
         textarea: textarea || null,
         imageUrl: imageUrl || null,
-        category,
-        featured,
-        order,
+        category: category || null,
+        featured: featured !== undefined ? featured : false,
+        order: order !== undefined ? order : 0,
       },
     })
 

@@ -14,13 +14,13 @@ export async function PUT(
     const service = await prisma.service.update({
       where: { id },
       data: {
-        title: data.title,
-        description: data.description,
+        title: data.title || null,
+        description: data.description || null,
         detailedDescription: data.detailedDescription || null,
-        icon: data.icon || "building",
+        icon: data.icon || null,
         iconSvg: data.iconSvg || null,
         iconImageUrl: data.iconImageUrl || null,
-        order: data.order || 0,
+        order: data.order !== undefined ? data.order : 0,
       },
     })
 
