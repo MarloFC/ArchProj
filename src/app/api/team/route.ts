@@ -33,13 +33,13 @@ export async function POST(request: Request) {
 
     const teamMember = await prisma.teamMember.create({
       data: {
-        name,
-        role,
-        imageUrl,
-        linkedin,
-        instagram,
-        email,
-        order,
+        name: name || null,
+        role: role || null,
+        imageUrl: imageUrl || null,
+        linkedin: linkedin || null,
+        instagram: instagram || null,
+        email: email || null,
+        order: order || 0,
       },
     })
 

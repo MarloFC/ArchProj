@@ -120,11 +120,11 @@ model SiteConfig {
 
 model Project {
   id          String   @id @default(cuid())
-  title       String
-  description String
+  title       String?
+  description String?
   textarea    String?  @db.Text
   imageUrl    String?
-  category    String   @default("residential")
+  category    String?  @default("residential")
   featured    Boolean  @default(false)
   order       Int      @default(0)
   createdAt   DateTime @default(now())
@@ -135,10 +135,10 @@ model Project {
 
 model Service {
   id                 String   @id @default(cuid())
-  title              String
-  description        String
+  title              String?
+  description        String?
   detailedDescription String?  @db.Text  // Longer description for modal
-  icon               String   @default("building")  // Lucide icon name (fallback)
+  icon               String?  @default("building")  // Lucide icon name (fallback)
   iconSvg            String?  @db.Text  // Custom SVG code
   iconImageUrl       String? // Image URL for icon
   order              Int      @default(0)
@@ -150,9 +150,9 @@ model Service {
 
 model TeamMember {
   id          String   @id @default(cuid())
-  name        String
-  role        String
-  imageUrl    String
+  name        String?
+  role        String?
+  imageUrl    String?
   linkedin    String?
   instagram   String?
   email       String?
@@ -165,9 +165,9 @@ model TeamMember {
 
 model Lead {
   id        String   @id @default(cuid())
-  name      String
-  email     String
-  message   String   @db.Text
+  name      String?
+  email     String?
+  message   String?   @db.Text
   project   String?
   createdAt DateTime @default(now())
 
