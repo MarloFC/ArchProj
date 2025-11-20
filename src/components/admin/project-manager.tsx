@@ -9,10 +9,10 @@ import { toast } from "sonner"
 
 interface Project {
   id: string
-  title: string
-  description: string
+  title: string | null
+  description: string | null
   textarea: string | null
-  category: string
+  category: string | null
   imageUrl: string | null
   featured: boolean
   order: number
@@ -185,8 +185,8 @@ export function ProjectManager() {
                 </label>
                 <input
                   type="text"
-                  value={editingProject.title}
-                  onChange={(e) => setEditingProject(prev => 
+                  value={editingProject.title || ""}
+                  onChange={(e) => setEditingProject(prev =>
                     prev ? { ...prev, title: e.target.value } : null
                   )}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
@@ -199,7 +199,7 @@ export function ProjectManager() {
                   Category
                 </label>
                 <select
-                  value={editingProject.category}
+                  value={editingProject.category || "residential"}
                   onChange={(e) => setEditingProject(prev =>
                     prev ? { ...prev, category: e.target.value } : null
                   )}
@@ -236,7 +236,7 @@ export function ProjectManager() {
               <CardContent>
                 <SlateEditor
                   key={`description-${editingProject.id}`}
-                  value={editingProject.description}
+                  value={editingProject.description || ""}
                   onChange={(value) => setEditingProject(prev =>
                     prev ? { ...prev, description: value } : null
                   )}
@@ -316,7 +316,7 @@ export function ProjectManager() {
                     {project.imageUrl ? (
                       <img
                         src={project.imageUrl}
-                        alt={project.title}
+                        alt={project.title || "Project"}
                         className="w-full h-full object-cover"
                       />
                     ) : (

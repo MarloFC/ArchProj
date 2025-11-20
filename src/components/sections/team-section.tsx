@@ -4,9 +4,9 @@ import { Linkedin, Instagram, Mail } from "lucide-react"
 
 interface TeamMember {
   id: string
-  name: string
-  role: string
-  imageUrl: string
+  name: string | null
+  role: string | null
+  imageUrl: string | null
   linkedin: string | null
   instagram: string | null
   email: string | null

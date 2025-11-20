@@ -9,10 +9,10 @@ import { toast } from "sonner"
 
 interface Service {
   id: string
-  title: string
-  description: string
+  title: string | null
+  description: string | null
   detailedDescription: string | null
-  icon: string
+  icon: string | null
   iconSvg: string | null
   iconImageUrl: string | null
   order: number
@@ -186,7 +186,7 @@ export function ServiceManager() {
                 </label>
                 <input
                   type="text"
-                  value={editingService.title}
+                  value={editingService.title || ""}
                   onChange={(e) => setEditingService(prev =>
                     prev ? { ...prev, title: e.target.value } : null
                   )}
@@ -201,7 +201,7 @@ export function ServiceManager() {
                 </label>
                 <input
                   type="text"
-                  value={editingService.icon}
+                  value={editingService.icon || ""}
                   onChange={(e) => setEditingService(prev =>
                     prev ? { ...prev, icon: e.target.value } : null
                   )}
@@ -219,7 +219,7 @@ export function ServiceManager() {
               <CardContent>
                 <SlateEditor
                   key={`description-${editingService.id}`}
-                  value={editingService.description}
+                  value={editingService.description || ""}
                   onChange={(value) => setEditingService(prev =>
                     prev ? { ...prev, description: value } : null
                   )}
@@ -342,7 +342,7 @@ export function ServiceManager() {
                     {service.iconImageUrl ? (
                       <img
                         src={service.iconImageUrl}
-                        alt={service.title}
+                        alt={service.title || "Service"}
                         className="w-10 h-10 object-contain"
                       />
                     ) : service.iconSvg ? (
@@ -368,7 +368,7 @@ export function ServiceManager() {
                         [&>ol]:list-decimal [&>ol]:pl-4 [&>ol]:my-1
                         [&>li]:text-gray-700 [&>li]:text-xs [&>li]:md:text-sm [&>li]:mb-0.5
                         [&>strong]:font-bold [&>em]:italic"
-                      dangerouslySetInnerHTML={{ __html: service.description }}
+                      dangerouslySetInnerHTML={{ __html: service.description || "" }}
                     />
                   </div>
                 </div>

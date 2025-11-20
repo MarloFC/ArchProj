@@ -8,9 +8,9 @@ import { toast } from "sonner"
 
 interface TeamMember {
   id: string
-  name: string
-  role: string
-  imageUrl: string
+  name: string | null
+  role: string | null
+  imageUrl: string | null
   linkedin: string | null
   instagram: string | null
   email: string | null
@@ -181,7 +181,7 @@ export function TeamManager() {
                   <input
                     type="text"
                     className="w-full px-3 py-2 border rounded-md"
-                    value={editingMember.name}
+                    value={editingMember.name || ""}
                     onChange={(e) =>
                       setEditingMember({ ...editingMember, name: e.target.value })
                     }
@@ -194,7 +194,7 @@ export function TeamManager() {
                   <input
                     type="text"
                     className="w-full px-3 py-2 border rounded-md"
-                    value={editingMember.role}
+                    value={editingMember.role || ""}
                     onChange={(e) =>
                       setEditingMember({ ...editingMember, role: e.target.value })
                     }
@@ -207,7 +207,7 @@ export function TeamManager() {
                   <input
                     type="text"
                     className="w-full px-3 py-2 border rounded-md"
-                    value={editingMember.imageUrl}
+                    value={editingMember.imageUrl || ""}
                     onChange={(e) =>
                       setEditingMember({ ...editingMember, imageUrl: e.target.value })
                     }
