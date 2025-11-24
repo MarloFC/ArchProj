@@ -126,6 +126,7 @@ export function ContentEditor() {
     heroDescription: "",
     heroButton1Text: "",
     heroButton2Text: "",
+    heroBackgroundImage: "",
     logoName: "",
     logoSvg: "",
     logoWidth: 8,
@@ -144,6 +145,8 @@ export function ContentEditor() {
     contactEmail: "",
     contactPhone: "",
     contactAddress: "",
+    contactWhatsapp: "",
+    contactInstagram: "",
     teamTitle: "",
     teamSubtitle: "",
     teamDescription: "",
@@ -166,6 +169,7 @@ export function ContentEditor() {
             heroDescription: data.heroDescription || "",
             heroButton1Text: data.heroButton1Text || "",
             heroButton2Text: data.heroButton2Text || "",
+            heroBackgroundImage: data.heroBackgroundImage || "",
             logoName: data.logoName || "",
             logoSvg: data.logoSvg || "",
             logoWidth: data.logoWidth || 8,
@@ -187,6 +191,8 @@ export function ContentEditor() {
             contactEmail: data.contactEmail || "",
             contactPhone: data.contactPhone || "",
             contactAddress: data.contactAddress || "",
+            contactWhatsapp: data.contactWhatsapp || "",
+            contactInstagram: data.contactInstagram || "",
           })
         }
       } catch (error) {
@@ -355,6 +361,13 @@ export function ContentEditor() {
               onChange={handleFieldChange("heroButton2Text")}
               onAIGenerate={() => {}}
               loading={loading}
+            />
+            <ImageField
+              label="Hero Background Image"
+              description="Background image for the hero section (replaces gradient)"
+              currentImage={content.heroBackgroundImage}
+              value={content.heroBackgroundImage}
+              onChange={handleFieldChange("heroBackgroundImage")}
             />
           </>
         )}
@@ -587,24 +600,24 @@ export function ContentEditor() {
               loading={loading}
             />
             <InputField
-              label="Phone Number"
-              field="contactPhone"
-              description="Your business phone number"
+              label="WhatsApp Link"
+              field="contactWhatsapp"
+              description="WhatsApp contact link (e.g., https://wa.me/5522992231569)"
               showAI={false}
-              value={content.contactPhone}
-              onChange={handleFieldChange("contactPhone")}
+              type="url"
+              value={content.contactWhatsapp}
+              onChange={handleFieldChange("contactWhatsapp")}
               onAIGenerate={() => {}}
               loading={loading}
             />
             <InputField
-              label="Physical Address"
-              field="contactAddress"
-              description="Your business address"
+              label="Instagram Link"
+              field="contactInstagram"
+              description="Instagram profile URL"
               showAI={false}
-              type="textarea"
-              rows={2}
-              value={content.contactAddress}
-              onChange={handleFieldChange("contactAddress")}
+              type="url"
+              value={content.contactInstagram}
+              onChange={handleFieldChange("contactInstagram")}
               onAIGenerate={() => {}}
               loading={loading}
             />

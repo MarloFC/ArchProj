@@ -124,6 +124,14 @@ export function ProjectsSection({ projects: dbProjects, config }: ProjectsSectio
   const projectsTitle = config?.projectsTitle || ""
   const projectsDescription = config?.projectsDescription || ""
 
+  // Helper function to strip HTML tags and get plain text
+  const stripHtml = (html: string | null) => {
+    if (!html) return ""
+    const tmp = document.createElement("DIV")
+    tmp.innerHTML = html
+    return tmp.textContent || tmp.innerText || ""
+  }
+
   const trackRef = useRef<HTMLDivElement>(null)
   const [mouseDownAt, setMouseDownAt] = useState(0)
   const [prevPercentage, setPrevPercentage] = useState(0)
@@ -382,7 +390,6 @@ export function ProjectsSection({ projects: dbProjects, config }: ProjectsSectio
           onTouchEnd={handleCarouselDragEnd}
         >
           {projects.map((project, index) => {
-            const projectId = (project.title || 'project').toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')
             return (
               <motion.div
                 key={project.id}
@@ -397,7 +404,7 @@ export function ProjectsSection({ projects: dbProjects, config }: ProjectsSectio
                 style={{ pointerEvents: index === currentSlide ? 'auto' : 'none' }}
               >
                 <a
-                  href={`/projects#${projectId}`}
+                  href={`/project/${project.id}`}
                   className="relative group block w-full"
                   onClick={(e) => {
                     if (isDraggingCarousel) {
@@ -411,6 +418,7 @@ export function ProjectsSection({ projects: dbProjects, config }: ProjectsSectio
                       alt={project.title || "Project"}
                       className="w-full h-full object-cover"
                       draggable="false"
+                      crossOrigin="anonymous"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
                       <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
@@ -418,7 +426,7 @@ export function ProjectsSection({ projects: dbProjects, config }: ProjectsSectio
                           {project.category}
                         </span>
                         <h3 className="text-xl font-bold mb-2">{project.title}</h3>
-                        <p className="text-sm text-gray-200">{project.description}</p>
+                        <p className="text-sm text-gray-200">{stripHtml(project.description)}</p>
                       </div>
                     </div>
                   </div>
@@ -479,12 +487,10 @@ export function ProjectsSection({ projects: dbProjects, config }: ProjectsSectio
             userSelect: "none",
           }}
         >
-          {projects.map((project) => {
-            const projectId = (project.title || 'project').toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')
-            return (
+          {projects.map((project) => (
             <a
               key={project.id}
-              href={`/projects#${projectId}`}
+              href={`/project/${project.id}`}
               className="relative group w-80 block"
               draggable="false"
               onClick={(e) => {
@@ -501,6 +507,7 @@ export function ProjectsSection({ projects: dbProjects, config }: ProjectsSectio
                 alt={project.title || "Project"}
                 className="gallery-image w-[40vw] h-[65vmin] object-cover select-none pointer-events-none rounded-2xl shadow-2xl"
                 draggable="false"
+                crossOrigin="anonymous"
                 style={{
                   objectPosition: `${100 + currentPercentage}% center`,
                 }}
@@ -511,11 +518,11 @@ export function ProjectsSection({ projects: dbProjects, config }: ProjectsSectio
                     {project.category}
                   </span>
                   <h3 className="text-2xl font-bold mb-2 overflow-hidden">{project.title}</h3>
-                  <p className="text-sm text-gray-200 overflow-hidden line-clamp-2">{project.description}</p>
+                  <p className="text-sm text-gray-200 overflow-hidden line-clamp-2">{stripHtml(project.description)}</p>
                 </div>
               </div>
             </a>
-          )})}
+          ))}
         </div>
 
         {/* Scroll indicator */}
@@ -533,26 +540,6 @@ export function ProjectsSection({ projects: dbProjects, config }: ProjectsSectio
         </div>
       </div>
 
-      <div className="container mx-auto px-6 mt-12 text-center">
-        <a href="/projects">
-          <Button
-            size="lg"
-            style={{
-              background: `linear-gradient(to right, ${gradientFrom}, ${gradientTo})`,
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.opacity = '0.9'
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.opacity = '1'
-            }}
-            className="cursor-pointer"
-          >
-            Veja todos os projetos
-            <ArrowRight className="w-4 h-4 ml-2" />
-          </Button>
-        </a>
-      </div>
     </section>
   )
 }

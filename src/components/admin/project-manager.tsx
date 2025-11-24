@@ -14,6 +14,7 @@ interface Project {
   textarea: string | null
   category: string | null
   imageUrl: string | null
+  images: string[]
   featured: boolean
   order: number
 }
@@ -54,6 +55,7 @@ export function ProjectManager() {
       textarea: "",
       category: "residential",
       imageUrl: "",
+      images: [],
       featured: false,
       order: projects.length,
     })
@@ -75,6 +77,7 @@ export function ProjectManager() {
             textarea: editingProject.textarea,
             category: editingProject.category,
             imageUrl: editingProject.imageUrl,
+            images: editingProject.images,
             featured: editingProject.featured,
             order: editingProject.order,
           }),
@@ -92,6 +95,7 @@ export function ProjectManager() {
             textarea: editingProject.textarea,
             category: editingProject.category,
             imageUrl: editingProject.imageUrl,
+            images: editingProject.images,
             featured: editingProject.featured,
             order: editingProject.order,
           }),
@@ -215,7 +219,7 @@ export function ProjectManager() {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Image URL
+                Cover Image URL
               </label>
               <input
                 type="url"
@@ -226,6 +230,63 @@ export function ProjectManager() {
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
                 placeholder="https://example.com/image.jpg"
               />
+              <p className="text-xs text-gray-500 mt-1">Main cover image shown in project list</p>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Project Gallery Images
+              </label>
+              <p className="text-xs text-gray-500 mb-3">Add multiple images for the project detail page gallery</p>
+
+              <div className="space-y-2">
+                {editingProject.images.map((image, index) => (
+                  <div key={index} className="flex gap-2">
+                    <input
+                      type="url"
+                      value={image}
+                      onChange={(e) => {
+                        const newImages = [...editingProject.images]
+                        newImages[index] = e.target.value
+                        setEditingProject(prev =>
+                          prev ? { ...prev, images: newImages } : null
+                        )
+                      }}
+                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
+                      placeholder="https://example.com/gallery-image.jpg"
+                    />
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        const newImages = editingProject.images.filter((_, i) => i !== index)
+                        setEditingProject(prev =>
+                          prev ? { ...prev, images: newImages } : null
+                        )
+                      }}
+                      className="text-red-600 hover:text-red-700"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
+                  </div>
+                ))}
+
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    setEditingProject(prev =>
+                      prev ? { ...prev, images: [...prev.images, ""] } : null
+                    )
+                  }}
+                  className="w-full"
+                >
+                  <Plus className="w-4 h-4 mr-2" />
+                  Add Gallery Image
+                </Button>
+              </div>
             </div>
 
             <Card>

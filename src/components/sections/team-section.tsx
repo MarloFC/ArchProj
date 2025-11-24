@@ -108,6 +108,7 @@ function TeamMemberCard({ member, gradientFrom, gradientTo, index }: any) {
             src={member.imageUrl}
             alt={member.name || "Team member"}
             className="w-full h-full object-cover grayscale-0 group-hover:scale-110 transition-transform duration-300"
+            crossOrigin="anonymous"
           />
         ) : (
           <div className="w-full h-full bg-gray-300 flex items-center justify-center text-gray-500 text-sm">

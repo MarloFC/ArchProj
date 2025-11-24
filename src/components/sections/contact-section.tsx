@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
-import { Mail, Phone, MapPin, Send } from "lucide-react"
+import { Mail, Send, Instagram, MessageCircle } from "lucide-react"
 import type { SiteConfig } from "@prisma/client"
 import { toast } from "sonner"
 
@@ -13,7 +13,6 @@ interface ContactSectionProps {
 
 export function ContactSection({ config }: ContactSectionProps) {
   const [firstname, setFirstname] = useState("")
-  const [lastname, setLastname] = useState("")
   const [email, setEmail] = useState("")
   const [project, setProject] = useState("Residencial")
   const [message, setMessage] = useState("")
@@ -26,8 +25,8 @@ export function ContactSection({ config }: ContactSectionProps) {
   const contactDescription = config?.contactDescription || ""
   const contactFormTitle = config?.contactFormTitle || ""
   const contactEmail = config?.contactEmail || ""
-  const contactPhone = config?.contactPhone || ""
-  const contactAddress = config?.contactAddress || ""
+  const contactWhatsapp = config?.contactWhatsapp || "https://wa.me/5522992231569"
+  const contactInstagram = config?.contactInstagram || "https://www.instagram.com/gatoarquitetura?igsh=MWUwZWE4dXJ1dm5zcA=="
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -41,7 +40,7 @@ export function ContactSection({ config }: ContactSectionProps) {
         },
         body: JSON.stringify({
           firstname,
-          lastname,
+          lastname: "",
           email,
           message,
           project,
@@ -53,7 +52,6 @@ export function ContactSection({ config }: ContactSectionProps) {
       if (data.ok) {
         toast.success("Mensagem enviada com sucesso!")
         setFirstname("")
-        setLastname("")
         setEmail("")
         setMessage("")
         setProject("Residencial")
@@ -96,6 +94,7 @@ export function ContactSection({ config }: ContactSectionProps) {
             />
 
             <div className="space-y-4">
+              {/* Email with text */}
               <div className="flex items-center space-x-4">
                 <div className="p-3 bg-white/20 rounded-lg">
                   <Mail className="w-5 h-5" />
@@ -103,23 +102,36 @@ export function ContactSection({ config }: ContactSectionProps) {
                 <span className="text-white/90">{contactEmail}</span>
               </div>
 
-              <div className="flex items-center space-x-4">
-                <div className="p-3 bg-white/20 rounded-lg">
-                  <Phone className="w-5 h-5" />
-                </div>
-                <span className="text-white/90">{contactPhone}</span>
+              {/* WhatsApp icon only - clickable */}
+              <div className="flex items-center space-x-4 group/whatsapp">
+                <a
+                  href={contactWhatsapp}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-3 bg-white/20 rounded-lg hover:bg-white/30 transition-colors cursor-pointer relative"
+                  aria-label="WhatsApp"
+                >
+                  <MessageCircle className="w-5 h-5" />
+                  <span className="absolute left-full ml-3 top-1/2 -translate-y-1/2 bg-white text-gray-900 px-3 py-1.5 rounded-lg text-sm font-medium opacity-0 group-hover/whatsapp:opacity-100 transition-opacity whitespace-nowrap pointer-events-none shadow-lg">
+                    Clique para conversar
+                  </span>
+                </a>
               </div>
 
-              <div className="flex items-start space-x-4">
-                <div className="p-3 bg-white/20 rounded-lg flex-shrink-0">
-                  <MapPin className="w-5 h-5" />
-                </div>
-                <div
-                  className="text-white/90 prose prose-sm max-w-none
-                    [&>p]:text-white/90 [&>p]:mb-0 [&>p]:leading-normal
-                    [&>strong]:font-bold [&>em]:italic"
-                  dangerouslySetInnerHTML={{ __html: contactAddress }}
-                />
+              {/* Instagram icon only - clickable */}
+              <div className="flex items-center space-x-4 group/instagram">
+                <a
+                  href={contactInstagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-3 bg-white/20 rounded-lg hover:bg-white/30 transition-colors cursor-pointer relative"
+                  aria-label="Instagram"
+                >
+                  <Instagram className="w-5 h-5" />
+                  <span className="absolute left-full ml-3 top-1/2 -translate-y-1/2 bg-white text-gray-900 px-3 py-1.5 rounded-lg text-sm font-medium opacity-0 group-hover/instagram:opacity-100 transition-opacity whitespace-nowrap pointer-events-none shadow-lg">
+                    Clique para visitar
+                  </span>
+                </a>
               </div>
             </div>
           </motion.div>
@@ -136,53 +148,30 @@ export function ContactSection({ config }: ContactSectionProps) {
             </h3>
             
             <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Primeiro nome
-                  </label>
-                  <input
-                    type="text"
-                    value={firstname}
-                    onChange={(e) => setFirstname(e.target.value)}
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 outline-none transition-colors"
-                    style={{
-                      ['--tw-ring-color' as any]: accentColor
-                    }}
-                    onFocus={(e) => {
-                      e.currentTarget.style.borderColor = accentColor
-                      e.currentTarget.style.boxShadow = `0 0 0 2px ${accentColor}40`
-                    }}
-                    onBlur={(e) => {
-                      e.currentTarget.style.borderColor = '#d1d5db'
-                      e.currentTarget.style.boxShadow = 'none'
-                    }}
-                    placeholder="Nome"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Último nome
-                  </label>
-                  <input
-                    type="text"
-                    value={lastname}
-                    onChange={(e) => setLastname(e.target.value)}
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 outline-none transition-colors"
-                    onFocus={(e) => {
-                      e.currentTarget.style.borderColor = accentColor
-                      e.currentTarget.style.boxShadow = `0 0 0 2px ${accentColor}40`
-                    }}
-                    onBlur={(e) => {
-                      e.currentTarget.style.borderColor = '#d1d5db'
-                      e.currentTarget.style.boxShadow = 'none'
-                    }}
-                    placeholder="Sobrenome"
-                  />
-                </div>
+              {/* Nome field (full width) */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Nome
+                </label>
+                <input
+                  type="text"
+                  value={firstname}
+                  onChange={(e) => setFirstname(e.target.value)}
+                  required
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 outline-none transition-colors"
+                  style={{
+                    ['--tw-ring-color' as any]: accentColor
+                  }}
+                  onFocus={(e) => {
+                    e.currentTarget.style.borderColor = accentColor
+                    e.currentTarget.style.boxShadow = `0 0 0 2px ${accentColor}40`
+                  }}
+                  onBlur={(e) => {
+                    e.currentTarget.style.borderColor = '#d1d5db'
+                    e.currentTarget.style.boxShadow = 'none'
+                  }}
+                  placeholder="Seu nome"
+                />
               </div>
 
               <div>
