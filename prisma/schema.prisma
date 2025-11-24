@@ -71,6 +71,7 @@ model SiteConfig {
   heroDescription String?  @default("Transform your vision into reality with our innovative architectural solutions.")
   heroButton1Text String?  @default("View Projects")
   heroButton2Text String?  @default("Get Consultation")
+  heroBackgroundImage String?  // Background image URL for hero section
 
   // Navbar
   logoName        String?  @default("ArchStudio")
@@ -99,6 +100,8 @@ model SiteConfig {
   contactEmail       String? @default("contact@architecturalexcellence.com")
   contactPhone       String? @default("+1 (555) 123-4567")
   contactAddress     String? @default("123 Design Street, Creative City, CC 12345")
+  contactWhatsapp    String? @default("https://wa.me/5522992231569")
+  contactInstagram   String? @default("https://www.instagram.com/gatoarquitetura?igsh=MWUwZWE4dXJ1dm5zcA==")
 
   // Team Section
   teamTitle       String? @default("Meet Our Team")
@@ -123,7 +126,8 @@ model Project {
   title       String?
   description String?
   textarea    String?  @db.Text
-  imageUrl    String?
+  imageUrl    String?  // Main/cover image for list view
+  images      String[] // Array of image URLs for gallery
   category    String?  @default("residential")
   featured    Boolean  @default(false)
   order       Int      @default(0)

@@ -1,6 +1,7 @@
 "use client"
 
 import type { Project } from "@prisma/client"
+import Link from "next/link"
 
 interface ProjectCardProps {
   project: Project
@@ -12,7 +13,8 @@ export function ProjectCard({ project, color = "#f97316" }: ProjectCardProps) {
   const projectId = (project.title || 'project').toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')
 
   return (
-    <div id={projectId} className="relative w-full aspect-[4/5] overflow-hidden shadow-lg group cursor-pointer">
+    <Link href={`/project/${project.id}`} className="block">
+      <div id={projectId} className="relative w-full aspect-[4/5] overflow-hidden shadow-lg group cursor-pointer">
       {/* Background Image Layer - absolute positioning to cover full card */}
       <div className="absolute inset-0">
         <img
@@ -51,6 +53,7 @@ export function ProjectCard({ project, color = "#f97316" }: ProjectCardProps) {
 
       {/* Hover overlay on image area */}
       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
-    </div>
+      </div>
+    </Link>
   )
 }

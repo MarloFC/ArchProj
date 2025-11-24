@@ -16,7 +16,7 @@ export async function PUT(
     }
 
     const body = await request.json()
-    const { title, description, textarea, imageUrl, category, featured, order } = body
+    const { title, description, textarea, imageUrl, images, category, featured, order } = body
     const { id } = await params
 
     const project = await prisma.project.update({
@@ -26,6 +26,7 @@ export async function PUT(
         description: description || null,
         textarea: textarea || null,
         imageUrl: imageUrl || null,
+        images: images !== undefined ? images : [],
         category: category || null,
         featured: featured !== undefined ? featured : false,
         order: order !== undefined ? order : 0,

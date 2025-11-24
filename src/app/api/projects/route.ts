@@ -29,7 +29,7 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json()
-    const { title, description, textarea, imageUrl, category, featured, order } = body
+    const { title, description, textarea, imageUrl, images, category, featured, order } = body
 
     const project = await prisma.project.create({
       data: {
@@ -37,6 +37,7 @@ export async function POST(request: Request) {
         description: description || null,
         textarea: textarea || null,
         imageUrl: imageUrl || null,
+        images: images || [],
         category: category || "residential",
         featured: featured || false,
         order: order || 0,

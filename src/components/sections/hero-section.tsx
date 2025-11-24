@@ -17,6 +17,7 @@ export function HeroSection({ config }: HeroSectionProps) {
   const heroDescription = config?.heroDescription || ""
   const heroButton1Text = config?.heroButton1Text
   const heroButton2Text = config?.heroButton2Text
+  const heroBackgroundImage = config?.heroBackgroundImage
   const gradientFrom = config?.gradientFrom || "#6366f1"
   const gradientTo = config?.gradientTo || "#8b5cf6"
   const ref = useRef<HTMLDivElement>(null)
@@ -30,16 +31,33 @@ export function HeroSection({ config }: HeroSectionProps) {
 
   return (
     <div ref={ref} className="relative h-screen overflow-hidden">
-      <motion.div
-        style={{
-          y,
-          opacity,
-          background: `linear-gradient(to bottom right, ${gradientFrom}, ${gradientTo})`
-        }}
-        className="absolute inset-0"
-      />
-
-      <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+      {heroBackgroundImage ? (
+        <>
+          <motion.div
+            style={{ y, opacity }}
+            className="absolute inset-0"
+          >
+            <img
+              src={heroBackgroundImage}
+              alt="Hero background"
+              className="w-full h-full object-cover"
+            />
+          </motion.div>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-black/20" />
+        </>
+      ) : (
+        <>
+          <motion.div
+            style={{
+              y,
+              opacity,
+              background: `linear-gradient(to bottom right, ${gradientFrom}, ${gradientTo})`
+            }}
+            className="absolute inset-0"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+        </>
+      )}
       
       <div className="relative z-10 flex h-full items-center justify-center">
         <div className="container mx-auto px-6 text-center text-white">
