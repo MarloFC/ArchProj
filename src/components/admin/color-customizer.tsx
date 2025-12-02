@@ -46,6 +46,7 @@ export function ColorCustomizer() {
     primary: "#6366f1",
     secondary: "#8b5cf6",
     accent: "#06b6d4",
+    alternative: "#DB650F",
     gradientFrom: "#6366f1",
     gradientTo: "#8b5cf6",
   })
@@ -63,6 +64,7 @@ export function ColorCustomizer() {
             primary: data.primaryColor || "#6366f1",
             secondary: data.secondaryColor || "#8b5cf6",
             accent: data.accentColor || "#06b6d4",
+            alternative: data.alternativeColor || "#DB650F",
             gradientFrom: data.gradientFrom || "#6366f1",
             gradientTo: data.gradientTo || "#8b5cf6",
           })
@@ -83,6 +85,7 @@ export function ColorCustomizer() {
       primary: theme.primary,
       secondary: theme.secondary,
       accent: theme.accent,
+      alternative: colors.alternative, // Keep current alternative color
       gradientFrom: theme.gradientFrom,
       gradientTo: theme.gradientTo,
     })
@@ -236,6 +239,26 @@ export function ColorCustomizer() {
                   type="text"
                   value={colors.accent}
                   onChange={(e) => handleColorChange("accent", e.target.value)}
+                  className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Alternative Color (Footer)
+              </label>
+              <div className="flex items-center space-x-3">
+                <input
+                  type="color"
+                  value={colors.alternative}
+                  onChange={(e) => handleColorChange("alternative", e.target.value)}
+                  className="w-12 h-10 border border-gray-300 rounded cursor-pointer"
+                />
+                <input
+                  type="text"
+                  value={colors.alternative}
+                  onChange={(e) => handleColorChange("alternative", e.target.value)}
                   className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
                 />
               </div>

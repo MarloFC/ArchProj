@@ -1,5 +1,6 @@
 import { Navbar } from "@/components/navigation/navbar"
 import { TeamSection } from "@/components/sections/team-section"
+import { Footer } from "@/components/footer"
 import { prisma } from "@/lib/prisma"
 
 // Revalidate every 10 seconds
@@ -47,6 +48,7 @@ export default async function TeamPage() {
         teamSubtitle={teamSubtitle}
         teamDescription={teamDescription}
       />
+      <Footer config={siteConfig} />
     </>
   )
 }
