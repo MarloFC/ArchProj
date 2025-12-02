@@ -17,6 +17,7 @@ export function ContactSection({ config }: ContactSectionProps) {
   const [project, setProject] = useState("Residencial")
   const [message, setMessage] = useState("")
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [emailCopied, setEmailCopied] = useState(false)
 
   const gradientFrom = config?.gradientFrom || "#6366f1"
   const gradientTo = config?.gradientTo || "#8b5cf6"
@@ -27,6 +28,17 @@ export function ContactSection({ config }: ContactSectionProps) {
   const contactEmail = config?.contactEmail || ""
   const contactWhatsapp = config?.contactWhatsapp || "https://wa.me/5522992231569"
   const contactInstagram = config?.contactInstagram || "https://www.instagram.com/gatoarquitetura?igsh=MWUwZWE4dXJ1dm5zcA=="
+
+  const handleCopyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(contactEmail)
+      setEmailCopied(true)
+      toast.success("Email copiado!")
+      setTimeout(() => setEmailCopied(false), 2000)
+    } catch (err) {
+      toast.error("Erro ao copiar email")
+    }
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -94,44 +106,42 @@ export function ContactSection({ config }: ContactSectionProps) {
             />
 
             <div className="space-y-4">
-              {/* Email with text */}
+              {/* Social icons */}
               <div className="flex items-center space-x-4">
-                <div className="p-3 bg-white/20 rounded-lg">
-                  <Mail className="w-5 h-5" />
-                </div>
-                <span className="text-white/90">{contactEmail}</span>
-              </div>
-
-              {/* WhatsApp icon only - clickable */}
-              <div className="flex items-center space-x-4 group/whatsapp">
-                <a
-                  href={contactWhatsapp}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-3 bg-white/20 rounded-lg hover:bg-white/30 transition-colors cursor-pointer relative"
-                  aria-label="WhatsApp"
-                >
-                  <MessageCircle className="w-5 h-5" />
-                  <span className="absolute left-full ml-3 top-1/2 -translate-y-1/2 bg-white text-gray-900 px-3 py-1.5 rounded-lg text-sm font-medium opacity-0 group-hover/whatsapp:opacity-100 transition-opacity whitespace-nowrap pointer-events-none shadow-lg">
-                    Clique para conversar
-                  </span>
-                </a>
-              </div>
-
-              {/* Instagram icon only - clickable */}
-              <div className="flex items-center space-x-4 group/instagram">
                 <a
                   href={contactInstagram}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-3 bg-white/20 rounded-lg hover:bg-white/30 transition-colors cursor-pointer relative"
+                  className="p-3 bg-white/20 rounded-lg hover:bg-white/30 transition-colors cursor-pointer relative group/instagram"
                   aria-label="Instagram"
                 >
-                  <Instagram className="w-5 h-5" />
-                  <span className="absolute left-full ml-3 top-1/2 -translate-y-1/2 bg-white text-gray-900 px-3 py-1.5 rounded-lg text-sm font-medium opacity-0 group-hover/instagram:opacity-100 transition-opacity whitespace-nowrap pointer-events-none shadow-lg">
+                  <Instagram className="w-5 h-5 relative z-0" />
+                  <span className="absolute left-full ml-3 top-1/2 -translate-y-1/2 bg-white text-gray-900 px-3 py-1.5 rounded-lg text-sm font-medium opacity-0 group-hover/instagram:opacity-100 transition-opacity whitespace-nowrap pointer-events-none shadow-lg z-10">
                     Clique para visitar
                   </span>
                 </a>
+                <a
+                  href={contactWhatsapp}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-3 bg-white/20 rounded-lg hover:bg-white/30 transition-colors cursor-pointer relative group/whatsapp"
+                  aria-label="WhatsApp"
+                >
+                  <MessageCircle className="w-5 h-5 relative z-0" />
+                  <span className="absolute left-full ml-3 top-1/2 -translate-y-1/2 bg-white text-gray-900 px-3 py-1.5 rounded-lg text-sm font-medium opacity-0 group-hover/whatsapp:opacity-100 transition-opacity whitespace-nowrap pointer-events-none shadow-lg z-10">
+                    Clique para conversar
+                  </span>
+                </a>
+                <div
+                  className="p-3 bg-white/20 rounded-lg hover:bg-white/30 transition-colors cursor-pointer relative group/email"
+                  onClick={handleCopyEmail}
+                  aria-label="Copy email"
+                >
+                  <Mail className="w-5 h-5 relative z-0" />
+                  <span className="absolute left-full ml-3 top-1/2 -translate-y-1/2 bg-white text-gray-900 px-3 py-1.5 rounded-lg text-sm font-medium opacity-0 group-hover/email:opacity-100 transition-opacity whitespace-nowrap pointer-events-none shadow-lg z-10">
+                    Clique para copiar o email
+                  </span>
+                </div>
               </div>
             </div>
           </motion.div>

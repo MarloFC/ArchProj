@@ -4,6 +4,7 @@ import { ComparisonSection } from "@/components/sections/comparison-section"
 import { ProjectsSection } from "@/components/sections/projects-section"
 import { ContactSection } from "@/components/sections/contact-section"
 import { Navbar } from "@/components/navigation/navbar"
+import { Footer } from "@/components/footer"
 import { LoadingProvider } from "@/components/providers/loading-provider"
 import { prisma } from "@/lib/prisma"
 
@@ -46,6 +47,7 @@ export default async function Home() {
           <ContactSection config={siteConfig} />
         </section>
       </main>
+      <Footer config={siteConfig} />
     </LoadingProvider>
   );
 }

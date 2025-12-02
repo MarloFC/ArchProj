@@ -112,6 +112,7 @@ model SiteConfig {
   primaryColor    String?   @default("#000000")
   secondaryColor  String?   @default("#ffffff")
   accentColor     String?   @default("#6366f1")
+  alternativeColor String?  @default("#DB650F")
   gradientFrom    String?   @default("#6366f1")
   gradientTo      String?   @default("#8b5cf6")
 

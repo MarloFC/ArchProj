@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma"
 import { Navbar } from "@/components/navigation/navbar"
+import { Footer } from "@/components/footer"
 import { notFound } from "next/navigation"
 import { ProjectGallery } from "@/components/project/project-gallery"
 import { BackToProjectsLink } from "@/components/ui/back-to-projects-link"
@@ -71,7 +72,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
 
           {/* Detailed Description */}
           {project.textarea && (
-            <div className="bg-white rounded-2xl p-8 shadow-lg mt-12">
+            <div>
               <h2 className="text-2xl font-bold text-gray-900 mb-4">
                 Detalhes do Projeto
               </h2>
@@ -83,6 +84,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
           )}
         </div>
       </main>
+      <Footer config={siteConfig} />
     </>
   )
 }
