@@ -1,15 +1,16 @@
 "use client"
 
+import Image from "next/image"
 import { Mail, MapPin, Phone, Instagram, MessageCircle } from "lucide-react"
 import Link from "next/link"
 import type { SiteConfig } from "@prisma/client"
+import arquitetura2 from "../../public/Arquitetura2.png"
 
 interface FooterProps {
   config: SiteConfig | null
 }
 
 export function Footer({ config }: FooterProps) {
-  const companyName = "Gato Arquitetura"
   const contactEmail = config?.contactEmail || ""
   const contactPhone = config?.contactPhone || ""
   const contactAddress = config?.contactAddress || ""
@@ -27,27 +28,28 @@ export function Footer({ config }: FooterProps) {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           {/* Company Info */}
           <div>
-            <h3
-              className="text-2xl font-bold mb-4 bg-clip-text text-transparent"
-              style={{
-                backgroundImage: `linear-gradient(to right, ${gradientFrom}, ${gradientTo})`
-              }}
+            <div
+              className="mb-4 flex justify-center"
             >
-              {companyName}
-            </h3>
-            <p className="text-gray-400 leading-relaxed">
+              <Image
+                src={arquitetura2}
+                alt="Gato Arquitetura"
+                className="h-64 w-80 object-contain -mt-12 -mb-12 brightness-0"
+              />
+            </div>
+            <p className="text-black leading-relaxed">
               Transformando espaços em experiências únicas através do design e da arquitetura.
             </p>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-lg font-semibold mb-4">Links Rápidos</h4>
+            <h4 className="text-lg font-semibold mb-4 text-black">Links Rápidos</h4>
             <ul className="space-y-2">
               <li>
                 <Link
                   href="/"
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-black hover:text-white transition-colors"
                 >
                   Início
                 </Link>
@@ -55,7 +57,7 @@ export function Footer({ config }: FooterProps) {
               <li>
                 <Link
                   href="/#services"
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-black hover:text-white transition-colors"
                 >
                   Serviços
                 </Link>
@@ -63,7 +65,7 @@ export function Footer({ config }: FooterProps) {
               <li>
                 <Link
                   href="/#projects"
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-black hover:text-white transition-colors"
                 >
                   Projetos
                 </Link>
@@ -71,7 +73,7 @@ export function Footer({ config }: FooterProps) {
               <li>
                 <Link
                   href="/team"
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-black hover:text-white transition-colors"
                 >
                   Equipe
                 </Link>
@@ -79,7 +81,7 @@ export function Footer({ config }: FooterProps) {
               <li>
                 <Link
                   href="/#contact"
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-black hover:text-white transition-colors"
                 >
                   Contato
                 </Link>
@@ -89,14 +91,14 @@ export function Footer({ config }: FooterProps) {
 
           {/* Contact Info */}
           <div>
-            <h4 className="text-lg font-semibold mb-4">Contato</h4>
+            <h4 className="text-lg font-semibold mb-4 text-black">Contato</h4>
             <ul className="space-y-3">
               {contactEmail && (
                 <li className="flex items-start gap-2">
                   <Mail className="w-5 h-5 mt-0.5 flex-shrink-0" style={{ color: gradientFrom }} />
                   <a
                     href={`mailto:${contactEmail}`}
-                    className="text-gray-400 hover:text-white transition-colors break-all"
+                    className="text-black hover:text-white transition-colors break-all"
                   >
                     {contactEmail}
                   </a>
@@ -107,7 +109,7 @@ export function Footer({ config }: FooterProps) {
                   <Phone className="w-5 h-5 mt-0.5 flex-shrink-0" style={{ color: gradientFrom }} />
                   <a
                     href={`https://wa.me/5522992231569`}
-                    className="text-gray-400 hover:text-white transition-colors"
+                    className="text-black hover:text-white transition-colors"
                   >
                     {contactPhone}
                   </a>
@@ -164,19 +166,19 @@ export function Footer({ config }: FooterProps) {
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-gray-800">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-gray-400 text-sm text-center md:text-left">
-              © {currentYear} {companyName}. Todos os direitos reservados.
+            <p className="text-black text-sm text-center md:text-left">
+              © {currentYear} Gato Arquitetura. Todos os direitos reservados.
             </p>
             <div className="flex gap-6 text-sm">
               <Link
                 href="/privacy"
-                className="text-gray-400 hover:text-white transition-colors"
+                className="text-black hover:text-white transition-colors"
               >
                 Política de Privacidade
               </Link>
               <Link
                 href="/terms"
-                className="text-gray-400 hover:text-white transition-colors"
+                className="text-black hover:text-white transition-colors"
               >
                 Termos de Uso
               </Link>
