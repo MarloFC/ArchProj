@@ -82,17 +82,17 @@ export function ServicesSection({ services: dbServices, config }: ServicesSectio
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-right mb-32 ml-auto max-w-5xl"
+          className="mb-32 mx-auto max-w-5xl"
         >
           <h2
-            className="text-6xl font-bold mb-6 bg-clip-text text-transparent md:text-8xl leading-tight"
+            className="text-6xl font-bold bg-clip-text text-transparent md:text-7xl leading-tight text-center"
             style={{
               backgroundImage: `linear-gradient(to right, ${gradientFrom}, ${gradientTo})`
             }}
           >
             {servicesTitle}
           </h2>
-          <p className="text-lg text-gray-600">
+          <p className="text-lg text-gray-600 text-center w-2/3 mx-auto">
             {servicesDescription}
           </p>
         </motion.div>

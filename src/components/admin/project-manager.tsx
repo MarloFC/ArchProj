@@ -209,10 +209,10 @@ export function ProjectManager() {
                   )}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
                 >
-                  <option value="residential">Residencial</option>
-                  <option value="commercial">Comercial</option>
-                  <option value="cultural">Cultural</option>
-                  <option value="industrial">Industrial</option>
+                  <option value="Residencial">Residencial</option>
+                  <option value="Comercial">Comercial</option>
+                  <option value="Cultural">Cultural</option>
+                  <option value="Industrial">Industrial</option>
                 </select>
               </div>
             </div>
@@ -328,7 +328,7 @@ export function ProjectManager() {
                 type="checkbox"
                 id="featured"
                 checked={editingProject.featured}
-                onChange={(e) => setEditingProject(prev => 
+                onChange={(e) => setEditingProject(prev =>
                   prev ? { ...prev, featured: e.target.checked } : null
                 )}
                 className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
@@ -369,62 +369,62 @@ export function ProjectManager() {
           </Card>
         ) : (
           projects.map((project) => (
-          <Card key={project.id}>
-            <CardContent className="p-4 md:p-6">
-              <div className="flex flex-col md:flex-row md:items-start md:justify-between space-y-4 md:space-y-0">
-                <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 flex-1">
-                  <div className="w-full sm:w-20 h-48 sm:h-20 bg-gray-200 rounded-lg overflow-hidden flex-shrink-0">
-                    {project.imageUrl ? (
-                      <img
-                        src={project.imageUrl}
-                        alt={project.title || "Project"}
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <div className="w-full h-full bg-gray-300 flex items-center justify-center text-gray-500 text-xs">
-                        No Image
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="flex-1 min-w-0">
-                    <div className="flex flex-wrap items-center gap-2 mb-1">
-                      <h3 className="text-base md:text-lg font-semibold text-gray-900 break-words">
-                        {project.title || "Untitled Project"}
-                      </h3>
-                      {project.featured && (
-                        <span className="px-2 py-1 bg-indigo-100 text-indigo-700 text-xs font-medium rounded-full">
-                          Featured
-                        </span>
+            <Card key={project.id}>
+              <CardContent className="p-4 md:p-6">
+                <div className="flex flex-col md:flex-row md:items-start md:justify-between space-y-4 md:space-y-0">
+                  <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 flex-1">
+                    <div className="w-full sm:w-20 h-48 sm:h-20 bg-gray-200 rounded-lg overflow-hidden flex-shrink-0">
+                      {project.imageUrl ? (
+                        <img
+                          src={project.imageUrl}
+                          alt={project.title || "Project"}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gray-300 flex items-center justify-center text-gray-500 text-xs">
+                          No Image
+                        </div>
                       )}
                     </div>
 
-                    <p className="text-xs md:text-sm text-gray-600 mb-2">{project.category || "Uncategorized"}</p>
-                    <p className="text-sm md:text-base text-gray-700 break-words">{project.description || "No description"}</p>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex flex-wrap items-center gap-2 mb-1">
+                        <h3 className="text-base md:text-lg font-semibold text-gray-900 break-words">
+                          {project.title || "Untitled Project"}
+                        </h3>
+                        {project.featured && (
+                          <span className="px-2 py-1 bg-indigo-100 text-indigo-700 text-xs font-medium rounded-full">
+                            Featured
+                          </span>
+                        )}
+                      </div>
+
+                      <p className="text-xs md:text-sm text-gray-600 mb-2">{project.category || "Uncategorized"}</p>
+                      <p className="text-sm md:text-base text-gray-700 break-words">{project.description || "No description"}</p>
+                    </div>
+                  </div>
+
+                  <div className="flex space-x-2 justify-end md:ml-4">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handleEditProject(project)}
+                    >
+                      <Edit className="w-4 h-4" />
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handleDeleteProject(project.id)}
+                      className="text-red-600 hover:text-red-700"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
                   </div>
                 </div>
-
-                <div className="flex space-x-2 justify-end md:ml-4">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => handleEditProject(project)}
-                  >
-                    <Edit className="w-4 h-4" />
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => handleDeleteProject(project.id)}
-                    className="text-red-600 hover:text-red-700"
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        ))
+              </CardContent>
+            </Card>
+          ))
         )}
       </div>
     </div>

@@ -82,8 +82,8 @@ export function ComparisonSection({ config }: ComparisonSectionProps) {
           className="text-center mb-16"
         >
           <h2
-            className="text-4xl font-bold mb-4 bg-clip-text text-transparent prose prose-2xl max-w-none
-              [&>p]:inline [&>p]:text-inherit [&>p]:font-inherit [&>p]:text-4xl [&>p]:mb-0
+            className="text-4xl md:text-6xl font-bold mb-4 bg-clip-text text-transparent prose prose-2xl max-w-none
+              [&>p]:inline [&>p]:text-inherit [&>p]:font-inherit [&>p]:text-4xl [&>p]:md:text-6xl [&>p]:mb-0
               [&>strong]:font-bold [&>em]:italic"
             style={{
               backgroundImage: `linear-gradient(to right, ${gradientFrom}, ${gradientTo})`
@@ -91,7 +91,7 @@ export function ComparisonSection({ config }: ComparisonSectionProps) {
             dangerouslySetInnerHTML={{ __html: beforeAfterTitle }}
           />
           <div
-            className="text-xl text-gray-600 max-w-2xl mx-auto prose prose-xl max-w-2xl
+            className="text-xl text-center  text-gray-600 max-w-2xl prose prose-xl max-w-2xl mx-auto
               [&>p]:text-gray-600 [&>p]:text-xl [&>p]:mb-2
               [&>strong]:font-bold [&>em]:italic"
             dangerouslySetInnerHTML={{ __html: beforeAfterDescription }}

@@ -145,7 +145,7 @@ export function ContactSection({ config }: ContactSectionProps) {
               </div>
             </div>
           </motion.div>
-          
+
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -156,7 +156,7 @@ export function ContactSection({ config }: ContactSectionProps) {
             <h3 className="text-2xl font-semibold mb-6 text-gray-900">
               {contactFormTitle}
             </h3>
-            
+
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Nome field (full width) */}
               <div>

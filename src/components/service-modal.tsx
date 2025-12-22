@@ -111,9 +111,8 @@ export function ServiceModal({ isOpen, onClose, service, gradientFrom = "#6366f1
 
   return (
     <div
-      className={`fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 transition-opacity duration-400 overflow-y-auto ${
-        !hasAnimated && !isClosing ? 'bg-black/0' : isClosing ? 'bg-black/0' : 'bg-black/50 backdrop-blur-sm'
-      }`}
+      className={`fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 transition-opacity duration-400 overflow-y-auto ${!hasAnimated && !isClosing ? 'bg-black/0' : isClosing ? 'bg-black/0' : 'bg-black/50 backdrop-blur-sm'
+        }`}
       onClick={handleClose}
     >
       <div
@@ -128,9 +127,8 @@ export function ServiceModal({ isOpen, onClose, service, gradientFrom = "#6366f1
         <Button
           variant="ghost"
           size="icon"
-          className={`absolute top-4 right-4 text-gray-500 hover:text-gray-700 z-10 transition-opacity duration-200 ${
-            !hasAnimated ? 'opacity-0' : 'opacity-100'
-          }`}
+          className={`absolute top-4 right-4 text-gray-500 hover:text-gray-700 z-10 transition-opacity duration-200 ${!hasAnimated ? 'opacity-0' : 'opacity-100'
+            }`}
           onClick={handleClose}
         >
           <X className="w-5 h-5" />
@@ -139,9 +137,8 @@ export function ServiceModal({ isOpen, onClose, service, gradientFrom = "#6366f1
         {/* Content */}
         <div className="p-6 sm:p-8">
           {/* Icon */}
-          <div className={`mb-4 sm:mb-6 flex justify-center transition-all duration-300 ${
-            !hasAnimated ? 'opacity-70 scale-75' : 'opacity-100 scale-100'
-          }`}>
+          <div className={`mb-4 sm:mb-6 flex justify-center transition-all duration-300 ${!hasAnimated ? 'opacity-70 scale-75' : 'opacity-100 scale-100'
+            }`}>
             <div
               className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl flex items-center justify-center shadow-lg transition-all duration-400"
               style={{
@@ -166,9 +163,8 @@ export function ServiceModal({ isOpen, onClose, service, gradientFrom = "#6366f1
           </div>
 
           {/* Title */}
-          <h2 className={`text-2xl sm:text-3xl font-bold text-gray-900 text-center mb-3 sm:mb-4 transition-all duration-300 delay-75 ${
-            !hasAnimated ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
-          }`}>
+          <h2 className={`text-2xl sm:text-3xl font-bold text-gray-900 text-center mb-3 sm:mb-4 transition-all duration-300 delay-75 ${!hasAnimated ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
+            }`}>
             {service.title || "Untitled Service"}
           </h2>
 
@@ -183,14 +179,13 @@ export function ServiceModal({ isOpen, onClose, service, gradientFrom = "#6366f1
               [&>li]:text-gray-600 [&>li]:mb-1
               [&>strong]:font-bold [&>em]:italic
               ${!hasAnimated ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
-            }`}
+              }`}
             dangerouslySetInnerHTML={{ __html: service.description || "" }}
           />
 
           {/* Divider */}
-          <div className={`border-t border-gray-200 my-4 sm:my-6 transition-all duration-300 delay-150 ${
-            !hasAnimated ? 'opacity-0' : 'opacity-100'
-          }`}></div>
+          <div className={`border-t border-gray-200 my-4 sm:my-6 transition-all duration-300 delay-150 ${!hasAnimated ? 'opacity-0' : 'opacity-100'
+            }`}></div>
 
           {/* Detailed description */}
           <div
@@ -203,14 +198,13 @@ export function ServiceModal({ isOpen, onClose, service, gradientFrom = "#6366f1
               [&>li]:text-gray-700 [&>li]:mb-2 [&>li]:leading-relaxed
               [&>strong]:font-bold [&>em]:italic
               ${!hasAnimated ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
-            }`}
+              }`}
             dangerouslySetInnerHTML={{ __html: service.detailedDescription || service.description || "" }}
           />
 
           {/* Close button at bottom */}
-          <div className={`mt-6 sm:mt-8 flex justify-center transition-all duration-300 delay-250 ${
-            !hasAnimated ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
-          }`}>
+          <div className={`mt-6 sm:mt-8 flex justify-center transition-all duration-300 delay-250 ${!hasAnimated ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
+            }`}>
             <Button
               onClick={handleClose}
               className="text-white px-6 sm:px-8 py-2 text-sm sm:text-base"
@@ -218,7 +212,7 @@ export function ServiceModal({ isOpen, onClose, service, gradientFrom = "#6366f1
                 background: `linear-gradient(to right, ${gradientFrom}, ${gradientTo})`
               }}
             >
-              Close
+              Fechar
             </Button>
           </div>
         </div>

@@ -97,7 +97,7 @@ function HeroContentSection({ config }: { config: SiteConfig | null }) {
           viewport={{ once: true }}
           className="max-w-5xl"
         >
-          <h1 className="mb-6 text-6xl font-bold leading-tight md:text-8xl text-left">
+          <h1 className="mb-2 text-6xl font-bold leading-tight md:text-8xl text-left">
             <span
               className="block bg-gradient-to-r bg-clip-text text-transparent prose prose-lg max-w-none
                 [&>p]:inline [&>p]:text-inherit [&>p]:font-inherit [&>p]:text-6xl [&>p]:md:text-8xl [&>p]:leading-tight
@@ -110,7 +110,7 @@ function HeroContentSection({ config }: { config: SiteConfig | null }) {
           </h1>
 
           <div
-            className="mb-8 text-2xl text-gray-700 md:text-3xl prose prose-xl max-w-none text-left
+            className="mb-0 text-2xl text-gray-700 md:text-3xl prose prose-xl max-w-none text-left
               [&>p]:text-gray-700 [&>p]:text-2xl [&>p]:md:text-3xl [&>p]:mb-2 [&>p]:leading-relaxed
               [&>strong]:font-bold [&>em]:italic"
             dangerouslySetInnerHTML={{ __html: heroSubtitle }}

@@ -53,17 +53,21 @@ export function Navbar({ config }: NavbarProps) {
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-8">
-            <Link href={getSectionLink("#services")} className="text-gray-700 hover:text-gray-600 transition-colors">
+            <Link href={getSectionLink("#services")} className="group relative text-gray-700 hover:text-gray-900 transition-colors">
               Serviços
+              <span className="absolute left-0 -bottom-1 w-full h-0.5 bg-gray-900 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
             </Link>
-            <Link href={getSectionLink("#projects")} className="text-gray-700 hover:text-gray-600 transition-colors">
+            <Link href={getSectionLink("#projects")} className="group relative text-gray-700 hover:text-gray-900 transition-colors">
               Projetos
+              <span className="absolute left-0 -bottom-1 w-full h-0.5 bg-gray-900 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
             </Link>
-            <Link href={getSectionLink("#contact")} className="text-gray-700 hover:text-gray-600 transition-colors">
+            <Link href={getSectionLink("#contact")} className="group relative text-gray-700 hover:text-gray-900 transition-colors">
               Contato
+              <span className="absolute left-0 -bottom-1 w-full h-0.5 bg-gray-900 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
             </Link>
-            <Link href="/team" className="text-gray-700 hover:text-gray-600 transition-colors">
+            <Link href="/team" className="group relative text-gray-700 hover:text-gray-900 transition-colors">
               Equipe
+              <span className="absolute left-0 -bottom-1 w-full h-0.5 bg-gray-900 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
             </Link>
 
             {session ? (
@@ -132,14 +136,14 @@ export function Navbar({ config }: NavbarProps) {
 
               {session ? (
                 <>
-                  <Link 
+                  <Link
                     href="/admin"
                     className="px-3 py-2 text-gray-700 hover:text-gray-600 transition-colors"
                     onClick={() => setIsOpen(false)}
                   >
                     Admin Panel
                   </Link>
-                  <button 
+                  <button
                     onClick={() => {
                       signOut()
                       setIsOpen(false)
@@ -150,7 +154,7 @@ export function Navbar({ config }: NavbarProps) {
                   </button>
                 </>
               ) : (
-                <Link 
+                <Link
                   href="/auth/signin"
                   className="px-3 py-2 text-gray-700 hover:text-gray-600 transition-colors"
                   onClick={() => setIsOpen(false)}
