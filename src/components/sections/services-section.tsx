@@ -75,14 +75,14 @@ export function ServicesSection({ services: dbServices, config }: ServicesSectio
 
   const services = dbServices.length > 0 ? dbServices : defaultServices
   return (
-    <section className="py-20 bg-white">
+    <section className="py-0 md:py-20 bg-white">
       <div className="container mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="mb-32 mx-auto max-w-5xl"
+          className="mb-8 md:mb-32 mx-auto max-w-5xl"
         >
           <h2
             className="text-6xl font-bold bg-clip-text text-transparent md:text-7xl leading-tight text-center"
@@ -97,7 +97,7 @@ export function ServicesSection({ services: dbServices, config }: ServicesSectio
           </p>
         </motion.div>
 
-        <div className="flex flex-wrap justify-center gap-8">
+        <div className="flex flex-wrap justify-center gap-6 md:gap-8">
           {services.map((service, index) => {
             const IconComponent = iconMap[(service.icon || 'building').toLowerCase()] || Building2
             return (

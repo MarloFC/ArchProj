@@ -349,7 +349,7 @@ export function ProjectsSection({ projects: dbProjects, config }: ProjectsSectio
   }
 
   return (
-    <section className="relative py-20 bg-white overflow-hidden">
+    <section className="relative py-10 md:py-20 bg-white overflow-hidden">
       <div className="container mx-auto px-6 mb-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -439,14 +439,14 @@ export function ProjectsSection({ projects: dbProjects, config }: ProjectsSectio
         {/* Navigation arrows */}
         <button
           onClick={prevSlide}
-          className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 hover:bg-white shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110 z-10"
+          className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 hover:bg-white shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110 z-10 cursor-pointer"
           style={{ color: accentColor }}
         >
           <ChevronLeft className="w-5 h-5" />
         </button>
         <button
           onClick={nextSlide}
-          className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 hover:bg-white shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110 z-10"
+          className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 hover:bg-white shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110 z-10 cursor-pointer"
           style={{ color: accentColor }}
         >
           <ChevronRight className="w-5 h-5" />
@@ -458,7 +458,7 @@ export function ProjectsSection({ projects: dbProjects, config }: ProjectsSectio
             <button
               key={index}
               onClick={() => setCurrentSlide(index)}
-              className="w-2 h-2 rounded-full transition-all duration-300"
+              className="w-2 h-2 rounded-full transition-all duration-300 cursor-pointer"
               style={{
                 backgroundColor: index === currentSlide ? accentColor : '#d1d5db',
                 width: index === currentSlide ? '2rem' : '0.5rem',

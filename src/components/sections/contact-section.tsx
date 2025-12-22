@@ -80,7 +80,7 @@ export function ContactSection({ config }: ContactSectionProps) {
 
   return (
     <section
-      className="py-20"
+      className="py-10 md:py-20"
       style={{
         background: `linear-gradient(to bottom right, ${gradientFrom}, ${gradientTo})`
       }}

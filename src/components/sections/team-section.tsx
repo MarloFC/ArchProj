@@ -35,10 +35,10 @@ export function TeamSection({
   teamDescription,
 }: TeamSectionProps) {
   return (
-    <main className="min-h-screen pt-24 pb-20" style={{ backgroundColor: accentColor }}>
+    <main className="min-h-screen pt-16 pb-10 md:pt-24 md:pb-20" style={{ backgroundColor: accentColor }}>
       <div className="container mx-auto px-6">
         {/* Header Section */}
-        <div className="text-left mt-20 mb-36 max-w-3xl mx-auto md:mx-20">
+        <div className="text-left mt-10 mb-16 md:mt-20 md:mb-36 max-w-3xl mx-auto md:mx-20">
           <h1
             className="text-5xl md:text-6xl font-bold mb-4 bg-clip-text text-transparent"
             style={{
@@ -80,7 +80,7 @@ function TeamMemberCard({ member, gradientFrom, gradientTo, index }: any) {
       className="group relative rounded-2xl p-6 transition-all duration-300 hover:shadow-2xl border border-gray-100"
       style={{
         animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`,
-        background:"whitesmoke"
+        background: "whitesmoke"
       }}
     >
       {/* Gradient Border Effect on Hover */}

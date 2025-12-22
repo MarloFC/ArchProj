@@ -72,14 +72,14 @@ export function ComparisonSection({ config }: ComparisonSectionProps) {
   }, [])
 
   return (
-    <section className="py-20 bg-white">
+    <section className="py-10 md:py-20 bg-white">
       <div className="container mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-8 md:mb-16"
         >
           <h2
             className="text-4xl md:text-6xl font-bold mb-4 bg-clip-text text-transparent prose prose-2xl max-w-none

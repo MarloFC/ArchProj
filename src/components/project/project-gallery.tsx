@@ -81,7 +81,7 @@ export function ProjectGallery({ images, projectTitle }: ProjectGalleryProps) {
           {/* Close Button */}
           <button
             onClick={closeLightbox}
-            className="absolute top-4 right-4 z-50 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+            className="absolute top-4 right-4 z-50 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors cursor-pointer"
             aria-label="Close lightbox"
           >
             <X className="w-8 h-8 text-white" />
@@ -103,7 +103,7 @@ export function ProjectGallery({ images, projectTitle }: ProjectGalleryProps) {
                 e.stopPropagation()
                 prevImage()
               }}
-              className="absolute left-4 top-1/2 -translate-y-1/2 z-50 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-50 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors cursor-pointer"
               aria-label="Previous image"
             >
               <ChevronLeft className="w-8 h-8 text-white" />
@@ -117,7 +117,7 @@ export function ProjectGallery({ images, projectTitle }: ProjectGalleryProps) {
                 e.stopPropagation()
                 nextImage()
               }}
-              className="absolute right-4 top-1/2 -translate-y-1/2 z-50 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+              className="absolute right-4 top-1/2 -translate-y-1/2 z-50 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors cursor-pointer"
               aria-label="Next image"
             >
               <ChevronRight className="w-8 h-8 text-white" />
@@ -147,11 +147,10 @@ export function ProjectGallery({ images, projectTitle }: ProjectGalleryProps) {
                     e.stopPropagation()
                     setCurrentImageIndex(index)
                   }}
-                  className={`flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition-all ${
-                    index === currentImageIndex
+                  className={`flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition-all cursor-pointer ${index === currentImageIndex
                       ? 'border-white scale-110'
                       : 'border-white/30 hover:border-white/60'
-                  }`}
+                    }`}
                 >
                   <img
                     src={image}

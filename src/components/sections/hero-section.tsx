@@ -86,9 +86,10 @@ function HeroContentSection({ config }: { config: SiteConfig | null }) {
   const heroButton2Text = config?.heroButton2Text
   const gradientFrom = config?.gradientFrom || "#6366f1"
   const gradientTo = config?.gradientTo || "#8b5cf6"
+  const accentColor = config?.accentColor || "#efeee9"
 
   return (
-    <section className="py-20 bg-white">
+    <section className="py-2 md:py-20" style={{ backgroundColor: accentColor }}>
       <div className="container mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

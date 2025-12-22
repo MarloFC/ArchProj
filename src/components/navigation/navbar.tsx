@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Building2, Menu, X, User } from "lucide-react"
 import Link from "next/link"
@@ -79,7 +80,7 @@ export function Navbar({ config }: NavbarProps) {
                   </Button>
                 </Link>
                 <Button variant="ghost" size="sm" onClick={() => signOut()}>
-                  Sign Out
+                  Sair
                 </Button>
               </div>
             ) : (
@@ -95,76 +96,84 @@ export function Navbar({ config }: NavbarProps) {
           {/* Mobile Menu Button */}
           <button
             onClick={toggleMenu}
-            className="md:hidden p-2 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+            className="md:hidden p-2 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-100 cursor-pointer"
           >
             {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
 
         {/* Mobile Menu */}
-        {isOpen && (
-          <div className="md:hidden py-4 border-t border-gray-200 bg-white">
-            <div className="flex flex-col space-y-3">
-              <Link
-                href={getSectionLink("#services")}
-                className="px-3 py-2 text-gray-700 hover:text-gray-600 transition-colors"
-                onClick={() => setIsOpen(false)}
-              >
-                Services
-              </Link>
-              <Link
-                href={getSectionLink("#projects")}
-                className="px-3 py-2 text-gray-700 hover:text-gray-600 transition-colors"
-                onClick={() => setIsOpen(false)}
-              >
-                Projects
-              </Link>
-              <Link
-                href={getSectionLink("#contact")}
-                className="px-3 py-2 text-gray-700 hover:text-gray-600 transition-colors"
-                onClick={() => setIsOpen(false)}
-              >
-                Contact
-              </Link>
-              <Link
-                href="/team"
-                className="px-3 py-2 text-gray-700 hover:text-gray-600 transition-colors"
-                onClick={() => setIsOpen(false)}
-              >
-                Team
-              </Link>
-
-              {session ? (
-                <>
-                  <Link
-                    href="/admin"
-                    className="px-3 py-2 text-gray-700 hover:text-gray-600 transition-colors"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    Admin Panel
-                  </Link>
-                  <button
-                    onClick={() => {
-                      signOut()
-                      setIsOpen(false)
-                    }}
-                    className="px-3 py-2 text-left text-gray-700 hover:text-gray-600 transition-colors"
-                  >
-                    Sign Out
-                  </button>
-                </>
-              ) : (
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "calc(100vh - 4rem)" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className="md:hidden fixed top-16 left-0 w-full bg-white border-t border-gray-200 overflow-hidden"
+            >
+              <div className="flex flex-col p-6 space-y-6">
                 <Link
-                  href="/auth/signin"
-                  className="px-3 py-2 text-gray-700 hover:text-gray-600 transition-colors"
+                  href={getSectionLink("#services")}
+                  className="text-lg font-medium text-gray-700 hover:text-gray-900 transition-colors"
                   onClick={() => setIsOpen(false)}
                 >
-                  Admin Login
+                  Serviços
                 </Link>
-              )}
-            </div>
-          </div>
-        )}
+                <Link
+                  href={getSectionLink("#projects")}
+                  className="text-lg font-medium text-gray-700 hover:text-gray-900 transition-colors"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Projetos
+                </Link>
+                <Link
+                  href={getSectionLink("#contact")}
+                  className="text-lg font-medium text-gray-700 hover:text-gray-900 transition-colors"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Contato
+                </Link>
+                <Link
+                  href="/team"
+                  className="text-lg font-medium text-gray-700 hover:text-gray-900 transition-colors"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Equipe
+                </Link>
+
+                {session ? (
+                  <>
+                    <Link
+                      href="/admin"
+                      className="text-lg font-medium text-gray-700 hover:text-gray-900 transition-colors"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      Painel Admin
+                    </Link>
+                    <button
+                      onClick={() => {
+                        signOut()
+                        setIsOpen(false)
+                      }}
+                      className="text-lg font-medium text-left text-gray-700 hover:text-gray-900 transition-colors cursor-pointer"
+                    >
+                      Sair
+                    </button>
+                  </>
+                ) : (
+                  <Link
+                    href="/auth/signin"
+                    className="text-lg font-medium text-gray-700 hover:text-gray-900 transition-colors"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Login Admin
+                  </Link>
+                )}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </nav>
   )
