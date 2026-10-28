@@ -16,6 +16,7 @@ export function ContactSection({ config }: ContactSectionProps) {
   const [email, setEmail] = useState("")
   const [project, setProject] = useState("Residencial")
   const [message, setMessage] = useState("")
+  const [website, setWebsite] = useState("")
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [emailCopied, setEmailCopied] = useState(false)
 
@@ -56,6 +57,7 @@ export function ContactSection({ config }: ContactSectionProps) {
           email,
           message,
           project,
+          website,
         }),
       })
 
@@ -158,6 +160,18 @@ export function ContactSection({ config }: ContactSectionProps) {
             </h3>
 
             <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Honeypot anti-spam trap for bots */}
+              <div style={{ display: 'none' }} aria-hidden="true">
+                <input
+                  type="text"
+                  name="website"
+                  value={website}
+                  onChange={(e) => setWebsite(e.target.value)}
+                  tabIndex={-1}
+                  autoComplete="off"
+                />
+              </div>
+
               {/* Nome field (full width) */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">

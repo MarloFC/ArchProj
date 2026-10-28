@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server"
 import { revalidatePath } from "next/cache"
-import { getSession } from "@/lib/auth"
+import { isUserAdmin } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 
 // GET all team members
@@ -22,10 +22,13 @@ export async function GET() {
 // POST create new team member (admin only)
 export async function POST(request: Request) {
   try {
-    const session = await getSession()
+    const admin = await isUserAdmin()
 
-    if (!session?.user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+    if (!admin) {
+      return NextResponse.json(
+        { error: "Unauthorized: Admin access required" },
+        { status: 403 }
+      )
     }
 
     const body = await request.json()

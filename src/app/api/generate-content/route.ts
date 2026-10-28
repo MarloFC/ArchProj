@@ -1,13 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { generateContent } from '@/lib/gemini'
-import { getCurrentUser } from '@/lib/auth'
+import { isUserAdmin } from '@/lib/auth'
 
 export async function POST(request: NextRequest) {
   try {
-    const user = await getCurrentUser()
+    const admin = await isUserAdmin()
     
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    if (!admin) {
+      return NextResponse.json(
+        { error: 'Unauthorized: Admin access required' },
+        { status: 403 }
+      )
     }
 
     const body = await request.json()

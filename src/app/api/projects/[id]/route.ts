@@ -1,18 +1,20 @@
 import { NextResponse } from "next/server"
 import { revalidatePath } from "next/cache"
-import { getServerSession } from "next-auth"
-import { authOptions } from "@/app/api/auth/[...nextauth]/route"
+import { isUserAdmin } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 
-// PUT update project
+// PUT update project (admin only)
 export async function PUT(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const session = await getServerSession(authOptions)
-    if (!session) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+    const admin = await isUserAdmin()
+    if (!admin) {
+      return NextResponse.json(
+        { error: "Unauthorized: Admin access required" },
+        { status: 403 }
+      )
     }
 
     const body = await request.json()
@@ -47,15 +49,18 @@ export async function PUT(
   }
 }
 
-// DELETE project
+// DELETE project (admin only)
 export async function DELETE(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const session = await getServerSession(authOptions)
-    if (!session) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+    const admin = await isUserAdmin()
+    if (!admin) {
+      return NextResponse.json(
+        { error: "Unauthorized: Admin access required" },
+        { status: 403 }
+      )
     }
 
     const { id } = await params

@@ -1,13 +1,22 @@
 import { NextResponse } from "next/server"
 import { revalidatePath } from "next/cache"
 import { prisma } from "@/lib/prisma"
+import { isUserAdmin } from "@/lib/auth"
 
-// PUT update service
+// PUT update service (admin only)
 export async function PUT(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const admin = await isUserAdmin()
+    if (!admin) {
+      return NextResponse.json(
+        { error: "Unauthorized: Admin access required" },
+        { status: 403 }
+      )
+    }
+
     const data = await request.json()
     const { id } = await params
 
@@ -41,12 +50,20 @@ export async function PUT(
   }
 }
 
-// DELETE service
+// DELETE service (admin only)
 export async function DELETE(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const admin = await isUserAdmin()
+    if (!admin) {
+      return NextResponse.json(
+        { error: "Unauthorized: Admin access required" },
+        { status: 403 }
+      )
+    }
+
     const { id } = await params
     await prisma.service.delete({
       where: { id },

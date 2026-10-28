@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server"
 import { revalidatePath } from "next/cache"
 import { prisma } from "@/lib/prisma"
+import { isUserAdmin } from "@/lib/auth"
 
 // GET all services
 export async function GET() {
@@ -18,9 +19,17 @@ export async function GET() {
   }
 }
 
-// POST create new service
+// POST create new service (admin only)
 export async function POST(request: Request) {
   try {
+    const admin = await isUserAdmin()
+    if (!admin) {
+      return NextResponse.json(
+        { error: "Unauthorized: Admin access required" },
+        { status: 403 }
+      )
+    }
+
     const data = await request.json()
 
     const service = await prisma.service.create({
