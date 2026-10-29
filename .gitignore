@@ -44,3 +44,8 @@ scripts/image-backup-*.json
 *.tsbuildinfo
 next-env.d.ts
 scripts/migrate-images-to-cloudinary.mjs
+
+# local-only files
+prisma/*.db
+prisma/*.db-journal
+.claude/settings.local.json
