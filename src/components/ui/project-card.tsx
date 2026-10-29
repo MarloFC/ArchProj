@@ -2,6 +2,7 @@
 
 import type { Project } from "@prisma/client"
 import Link from "next/link"
+import { optimizeImage } from "@/lib/cloudinary"
 
 interface ProjectCardProps {
   project: Project
@@ -18,7 +19,9 @@ export function ProjectCard({ project, color = "#f97316" }: ProjectCardProps) {
       {/* Background Image Layer - absolute positioning to cover full card */}
       <div className="absolute inset-0">
         <img
-          src={project.imageUrl || "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=800&fit=crop"}
+          src={optimizeImage(project.imageUrl, { width: 800 }) || "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=1000&fit=crop&auto=format&q=70"}
+          loading="lazy"
+          decoding="async"
           alt={project.title || "Project"}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         />

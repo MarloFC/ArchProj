@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { X, ChevronRight, ChevronLeft } from "lucide-react"
+import { optimizeImage } from "@/lib/cloudinary"
 
 interface ProjectGalleryProps {
   images: string[]
@@ -56,7 +57,9 @@ export function ProjectGallery({ images, projectTitle }: ProjectGalleryProps) {
             onClick={() => openLightbox(index)}
           >
             <img
-              src={image}
+              src={optimizeImage(image, { width: 900 })}
+              loading="lazy"
+              decoding="async"
               alt={`${projectTitle} - Image ${index + 1}`}
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
               crossOrigin="anonymous"
@@ -130,7 +133,8 @@ export function ProjectGallery({ images, projectTitle }: ProjectGalleryProps) {
             onClick={(e) => e.stopPropagation()}
           >
             <img
-              src={images[currentImageIndex]}
+              src={optimizeImage(images[currentImageIndex], { width: 1920 })}
+              decoding="async"
               alt={`${projectTitle} - Image ${currentImageIndex + 1}`}
               className="max-w-full max-h-[90vh] object-contain rounded-lg"
               crossOrigin="anonymous"
@@ -153,7 +157,9 @@ export function ProjectGallery({ images, projectTitle }: ProjectGalleryProps) {
                     }`}
                 >
                   <img
-                    src={image}
+                    src={optimizeImage(image, { width: 160, height: 160 })}
+                    loading="lazy"
+                    decoding="async"
                     alt={`Thumbnail ${index + 1}`}
                     className="w-full h-full object-cover"
                     crossOrigin="anonymous"

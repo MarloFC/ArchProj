@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Plus, Edit, Trash2, Save, Loader2, X } from "lucide-react"
 import { toast } from "sonner"
+import { ImageUploadButton } from "@/components/admin/image-upload-button"
 
 interface TeamMember {
   id: string
@@ -204,15 +205,22 @@ export function TeamManager() {
 
                 <div>
                   <label className="block text-sm font-medium mb-1">Image URL</label>
-                  <input
-                    type="text"
-                    className="w-full px-3 py-2 border rounded-md"
-                    value={editingMember.imageUrl || ""}
-                    onChange={(e) =>
-                      setEditingMember({ ...editingMember, imageUrl: e.target.value })
-                    }
-                    placeholder="https://images.unsplash.com/..."
-                  />
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      className="flex-1 px-3 py-2 border rounded-md"
+                      value={editingMember.imageUrl || ""}
+                      onChange={(e) =>
+                        setEditingMember({ ...editingMember, imageUrl: e.target.value })
+                      }
+                      placeholder="Paste an image URL or upload a file"
+                    />
+                    <ImageUploadButton
+                      onUploaded={(url) =>
+                        setEditingMember({ ...editingMember, imageUrl: url })
+                      }
+                    />
+                  </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3">

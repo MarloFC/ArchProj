@@ -3,6 +3,7 @@
 import { motion } from "framer-motion"
 import { useState, useRef, useEffect, MouseEvent, TouchEvent } from "react"
 import type { SiteConfig } from "@prisma/client"
+import { optimizeImage } from "@/lib/cloudinary"
 
 interface ComparisonSectionProps {
   config: SiteConfig | null
@@ -119,7 +120,9 @@ export function ComparisonSection({ config }: ComparisonSectionProps) {
             {/* After Image (Right) - Base layer */}
             <div className="absolute inset-0">
               <img
-                src={afterImage}
+                src={optimizeImage(afterImage, { width: 1400 })}
+                loading="lazy"
+                decoding="async"
                 alt="After renovation"
                 className="w-full h-full object-cover"
                 draggable={false}
@@ -137,7 +140,9 @@ export function ComparisonSection({ config }: ComparisonSectionProps) {
               }}
             >
               <img
-                src={beforeImage}
+                src={optimizeImage(beforeImage, { width: 1400 })}
+                loading="lazy"
+                decoding="async"
                 alt="Before renovation"
                 className="w-full h-full object-cover"
                 draggable={false}

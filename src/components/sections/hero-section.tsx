@@ -5,6 +5,7 @@ import { useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { ArrowDown } from "lucide-react"
 import type { SiteConfig } from "@prisma/client"
+import { optimizeImage } from "@/lib/cloudinary"
 
 interface HeroSectionProps {
   config: SiteConfig | null
@@ -34,7 +35,10 @@ export function HeroSection({ config }: HeroSectionProps) {
               className="absolute inset-0"
             >
               <img
-                src={heroBackgroundImage}
+                src={optimizeImage(heroBackgroundImage, { width: 1920 })}
+                loading="eager"
+                fetchPriority="high"
+                decoding="async"
                 alt="Hero background"
                 className="w-full h-full object-cover"
                 crossOrigin="anonymous"

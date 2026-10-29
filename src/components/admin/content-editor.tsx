@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { SlateEditor } from "@/components/ui/slate-editor"
 import { Sparkles, Save, Image as ImageIcon } from "lucide-react"
 import { toast } from "sonner"
+import { ImageUploadButton } from "@/components/admin/image-upload-button"
 
 // Memoized components to prevent re-renders
 const InputField = memo(({
@@ -105,13 +106,16 @@ const ImageField = memo(({
             />
           </div>
         )}
-        <input
-          type="text"
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
-          placeholder="Enter image URL"
-        />
+        <div className="flex gap-2">
+          <input
+            type="text"
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            className="flex-1 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
+            placeholder="Paste an image URL or upload a file"
+          />
+          <ImageUploadButton onUploaded={onChange} />
+        </div>
       </CardContent>
     </Card>
   )

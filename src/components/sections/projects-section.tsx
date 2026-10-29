@@ -5,6 +5,7 @@ import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import type { Project, SiteConfig } from "@prisma/client"
 import { useState, useRef, MouseEvent, useEffect } from "react"
+import { optimizeImage } from "@/lib/cloudinary"
 
 interface ProjectsSectionProps {
   projects: Project[]
@@ -414,7 +415,9 @@ export function ProjectsSection({ projects: dbProjects, config }: ProjectsSectio
                 >
                   <div className="relative h-[450px] rounded-2xl overflow-hidden shadow-2xl">
                     <img
-                      src={project.imageUrl || `https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=800&fit=crop`}
+                      src={optimizeImage(project.imageUrl, { width: 1000 }) || `https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1000&h=800&fit=crop&auto=format&q=70`}
+                      loading="lazy"
+                      decoding="async"
                       alt={project.title || "Project"}
                       className="w-full h-full object-cover"
                       draggable="false"
@@ -503,7 +506,9 @@ export function ProjectsSection({ projects: dbProjects, config }: ProjectsSectio
               }}
             >
               <img
-                src={project.imageUrl || `https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=800&fit=crop`}
+                src={optimizeImage(project.imageUrl, { width: 1000 }) || `https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1000&h=800&fit=crop&auto=format&q=70`}
+                loading="lazy"
+                decoding="async"
                 alt={project.title || "Project"}
                 className="gallery-image w-[40vw] h-[65vmin] object-cover select-none pointer-events-none rounded-2xl shadow-2xl"
                 draggable="false"

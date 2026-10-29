@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { SlateEditor } from "@/components/ui/slate-editor"
 import { Plus, Edit, Trash2, Save, Loader2 } from "lucide-react"
 import { toast } from "sonner"
+import { ImageUploadButton } from "@/components/admin/image-upload-button"
 
 interface Project {
   id: string
@@ -221,15 +222,22 @@ export function ProjectManager() {
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Cover Image URL
               </label>
-              <input
-                type="url"
-                value={editingProject.imageUrl || ""}
-                onChange={(e) => setEditingProject(prev =>
-                  prev ? { ...prev, imageUrl: e.target.value } : null
-                )}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
-                placeholder="https://example.com/image.jpg"
-              />
+              <div className="flex gap-2">
+                <input
+                  type="url"
+                  value={editingProject.imageUrl || ""}
+                  onChange={(e) => setEditingProject(prev =>
+                    prev ? { ...prev, imageUrl: e.target.value } : null
+                  )}
+                  className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
+                  placeholder="https://example.com/image.jpg"
+                />
+                <ImageUploadButton
+                  onUploaded={(url) => setEditingProject(prev =>
+                    prev ? { ...prev, imageUrl: url } : null
+                  )}
+                />
+              </div>
               <p className="text-xs text-gray-500 mt-1">Main cover image shown in project list</p>
             </div>
 
@@ -254,6 +262,16 @@ export function ProjectManager() {
                       }}
                       className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
                       placeholder="https://example.com/gallery-image.jpg"
+                    />
+                    <ImageUploadButton
+                      label="Upload"
+                      onUploaded={(url) => {
+                        const newImages = [...editingProject.images]
+                        newImages[index] = url
+                        setEditingProject(prev =>
+                          prev ? { ...prev, images: newImages } : null
+                        )
+                      }}
                     />
                     <Button
                       type="button"

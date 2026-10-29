@@ -37,6 +37,10 @@ yarn-error.log*
 # vercel
 .vercel
 
+# image migration backups
+scripts/image-backup-*.json
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+scripts/migrate-images-to-cloudinary.mjs

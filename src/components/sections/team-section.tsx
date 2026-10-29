@@ -1,6 +1,7 @@
 "use client"
 
 import { Linkedin, Instagram, Mail } from "lucide-react"
+import { optimizeImage } from "@/lib/cloudinary"
 
 interface TeamMember {
   id: string
@@ -105,7 +106,9 @@ function TeamMemberCard({ member, gradientFrom, gradientTo, index }: any) {
         />
         {member.imageUrl ? (
           <img
-            src={member.imageUrl}
+            src={optimizeImage(member.imageUrl, { width: 320, height: 320 })}
+            loading="lazy"
+            decoding="async"
             alt={member.name || "Team member"}
             className="w-full h-full object-cover grayscale-0 group-hover:scale-110 transition-transform duration-300"
             crossOrigin="anonymous"
